@@ -21,12 +21,21 @@ module.exports = {
         lastName: 'One'
       }
     ], {});
+    await queryInterface.bulkInsert(options, [
+      {
+        email: 'tester2@user.io',
+        username: 'Tester-2',
+        hashedPassword: bcrypt.hashSync('tester'),
+        firstName: 'Tester',
+        lastName: 'Two'
+      }
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Users';
     await queryInterface.bulkDelete(options, {
-      username: {[Op.in]: ['Tester-1']}
+      username: {[Op.in]: [['Tester-1', 'Tester-2']]}
     }, {});
   }
 };
