@@ -16,14 +16,7 @@ module.exports = {
 
     let spot1 = await Spot.findOne({where: {address: '123 Test Street'}});
     let spot2 = await Spot.findOne({where: {address: '123 Test Avenue'}});
-
-    await queryInterface.bulkInsert(options, [
-      {
-        spotId: spot1.id,
-        url: 'test.url',
-        preview: true
-      }
-    ], {});
+    let spot3 = await Spot.findOne({where: {address: '123 Test Drive'}});
 
     await queryInterface.bulkInsert(options, [
       {
@@ -36,6 +29,14 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: spot2.id,
+        url: 'test.url',
+        preview: true
+      }
+    ], {});
+
+    await queryInterface.bulkInsert(options, [
+      {
+        spotId: spot3.id,
         url: 'test.url',
         preview: true
       }

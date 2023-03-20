@@ -19,6 +19,9 @@ module.exports = {
     let user2 = await User.findOne({where: {username: 'Tester-2'}});
     let spot2 = await Spot.findOne({where: {address: '123 Test Avenue'}});
 
+    let user3 = await User.findOne({where: {username: 'Tester-3'}});
+    let spot3 = await Spot.findOne({where: {address: '123 Test Drive'}});
+
     await queryInterface.bulkInsert(options, [
       {
         spotId: spot1.id,
@@ -39,10 +42,10 @@ module.exports = {
 
     await queryInterface.bulkInsert(options, [
       {
-        spotId: spot2.id,
-        userId: user2.id,
-        startDate: '2022-11-19',
-        endDate: '2022-11-20'
+        spotId: spot3.id,
+        userId: user3.id,
+        startDate: '2021-11-19',
+        endDate: '2021-11-20'
       }
     ], {});
   },
@@ -50,7 +53,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'Bookings';
     await queryInterface.bulkDelete(options, {
-      startDate: ['2021-11-19', '2022-11-19']
+      startDate: ['2021-11-19']
     }, {})
   }
 };

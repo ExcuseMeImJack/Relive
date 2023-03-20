@@ -20,7 +20,7 @@ module.exports = {
         spotId: spot1.id,
         userId: user1.id,
         review: 'The Good Place.',
-        stars: 4
+        stars: 3
       }
     ], {});
 
@@ -29,7 +29,7 @@ module.exports = {
         spotId: spot1.id,
         userId: user1.id,
         review: 'The Bad Place.',
-        stars: 4
+        stars: 1
       }
     ], {});
 

@@ -44,12 +44,27 @@ module.exports = {
         price: 123
       }
     ], {});
+
+    await queryInterface.bulkInsert(options, [
+      {
+        ownerId: user2.id,
+        address: '123 Test Drive',
+        city: 'Los Angeles',
+        state: 'CA',
+        country: 'United States',
+        lat: 34.0522,
+        lng: 118.2437,
+        name: 'Test House 3',
+        description: 'A house we use to test our database with.',
+        price: 123
+      }
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
     options.tableName = 'Spots';
     await queryInterface.bulkDelete(options, {
-      address: {[Op.in]: ['123 Test Street', '123 Test Avenue']}
+      address: {[Op.in]: ['123 Test Street', '123 Test Avenue', '123 Test Drive']}
     }, {})
   }
 };
