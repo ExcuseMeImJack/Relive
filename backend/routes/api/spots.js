@@ -42,7 +42,7 @@ const validateSpotCreations = [
 ];
 
 // Create a Spot
-router.post('/', validateSpotCreations, async (req, res, next) => {
+router.post('/', [requireAuth, validateSpotCreations], async (req, res, next) => {
 
   const {user} = req;
   if(user){
@@ -76,7 +76,8 @@ router.get('/', async (req, res) => {
       {
         model: SpotImage
       }
-    ]
+    ],
+    order:['id']
   });
 
   let spotsList = [];
@@ -101,13 +102,14 @@ router.get('/', async (req, res) => {
 
     //calculate average
     spot.avgRating = (sum/count).toFixed(1);
-    if(!spot.avgRating) spot.avgRating = 0;
+    if(isNaN(spot.avgRating)) spot.avgRating = 0;
 
     // Setting the previewImage within Spots
     spot.SpotImages.forEach(image => {
       if(image.preview) spot.previewImage = image.url;
-      if(!spot.previewImage) spot.previewImage = 'Spot has no images';
     });
+    
+    if(!spot.previewImage) spot.previewImage = 'Spot has no images';
 
     delete spot.Reviews;
     delete spot.SpotImages;
