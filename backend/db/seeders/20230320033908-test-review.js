@@ -38,7 +38,7 @@ module.exports = {
         spotId: spot2.id,
         userId: user2.id,
         review: 'The Medium Place.',
-        stars: 4
+        stars: 2
       }
     ], {});
   },
