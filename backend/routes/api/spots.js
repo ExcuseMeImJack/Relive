@@ -7,7 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-const validateSpotCreations = [
+const validateSpot = [
   check('address')
     .exists({checkFalsy: true})
     .withMessage('Street address is required'),
@@ -41,8 +41,49 @@ const validateSpotCreations = [
   handleValidationErrors
 ];
 
+router.put('/:spotId', [requireAuth, validateSpot], async(req, res) => {
+  const {user} = req;
+  if(user) {
+
+    const spots = await Spot.findAll({attributes: ['id']});
+    let spotsList = [];
+    let spotIds = [];
+
+    spots.forEach(spot => {
+      spotsList.push(spot.toJSON());
+    });
+
+    spotsList.forEach(spot => {
+      spotIds.push(spot.id);
+    })
+
+    const numericSpotId = parseInt(req.params.spotId);
+    if(!spotIds.includes(numericSpotId)) return res.status(404).json({message: "Spot couldn't be found"});
+
+
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    const updatedSpot = await spot.update({
+      ownerId: user.id,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price
+    });
+
+    res.status(200).json(updatedSpot);
+
+  }
+})
+
 // Create a Spot
-router.post('/', [requireAuth, validateSpotCreations], async (req, res, next) => {
+router.post('/', [requireAuth, validateSpot], async (req, res) => {
 
   const {user} = req;
   if(user){
@@ -108,7 +149,7 @@ router.get('/', async (req, res) => {
     spot.SpotImages.forEach(image => {
       if(image.preview) spot.previewImage = image.url;
     });
-    
+
     if(!spot.previewImage) spot.previewImage = 'Spot has no images';
 
     delete spot.Reviews;
