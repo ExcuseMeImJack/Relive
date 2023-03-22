@@ -26,16 +26,30 @@ const doesSpotExist = async (spotIdParam) => {
 };
 
 const validateSpot = [
-  check("address").exists({ checkFalsy: true }).withMessage("Street address is required"),
+  check("address")
+    .exists({ checkFalsy: true })
+    .withMessage("Street address is required"),
   check("city").exists({ checkFalsy: true }).withMessage("City is required"),
   check("state").exists({ checkFalsy: true }).withMessage("State is required"),
-  check("country").exists({ checkFalsy: true }).withMessage("Country is required"),
-  check("lat").isFloat({ min: -90, max: 90 }).withMessage("Latitude is not valid"),
-  check("lng").isFloat({ min: -180, max: 180 }).withMessage("Longitude is not valid"),
+  check("country")
+    .exists({ checkFalsy: true })
+    .withMessage("Country is required"),
+  check("lat")
+    .isFloat({ min: -90, max: 90 })
+    .withMessage("Latitude is not valid"),
+  check("lng")
+    .isFloat({ min: -180, max: 180 })
+    .withMessage("Longitude is not valid"),
   check("name").exists({ checkFalsy: true }).withMessage("Name is required"),
-  check("name").isLength({ max: 49 }).withMessage("Name must be less than 50 characters"),
-  check("description").exists({ checkFalsy: true }).withMessage("Description is required"),
-  check("price").exists({ checkFalsy: true }).withMessage("Price per day is required"),
+  check("name")
+    .isLength({ max: 49 })
+    .withMessage("Name must be less than 50 characters"),
+  check("description")
+    .exists({ checkFalsy: true })
+    .withMessage("Description is required"),
+  check("price")
+    .exists({ checkFalsy: true })
+    .withMessage("Price per day is required"),
   handleValidationErrors,
 ];
 
@@ -53,7 +67,6 @@ router.get("/current", [requireAuth], async (req, res) => {
 
 // Get details of a Spot from an id
 router.get("/:spotId", async (req, res) => {
-
   if ((await doesSpotExist(req.params.spotId)) === false)
     return res.status(404).json({ message: "Spot couldn't be found" });
 
@@ -84,12 +97,17 @@ router.get("/:spotId", async (req, res) => {
   if (isNaN(spot.avgStarRating)) spot.avgStarRating = 0;
 
   // SpotImage Handling ====================================================
-  const images = await SpotImage.findAll({where: {spotId: req.params.spotId}, attributes: {exclude: ['spotId','createdAt', 'updatedAt']}});
+  const images = await SpotImage.findAll({
+    where: { spotId: req.params.spotId },
+    attributes: { exclude: ["spotId", "createdAt", "updatedAt"] },
+  });
   spot.SpotImages = images;
 
   // User Handling =========================================================
 
-  const owner = await User.findByPk(spot.ownerId, {attributes: ['id', 'firstName', 'lastName']})
+  const owner = await User.findByPk(spot.ownerId, {
+    attributes: ["id", "firstName", "lastName"],
+  });
   spot.Owner = owner;
   // Remove the rest
   delete spot.Reviews;
@@ -117,7 +135,7 @@ router.delete("/:spotId", [requireAuth], async (req, res) => {
 router.put("/:spotId", [requireAuth, validateSpot], async (req, res) => {
   const { user } = req;
   if (user) {
-    if (doesSpotExist(req.params.spotId))
+    if ((await doesSpotExist(req.params.spotId)) === false)
       return res.status(404).json({ message: "Spot couldn't be found" });
 
     const {
