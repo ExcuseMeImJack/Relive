@@ -59,10 +59,17 @@ const validateSpot = [
   handleValidationErrors
 ];
 
+// Get all Spots owned by the Current User
+router.get('/current', [requireAuth], async(req, res) => {
+  const {user} = req;
+  if(user) {
+    const spotsOwnedByUser = await Spot.findAll({where: {ownerId: user.id}, order: ['id']});
+    res.status(200).json({['Spots']:spotsOwnedByUser});
+  }
+});
+
 // Delete a Spot
 router.delete('/:spotId', [requireAuth], async(req, res) => {
-
-  console.log(await doesSpotExist(req.params.spotId))
   if (await doesSpotExist(req.params.spotId) === false) return res.status(404).json({message: "Spot couldn't be found"});
 
   const {user} = req;
@@ -105,7 +112,6 @@ router.put('/:spotId', [requireAuth, validateSpot], async(req, res) => {
 
 // Create a Spot
 router.post('/', [requireAuth, validateSpot], async (req, res) => {
-
   const {user} = req;
   if(user){
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
@@ -129,7 +135,6 @@ router.post('/', [requireAuth, validateSpot], async (req, res) => {
 
 // Get all Spots
 router.get('/', async (req, res) => {
-
   const spots = await Spot.findAll({
     include: [
       {
