@@ -28,6 +28,21 @@ module.exports = {
 
     await queryInterface.bulkInsert(options, [
       {
+        spotId: spot1.id,
+        url: 'test.url',
+        preview: true
+      }
+    ], {});
+    await queryInterface.bulkInsert(options, [
+      {
+        spotId: spot1.id,
+        url: 'test.url',
+        preview: true
+      }
+    ], {});
+
+    await queryInterface.bulkInsert(options, [
+      {
         spotId: spot2.id,
         url: 'test.url',
         preview: true
