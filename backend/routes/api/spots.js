@@ -164,9 +164,10 @@ router.put("/:spotId", [requireAuth, validateSpot], async (req, res) => {
   const { user } = req;
   if (user) {
     const spot = await Spot.findByPk(req.params.spotId);
-    if (user.id === spot.ownerId) {
-      if ((await doesSpotExist(req.params.spotId)) === false)
+    if ((await doesSpotExist(req.params.spotId)) === false)
         return res.status(404).json({ message: "Spot couldn't be found" });
+    if (user.id === spot.ownerId) {
+
 
       const {
         address,
