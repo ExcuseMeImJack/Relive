@@ -1,10 +1,8 @@
 const express = require("express");
-const { Op } = require("sequelize");
-const { Spot, SpotImage, Review, User, sequelize } = require("../../db/models");
+const { Spot, SpotImage, Review, User } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
-const spot = require("../../db/models/spot");
 
 const router = express.Router();
 
@@ -144,8 +142,7 @@ router.get("/:spotId", async (req, res) => {
 
 // Delete a Spot
 router.delete("/:spotId", [requireAuth], async (req, res) => {
-  if ((await doesSpotExist(req.params.spotId)) === false)
-    return res.status(404).json({ message: "Spot couldn't be found" });
+  if ((await doesSpotExist(req.params.spotId)) === false) return res.status(404).json({ message: "Spot couldn't be found" });
 
   const { user } = req;
 
@@ -161,13 +158,16 @@ router.delete("/:spotId", [requireAuth], async (req, res) => {
 
 // Edit a Spot
 router.put("/:spotId", [requireAuth, validateSpot], async (req, res) => {
-  const { user } = req;
-  if (user) {
-    const spot = await Spot.findByPk(req.params.spotId);
-    if ((await doesSpotExist(req.params.spotId)) === false)
-        return res.status(404).json({ message: "Spot couldn't be found" });
-    if (user.id === spot.ownerId) {
 
+  const { user } = req;
+
+  if (user) {
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if ((await doesSpotExist(req.params.spotId)) === false) return res.status(404).json({ message: "Spot couldn't be found" });
+
+    if (user.id === spot.ownerId) {
 
       const {
         address,
