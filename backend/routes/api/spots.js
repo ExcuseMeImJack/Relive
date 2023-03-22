@@ -4,6 +4,7 @@ const { Spot, SpotImage, Review, User, sequelize } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+const spot = require("../../db/models/spot");
 
 const router = express.Router();
 
@@ -62,6 +63,31 @@ router.get("/current", [requireAuth], async (req, res) => {
       order: ["id"],
     });
     res.status(200).json({ ["Spots"]: spotsOwnedByUser });
+  }
+});
+
+// Create an Image for a spotId
+router.post("/:spotId/images", requireAuth, async (req, res) => {
+  if ((await doesSpotExist(req.params.spotId)) === false)
+    return res.status(404).json({ message: "Spot couldn't be found" });
+
+  const { user } = req;
+  console.log(user);
+  const spot = await Spot.findByPk(req.params.spotId);
+  if (user.id === spot.ownerId) {
+    const { url, preview } = req.body;
+
+    const newSpotImage = await SpotImage.create({
+      spotId: req.params.spotId,
+      url,
+      preview,
+    });
+
+    const newSpotImageModified = await SpotImage.findOne({where: {id: newSpotImage.id}, attributes: {exclude: ['spotId', 'updatedAt', 'createdAt']}});
+
+    res.json(newSpotImageModified);
+  } else {
+    res.status(403).json({ message: "Forbidden" });
   }
 });
 
@@ -128,6 +154,8 @@ router.delete("/:spotId", [requireAuth], async (req, res) => {
   if (user.id === spot.ownerId) {
     await spot.destroy();
     return res.status(200).json({ message: "Successfully deleted" });
+  } else {
+    res.status(403).json({ message: "Forbidden" });
   }
 });
 
@@ -135,36 +163,41 @@ router.delete("/:spotId", [requireAuth], async (req, res) => {
 router.put("/:spotId", [requireAuth, validateSpot], async (req, res) => {
   const { user } = req;
   if (user) {
-    if ((await doesSpotExist(req.params.spotId)) === false)
-      return res.status(404).json({ message: "Spot couldn't be found" });
-
-    const {
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      name,
-      description,
-      price,
-    } = req.body;
     const spot = await Spot.findByPk(req.params.spotId);
+    if (user.id === spot.ownerId) {
+      if ((await doesSpotExist(req.params.spotId)) === false)
+        return res.status(404).json({ message: "Spot couldn't be found" });
 
-    const updatedSpot = await spot.update({
-      ownerId: user.id,
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      name,
-      description,
-      price,
-    });
+      const {
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+      } = req.body;
+      const spot = await Spot.findByPk(req.params.spotId);
 
-    res.status(200).json(updatedSpot);
+      const updatedSpot = await spot.update({
+        ownerId: user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+      });
+
+      res.status(200).json(updatedSpot);
+    } else {
+      res.status(403).json({ message: "Forbidden" });
+    }
   }
 });
 
