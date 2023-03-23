@@ -6,31 +6,28 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
+
+
 router.get('/current', requireAuth, async(req, res) => {
   const {user} = req;
   if(user) {
-    const reviews = await Review.findAll({
-      where:
-      {
-        userId: user.id
-      },
-      include:
-      [
+    const reviews = await Review.findAll({where: {userId: user.id},
+      include:[
         {
           model: User,
 
         },
         {
           model: Spot,
-          include: {
+          include:
+          {
             model: SpotImage
           }
         },
         {
           model: ReviewImage
         }
-      ]
-    }
+      ]}
   );
 
   let reviewsList = [];
@@ -43,12 +40,10 @@ router.get('/current', requireAuth, async(req, res) => {
     delete review.Spot.createdAt;
     delete review.Spot.updatedAt;
     delete review.Spot.description;
-
-
     review.Spot.SpotImages.forEach(spotImage => {
       if(spotImage.preview) review.Spot.previewImage = spotImage.url;
     })
-    
+
     delete review.Spot.SpotImages;
     review.ReviewImages.forEach(image => {
       delete image.reviewId;
@@ -63,8 +58,5 @@ router.get('/current', requireAuth, async(req, res) => {
     res.status(200).json(Reviews);
   }
 });
-
-
-
 
 module.exports = router;
