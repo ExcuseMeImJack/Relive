@@ -26,8 +26,8 @@ module.exports = {
       {
         spotId: spot1.id,
         userId: user1.id,
-        startDate: '2021-11-19',
-        endDate: '2021-11-20'
+        startDate: new Date('2021-11-19'),
+        endDate: new Date('2021-11-20')
       }
     ], {});
 
@@ -35,8 +35,8 @@ module.exports = {
       {
         spotId: spot2.id,
         userId: user2.id,
-        startDate: '2021-11-19',
-        endDate: '2021-11-20'
+        startDate: new Date('2021-11-19'),
+        endDate: new Date('2021-11-20')
       }
     ], {});
 
@@ -44,8 +44,17 @@ module.exports = {
       {
         spotId: spot3.id,
         userId: user3.id,
-        startDate: '2021-11-19',
-        endDate: '2021-11-20'
+        startDate: new Date('2021-11-19'),
+        endDate: new Date('2021-11-20')
+      }
+    ], {});
+
+    await queryInterface.bulkInsert(options, [
+      {
+        spotId: spot2.id,
+        userId: user3.id,
+        startDate: new Date('2022-11-19'),
+        endDate: new Date('2022-11-20')
       }
     ], {});
   },
@@ -53,7 +62,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'Bookings';
     await queryInterface.bulkDelete(options, {
-      startDate: ['2021-11-19']
+      startDate: ['2021-11-19', '2022-11-19']
     }, {})
   }
 };

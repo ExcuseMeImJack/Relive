@@ -176,7 +176,7 @@ router.get("/current", [requireAuth], async (req, res) => {
         if (image.preview) spot.previewImage = image.url;
       });
 
-      if (!spot.previewImage) spot.previewImage = "Spot has no images";
+      if (!spot.previewImage) spot.previewImage = "Spot has no preview images";
 
       delete spot.Reviews;
       delete spot.SpotImages;
@@ -393,7 +393,7 @@ router.get("/", async (req, res) => {
       if (image.preview) spot.previewImage = image.url;
     });
 
-    if (!spot.previewImage) spot.previewImage = "Spot has no images";
+    if (!spot.previewImage) spot.previewImage = "Spot has no preview images";
 
     delete spot.Reviews;
     delete spot.SpotImages;
