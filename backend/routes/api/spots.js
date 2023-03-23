@@ -1,5 +1,5 @@
 const express = require("express");
-const { Spot, SpotImage, Review, User } = require("../../db/models");
+const { Spot, SpotImage, Review, User, ReviewImage } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -51,6 +51,42 @@ const validateSpot = [
     .withMessage("Price per day is required"),
   handleValidationErrors,
 ];
+
+router.get('/:spotId/reviews', async (req, res) => {
+
+  if ((await doesSpotExist(req.params.spotId)) === false)
+  return res.status(404).json({ message: "Spot couldn't be found" });
+
+  const reviews = await Review.findAll({where: {spotId: req.params.spotId}, include: [
+    {
+      model: User
+    },
+    {
+      model: ReviewImage
+    }
+  ]
+  });
+
+  let reviewsList = [];
+  reviews.forEach(review => {
+    reviewsList.push(review.toJSON());
+  });
+
+  reviewsList.forEach(review => {
+    delete review.User.username;
+
+    review.ReviewImages.forEach(image => {
+      delete image.reviewId;
+      delete image.createdAt;
+      delete image.updatedAt;
+    })
+  });
+
+
+
+
+  res.status(200).json({['Reviews']: reviewsList});
+});
 
 // Get all Spots owned by the Current User
 router.get("/current", [requireAuth], async (req, res) => {
@@ -258,20 +294,14 @@ router.get("/", async (req, res) => {
     let sum = 0;
     let count = 0;
 
-    // Setting and calculating the avgRating within Spots
     spot.Reviews.forEach((review) => {
-      // Sum of all stars for one spot
       sum += review.stars;
-
-      // count of all reviews for one spot
       count++;
     });
 
-    //calculate average
     spot.avgRating = (sum / count).toFixed(1);
     if (isNaN(spot.avgRating)) spot.avgRating = 0;
 
-    // Setting the previewImage within Spots
     spot.SpotImages.forEach((image) => {
       if (image.preview) spot.previewImage = image.url;
     });
