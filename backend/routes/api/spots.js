@@ -1,5 +1,5 @@
 const express = require("express");
-const { Spot, SpotImage, Review, User, ReviewImage } = require("../../db/models");
+const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -21,23 +21,6 @@ const doesSpotExist = async (spotIdParam) => {
 
   const numericSpotId = parseInt(spotIdParam);
   if (!spotIds.includes(numericSpotId)) return false;
-  else return true;
-};
-
-const doesReviewExist = async (userId, spotId) => {
-  const reviews = await Review.findAll({ where: {spotId: spotId}, attributes: ["userId"] });
-  let reviewsList = [];
-  let userIds = [];
-
-  reviews.forEach((review) => {
-    reviewsList.push(review.toJSON());
-  });
-
-  reviewsList.forEach((review) => {
-    userIds.push(review.userId);
-  });
-
-  if (userIds.includes(userId)) return false;
   else return true;
 };
 
@@ -74,6 +57,25 @@ const validateReview = [
   check('stars').isInt({min: 1, max: 5}).withMessage("Stars must be an integer from 1 to 5"),
   handleValidationErrors
 ]
+
+// Get all Bookings for a Spot based on the Spot's id
+// If I defer, it is adam's fault
+router.get('/:spotId/bookings', [requireAuth], async (req, res) =>{
+  const {user} = req;
+
+  const spot = await Spot.findByPk(req.params.spotId);
+
+  if(!spot)  return res.status(404).json({ message: "Spot couldn't be found" });
+
+  if(user.id === spot.ownerId){
+    const ownerBookings = await Booking.findAll({where:{spotId: req.params.spotId}, include: [{model: User, attributes: {exclude:['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt']}}]});
+
+    return res.json({['Bookings']: ownerBookings})
+  } else if(user.id !== spot.ownerId){
+    const clientBookings = await Booking.findAll({where:{spotId: req.params.spotId}, attributes:{exclude:['id', 'userId', 'createdAt', 'updatedAt']}});
+    return res.json({['Bookings']: clientBookings})
+  }
+});
 
 // Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', [requireAuth, validateReview], async (req, res) => {

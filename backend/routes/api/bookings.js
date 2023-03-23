@@ -47,8 +47,8 @@ router.get('/current', requireAuth, async(req, res) => {
         userBookings.forEach(userBooking => {
           if(userBooking.id === booking.id) {
             booking.userId = userBooking.userId;
-            booking.startDate = userBooking.startDate.toISOString().replace('T', '').replace('Z', '').replace('00:00:00.000', '');
-            booking.endDate = userBooking.endDate.toISOString().replace('T', '').replace('Z', '').replace('00:00:00.000', '');
+            booking.startDate = userBooking.startDate;
+            booking.endDate = userBooking.endDate;
             booking.createdAt = userBooking.createdAt;
             booking.updatedAt = userBooking.updatedAt;
           }
@@ -58,20 +58,7 @@ router.get('/current', requireAuth, async(req, res) => {
     res.status(200).json({['Bookings']: bookingsList})
   }
 });
-// const my_model = await MyModel.findById(id, {
-//   include: [
-//     {
-//       model: AnotherModel,
-//       attributes: [ 'displayName', 'email' ] // only these attributes returned
-//     },
-//     { model: YetAnotherModel,
-//       include: [{
-//         model: AnotherModel,
-//         attributes: [ 'id', 'displayName', 'email' ]
-//       }]
-//     }
-//   ]
-// })
+
 
 // My preferred method of doing this is to use the getTime method on date objects.  This returns a number, the number of milliseconds since a specific date about 50 years ago.  You can use this number to compare against the value for other date objects, and if the number is the same, the dates are the same.
 
