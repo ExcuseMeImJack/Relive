@@ -134,7 +134,7 @@ router.get("/current", [requireAuth], async (req, res) => {
   });
   const Spots = { ["Spots"]: spotsList };
 
-  res.status(200).json(Spots);
+  res.status(200).send(Spots);
   }
 });
 
@@ -158,7 +158,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
 
     const newSpotImageModified = await SpotImage.findOne({where: {id: newSpotImage.id}, attributes: {exclude: ['spotId', 'updatedAt', 'createdAt']}});
 
-    res.json(newSpotImageModified);
+    res.send(newSpotImageModified);
   } else {
     res.status(403).json({ message: "Forbidden" });
   }
@@ -212,7 +212,7 @@ router.get("/:spotId", async (req, res) => {
   delete spot.Reviews;
   delete spot.User;
 
-  res.json(spot);
+  res.send(spot);
 });
 
 // Delete a Spot
@@ -225,7 +225,7 @@ router.delete("/:spotId", [requireAuth], async (req, res) => {
 
   if (user.id === spot.ownerId) {
     await spot.destroy();
-    return res.status(200).json({ message: "Successfully deleted" });
+    return res.status(200).send({ message: "Successfully deleted" });
   } else {
     res.status(403).json({ message: "Forbidden" });
   }
@@ -270,7 +270,7 @@ router.put("/:spotId", [requireAuth, validateSpot], async (req, res) => {
         price,
       });
 
-      res.status(200).json(updatedSpot);
+      res.status(200).send(updatedSpot);
     } else {
       res.status(403).json({ message: "Forbidden" });
     }
@@ -306,7 +306,7 @@ router.post("/", [requireAuth, validateSpot], async (req, res) => {
       price,
     });
 
-    res.status(201).json(newSpot);
+    res.status(201).send(newSpot);
   }
 });
 
@@ -353,7 +353,7 @@ router.get("/", async (req, res) => {
 
   const Spots = { ["Spots"]: spotsList };
 
-  res.status(200).json(Spots);
+  res.status(200).send(Spots);
 });
 
 module.exports = router;
