@@ -92,13 +92,52 @@ router.get('/:spotId/reviews', async (req, res) => {
 router.get("/current", [requireAuth], async (req, res) => {
   const { user } = req;
   if (user) {
-    const spotsOwnedByUser = await Spot.findAll({
+
+    const spots = await Spot.findAll({
       where: { ownerId: user.id },
+      include: [
+        {
+          model: Review,
+        },
+        {
+          model: SpotImage,
+        },
+      ],
       order: ["id"],
     });
-    res.status(200).json({ ["Spots"]: spotsOwnedByUser });
+
+    let spotsList = [];
+    spots.forEach((spot) => {
+      spotsList.push(spot.toJSON());
+    });
+
+    spotsList.forEach((spot) => {
+      let sum = 0;
+      let count = 0;
+
+      spot.Reviews.forEach((review) => {
+        sum += review.stars;
+        count++;
+      });
+
+      spot.avgRating = parseFloat((sum / count).toFixed(1));
+      if (isNaN(spot.avgRating)) spot.avgRating = 0;
+
+      spot.SpotImages.forEach((image) => {
+        if (image.preview) spot.previewImage = image.url;
+      });
+
+      if (!spot.previewImage) spot.previewImage = "Spot has no images";
+
+      delete spot.Reviews;
+      delete spot.SpotImages;
+  });
+  const Spots = { ["Spots"]: spotsList };
+
+  res.status(200).json(Spots);
   }
 });
+
 
 // Create an Image for a spotId
 router.post("/:spotId/images", requireAuth, async (req, res) => {
@@ -299,7 +338,7 @@ router.get("/", async (req, res) => {
       count++;
     });
 
-    spot.avgRating = (sum / count).toFixed(1);
+    spot.avgRating = parseFloat((sum / count).toFixed(1));
     if (isNaN(spot.avgRating)) spot.avgRating = 0;
 
     spot.SpotImages.forEach((image) => {
