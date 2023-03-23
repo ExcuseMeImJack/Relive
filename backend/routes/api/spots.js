@@ -187,7 +187,6 @@ router.get("/current", [requireAuth], async (req, res) => {
   }
 });
 
-
 // Create an Image for a spotId
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   if ((await doesSpotExist(req.params.spotId)) === false)

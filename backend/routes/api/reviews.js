@@ -6,6 +6,8 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
+
+
 router.get('/current', requireAuth, async(req, res) => {
   const {user} = req;
   if(user) {
@@ -56,5 +58,6 @@ router.get('/current', requireAuth, async(req, res) => {
     res.status(200).json(Reviews);
   }
 });
+
 
 module.exports = router;
