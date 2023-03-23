@@ -12,6 +12,39 @@ const validateReview = [
   handleValidationErrors
 ]
 
+const validateReviewImage = [
+  check('url').exists({checkFalsy: true}).withMessage("url is required"),
+  handleValidationErrors
+]
+
+// Add an Image to a Review based on the Review's id
+router.post('/:reviewId/images', [requireAuth, validateReviewImage], async (req, res) => {
+  const {user} = req;
+
+  const review = await Review.findByPk(req.params.reviewId);
+
+  if(!review) return res.status(404).json({ message: "Review couldn't be found" });
+
+  const reviewImages = await ReviewImage.findAll({where: {reviewId: req.params.reviewId}});
+  if(reviewImages.length > 10) return res.status(404).json({ message: "Maximum number of images for this resource was reached" });
+
+  if (user.id === review.userId) {
+    const { url } = req.body;
+
+    const newReviewImage = await ReviewImage.create({
+      reviewId: req.params.reviewId,
+      url
+    });
+
+    const newReviewImageModified = await ReviewImage.findOne({where: {id: newReviewImage.id}, attributes: {exclude: ['reviewId', 'updatedAt', 'createdAt']}});
+
+    res.json(newReviewImageModified);
+  } else {
+    res.status(403).json({ message: "Forbidden" });
+  }
+});
+
+// Get all Reviews of a Current User
 router.get('/current', requireAuth, async(req, res) => {
   const {user} = req;
   if(user) {
@@ -63,6 +96,7 @@ router.get('/current', requireAuth, async(req, res) => {
   }
 });
 
+// Edit a Review
 router.put('/:reviewId', [requireAuth, validateReview], async (req, res) => {
   const {user} = req;
 
@@ -82,7 +116,7 @@ router.put('/:reviewId', [requireAuth, validateReview], async (req, res) => {
   } else {
     res.status(403).json({ message: "Forbidden" });
   }
-})
+});
 
 // Delete a Review
 router.delete('/:reviewId', [requireAuth], async (req, res) => {
@@ -98,6 +132,6 @@ router.delete('/:reviewId', [requireAuth], async (req, res) => {
   } else {
     res.status(403).json({ message: "Forbidden" });
   }
-})
+});
 
 module.exports = router;
