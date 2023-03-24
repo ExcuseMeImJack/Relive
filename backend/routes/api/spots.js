@@ -3,6 +3,8 @@ const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../d
 const { requireAuth } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+const {Op} = require("sequelize");
+const { where } = require("sequelize");
 
 const router = express.Router();
 
@@ -444,9 +446,117 @@ router.post("/", [requireAuth, validateSpot], async (req, res) => {
   }
 });
 
+// const validateQueries = [
+//   check('page')
+//     .isInt({min: 1})
+//     .withMessage("Page must be greater than or equal to 1"),
+//   check('size')
+//     .isInt({min: 1})
+//     .withMessage("Size must be greater than or equal to 1"),
+//   check('maxLat')
+//     .isInt({min: -90, max: 90})
+//     .withMessage("Maximum latitude is invalid"),
+//   check('minLat')
+//     .isInt({min: -90, max: 90})
+//     .withMessage("Minimum latitude is invalid"),
+//   check('minLng')
+//     .isInt({min: -180, max: 180})
+//     .withMessage("Maximum longitude is invalid"),
+//   check('maxLng')
+//     .isInt({min: -180, max: 180})
+//     .withMessage("Minimum longitude is invalid"),
+//   check('minPrice')
+//     .isInt({min: 0})
+//     .withMessage("Minimum price must be greater than or equal to 0"),
+//   check('maxPrice')
+//     .isInt({min: 0})
+//     .withMessage("Maximum price must be greater than or equal to 0"),
+//   handleValidationErrors
+// ];
+
 // Get all Spots
 router.get("/", async (req, res) => {
+  const error = {};
+
+  let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+
+  if(!page) page = 1;
+  if(!size) size = 20;
+  const where = {};
+
+  page = parseInt(page);
+  size = parseInt(size);
+  minLat = parseFloat(minLat);
+  minLng = parseFloat(minLng);
+  maxLng = parseFloat(maxLng);
+  minPrice = parseFloat(minPrice);
+  maxPrice = parseFloat(maxPrice);
+
+  if(page){
+    if(page < 1 || isNaN(page)) error.page = "Page must be greater than or equal to 1";
+  }
+  if(size){
+    if(size < 1 || isNaN(size)) error.size = "Size must be greater than or equal to 1";
+  }
+  if(maxLat){
+    maxLat = parseFloat(maxLat);
+    if(maxLat < minLat || maxLat < -90 || maxLat > 90 || isNaN(maxLat)) error.maxLat = "Maximum latitude is invalid";
+    else where.lat = {
+      [Op.lte]: maxLat
+    };
+  }
+  if(minLat){
+    if(minLat > maxLat || minLat < -90 || minLat > 90 || isNaN(minLat)) error.minLat = "Minimum latitude is invalid";
+    else where.lat = {
+      [Op.gte]: minLat
+    };
+  }
+  if(maxLng){
+    if(maxLng < minLng || maxLng < -180 || maxLng > 180 || isNaN(maxLng)) error.maxLng = "Minimum longitude is invalid";
+    else where.lng = {
+      [Op.lte]: maxLng
+    };
+  }
+  if(minLng){
+    if(minLng > maxLng || minLng < -180 || minLng > 180 || isNaN(minLng)) error.minLng = "Maximum longitude is invalid";
+    else where.lng = {
+      [Op.gte]: minLng
+    };
+  }
+  if(minPrice){
+    if(minPrice < 0 || isNaN(minPrice)) error.minPrice = "Minimum price must be greater than or equal to 0";
+    else where.price = {
+      [Op.gte]: minPrice
+    };
+  }
+  if(maxPrice){
+    if(maxPrice < 0 || isNaN(maxPrice)) error.maxPrice = "Maximum price must be greater than or equal to 0"
+    else where.price = {
+      [Op.lte]: maxPrice
+    };
+  }
+
+  if(Object.keys(error).length) {
+    const errors = {};
+    if(error.page) errors.page = error.page;
+    if(error.size) errors.size = error.size;
+    if(error.maxLat) errors.maxLat = error.maxLat;
+    if(error.minLat) errors.minLat = error.minLat;
+    if(error.minLng) errors.minLng = error.minLng;
+    if(error.maxLng) errors.maxLng = error.maxLng;
+    if(error.minPrice) errors.minPrice = error.minPrice;
+    if(error.maxPrice) errors.maxPrice = error.maxPrice;
+    return res.status(403).json({
+      message: "Bad Request",
+      errors
+    });
+  }
+
+  const limit = size;
+  const offset = size * (page - 1);
+
   const spots = await Spot.findAll({
+    where,
     include: [
       {
         model: Review,
@@ -456,6 +566,8 @@ router.get("/", async (req, res) => {
       },
     ],
     order: ["id"],
+    limit,
+    offset
   });
 
   let spotsList = [];
@@ -485,7 +597,11 @@ router.get("/", async (req, res) => {
     delete spot.SpotImages;
   });
 
-  const Spots = { ["Spots"]: spotsList };
+  const Spots = {
+    ["Spots"]: spotsList,
+    page: page,
+    size: size
+  };
 
   res.status(200).json(Spots);
 });
