@@ -24,6 +24,23 @@ const doesSpotExist = async (spotIdParam) => {
   else return true;
 };
 
+const doesReviewExist = async (userId, spotId) => {
+  const reviews = await Review.findAll({ where: {spotId: spotId}, attributes: ["userId"] });
+  let reviewsList = [];
+  let userIds = [];
+
+  reviews.forEach((review) => {
+    reviewsList.push(review.toJSON());
+  });
+
+  reviewsList.forEach((review) => {
+    userIds.push(review.userId);
+  });
+
+  if (userIds.includes(userId)) return false;
+  else return true;
+};
+
 const validateSpot = [
   check("address")
     .exists({ checkFalsy: true })
@@ -150,8 +167,7 @@ router.post('/:spotId/reviews', [requireAuth, validateReview], async (req, res) 
   return res.status(404).json({ message: "Spot couldn't be found" });
 
   if(user) {
-    const review = await Review.findAll({where:{userId: user.id}})
-    if (review) return res.status(403).json({ message: "User already has a review for this spot" });
+    if ((await doesReviewExist(user.id, req.params.spotId)) === false) return res.status(403).json({ message: "User already has a review for this spot" });
   }
 
   if(user){
