@@ -150,7 +150,8 @@ router.post('/:spotId/reviews', [requireAuth, validateReview], async (req, res) 
   return res.status(404).json({ message: "Spot couldn't be found" });
 
   if(user) {
-    if ((await doesReviewExist(user.id, req.params.spotId)) === false) return res.status(403).json({ message: "User already has a review for this spot" });
+    const review = await Review.findAll({where:{userId: user.id}})
+    if (review) return res.status(403).json({ message: "User already has a review for this spot" });
   }
 
   if(user){
