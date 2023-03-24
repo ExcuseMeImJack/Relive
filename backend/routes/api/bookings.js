@@ -6,6 +6,48 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
+// Delete a Booking
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+  const {user} = req;
+  const bookingUserId = await Booking.findByPk(req.params.bookingId);
+
+  if(!bookingUserId) return res.status(404).json({ message: "Booking couldn't be found" });
+
+  const spotOwnerId = await Spot.findByPk(bookingUserId.spotId);
+
+  const today = new Date();
+  const currTime = today.getTime();
+  if(currTime > bookingUserId.startDate.getTime()) res.status(403).json({ message: "Bookings that have been started can't be deleted" });
+
+  if(bookingUserId.userId === user.id || spotOwnerId.ownerId === user.id){
+    await bookingUserId.destroy();
+    res.status(200).json({message: "Successfully deleted"})
+  } else {
+    res.status(403).json({ message: "Forbidden" });
+  }
+})
+
+// Edit a Booking
+router.put('/:bookingId', requireAuth, async (req, res) => {
+  const {user} = req;
+  const booking = await Booking.findByPk(req.params.bookingId);
+  if(!booking) return res.status(404).json({ message: "Review couldn't be found" });
+
+  if(booking.userId === user.id) {
+    const {startDate, endDate} = req.body;
+
+    const modifiedBooking = await booking.update({
+      startDate,
+      endDate
+    })
+
+    res.json(modifiedBooking);
+  } else {
+    res.status(403).json({ message: "Forbidden" });
+  }
+
+});
+
 // Get all of the Current User's Bookings
 router.get('/current', requireAuth, async(req, res) => {
   const {user} = req;

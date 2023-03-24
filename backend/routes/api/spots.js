@@ -137,6 +137,8 @@ router.post('/:spotId/bookings', [requireAuth], async (req, res) => {
 
     // So basically, any dates you get from the user or from your database, call toDateString on each of them, turning the resulting strings back into new Date() 's, then getTime on each of them, and you can compare those values to your heart's content.
     res.json(newBooking)
+  } else {
+    res.status(403).json({ message: "You cannot book your own Spot" });
   }
 })
 
