@@ -58,6 +58,71 @@ const validateReview = [
   handleValidationErrors
 ]
 
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', [requireAuth], async (req, res) => {
+  const {user} = req;
+
+  const spot = await Spot.findByPk(req.params.spotId);
+  const bookings = await Booking.findAll({where:{spotId: req.params.spotId}});
+  const errors = {};
+
+  if(!spot) return res.status(404).json({ message: "Spot couldn't be found" });
+
+  if(spot.ownerId !== user.id){
+
+    let {startDate, endDate} = req.body;
+
+    bookings.forEach(booking => {
+      const bookingStartDate = booking.startDate;
+      const bookingEndDate = booking.endDate;
+      const newStartDate = new Date(startDate);
+      const newEndDate = new Date(endDate);
+      const bookingStartTime = bookingStartDate.getTime();
+      const bookingEndTime = bookingEndDate.getTime();
+      const startTime = newStartDate.getTime();
+      const endTime = newEndDate.getTime();
+
+      if (endTime <= startTime) {
+        return res.status(400).json({
+            message: "Bad Request",
+            errors: {
+                endDate: "endDate cannot be on or before startDate"
+            }
+        });
+      }
+
+      if (startTime >= bookingStartTime && startTime <= bookingEndTime) errors.startDate = "Start date conflicts with an existing booking"
+
+      if (endTime >= bookingStartTime && endTime <= bookingEndTime) errors.endDate = "End date conflicts with an existing booking"
+
+    });
+
+    if(Object.keys(errors).length) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        errors
+      });
+    }
+
+    const intSpotId = parseInt(req.params.spotId);
+
+    const newBooking = await Booking.build({
+      spotId: intSpotId,
+      userId: user.id,
+      startDate,
+      endDate
+    })
+
+    newBooking.createdAt = newBooking.createdAt;
+    newBooking.updatedAt = newBooking.updatedAt;
+
+    await newBooking.save();
+
+    // So basically, any dates you get from the user or from your database, call toDateString on each of them, turning the resulting strings back into new Date() 's, then getTime on each of them, and you can compare those values to your heart's content.
+    res.json(newBooking)
+  }
+})
+
 // Get all Bookings for a Spot based on the Spot's id
 // If I defer, it is adam's fault
 router.get('/:spotId/bookings', [requireAuth], async (req, res) =>{
