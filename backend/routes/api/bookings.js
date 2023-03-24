@@ -30,11 +30,47 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 // Edit a Booking
 router.put('/:bookingId', requireAuth, async (req, res) => {
   const {user} = req;
+  const {startDate, endDate} = req.body;
+  const errors = {};
+
   const booking = await Booking.findByPk(req.params.bookingId);
+
   if(!booking) return res.status(404).json({ message: "Review couldn't be found" });
 
+  const date = new Date();
+  const currTime = date.getTime();
+  if(currTime > booking.startDate.getTime()) return res.status(403).json({ message: "Past bookings can't be modified" });
+
+  const bookingStartDate = booking.startDate;
+  const bookingEndDate = booking.endDate;
+  const newStartDate = new Date(startDate);
+  const newEndDate = new Date(endDate);
+  const bookingStartTime = bookingStartDate.getTime();
+  const bookingEndTime = bookingEndDate.getTime();
+  const startTime = newStartDate.getTime();
+  const endTime = newEndDate.getTime();
+
+  if (endTime <= startTime) {
+    return res.status(400).json({
+        message: "Bad Request",
+        errors: {
+            endDate: "endDate cannot be on or before startDate"
+        }
+    });
+  }
+
+  if (startTime >= bookingStartTime && startTime <= bookingEndTime) errors.startDate = "Start date conflicts with an existing booking"
+
+  if (endTime >= bookingStartTime && endTime <= bookingEndTime) errors.endDate = "End date conflicts with an existing booking"
+
+  if(Object.keys(errors).length) {
+    return res.status(403).json({
+      message: "Sorry, this spot is already booked for the specified dates",
+      errors
+    });
+  }
+
   if(booking.userId === user.id) {
-    const {startDate, endDate} = req.body;
 
     const modifiedBooking = await booking.update({
       startDate,
