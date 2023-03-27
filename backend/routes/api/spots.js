@@ -492,10 +492,10 @@ router.get("/", async (req, res) => {
   minPrice = parseFloat(minPrice);
   maxPrice = parseFloat(maxPrice);
 
-  if(page){
+  if(page || page === 0){
     if(page < 1 || isNaN(page)) error.page = "Page must be greater than or equal to 1";
   }
-  if(size){
+  if(size || size === 0){
     if(size < 1 || isNaN(size)) error.size = "Size must be greater than or equal to 1";
   }
   if(maxLat){
