@@ -1,11 +1,11 @@
-import { useDispatch } from "react-redux"
-import { thunkGetSpotById } from "../../store/spots";
-import { useEffect } from "react";
+// import { useDispatch } from "react-redux"
+// import { thunkGetSpotById } from "../../store/spots";
+// import { useEffect } from "react";
 import './spots.css'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const SpotItem = ({spot}) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
 
   const getSpotDetails = () => history.push(`/spots/${spot.id}`);
