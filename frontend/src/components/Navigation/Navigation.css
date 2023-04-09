@@ -3,6 +3,57 @@
 }
 
 .navBar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: 'left middle right';
+  width: 100%;
+  height: 70px;
+  align-items: center;
+  border-bottom: 2px #CCCCCC solid;
+
+}
+
+.profile-menu {
   display: flex;
-  justify-content: space-between;
+  padding: 5px 10px 5px 10px;
+  gap: 10px;
+  align-items: center;
+  grid-area: right;
+}
+
+.profile-menu-button {
+  border: 1px solid #CCCCCC;
+  border-radius: 20px;
+  background: none;
+  font-size: 18px;
+  color: #999999;
+}
+
+
+.profile-circle {
+  font-size: 24px;
+}
+
+.changeCursor {
+  cursor: pointer;
+}
+
+.nav-left {
+  grid-area: left;
+  padding-left: 20px;
+}
+
+.nav-right {
+  grid-area: right;
+  padding-right: 20px;
+}
+
+.navLogo {
+  width: 100px;
+  height: 35px;
+}
+
+.navIcon {
+  width: 45px;
+  height: 45px;
 }

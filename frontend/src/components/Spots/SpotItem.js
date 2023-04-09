@@ -12,7 +12,7 @@ const SpotItem = ({spot}) => {
 
   return (
     <div title={spot.name} className="spot-card" onClick={getSpotDetails} >
-      <div className="spot-image-container">
+      <div className="spot-image-container changeCursor">
         <img className="spot-image" src={spot.previewImage} alt={spot.name}/>
       </div>
       <div>
