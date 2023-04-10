@@ -59,6 +59,12 @@ h3 {
   cursor: pointer;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (min-width: 1025px){
   .landing-container {
     display: grid;
@@ -78,7 +84,7 @@ h3 {
   }
 }
 
-@media screen and (max-width: 511px){
+@media screen and (max-width: 510px){
   .spot-image {
     height: 18em;
   }

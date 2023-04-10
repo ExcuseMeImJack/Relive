@@ -10,6 +10,8 @@ const SpotItem = ({spot}) => {
 
   const getSpotDetails = () => history.push(`/spots/${spot.id}`);
 
+  if(!spot.previewImage) return (<p className='loading'>Loading...</p>);
+
   return (
     <div title={spot.name} className="spot-card" onClick={getSpotDetails} >
       <div className="spot-image-container changeCursor">
@@ -20,7 +22,7 @@ const SpotItem = ({spot}) => {
           <p>{spot.city}, {spot.state}</p>
           <div className="spot-card-rating">
             <i className="fa-solid fa-star"></i>
-            <p>{spot.avgRating === 0 ? 'New' : spot.avgRating}</p>
+            <p>{spot.avgRating === 0 ? 'New' : (spot.avgRating % 1 === 0 ? (spot.avgRating + '.0'): spot.avgRating)}</p>
           </div>
         </div>
         <p className="spot-card-bottom">${spot.price} night</p>

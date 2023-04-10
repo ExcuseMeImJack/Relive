@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import { thunkGetSpotById } from "../../store/spots";
 import './spots.css'
+import Reviews from "../Reviews/index";
 
 const SpotDetails = () => {
   const {spotId} = useParams();
@@ -19,8 +20,9 @@ const SpotDetails = () => {
   const spots = useSelector(state => Object.values(state.spots));
   const spot = spots.find(spot => spot.id === parseInt(spotId));
 
+  const currUser = useSelector(state => state.session.user)
+
   if(!spot) return null;
-  console.log(spot)
 
   return (
     <div className="getSpotDetails">
@@ -29,9 +31,9 @@ const SpotDetails = () => {
         <div className="images">
           {spot.SpotImages?.map(spotImg => (
             spotImg.preview ?
-            <div className="previewImage"><img src={spotImg.url} alt="preview img" /></div>
+            <div className="previewImage" key={spotImg.id}><img src={spotImg.url} alt="preview img" /></div>
             :
-            <div className="spotImages"><img src={spotImg.url} alt="not preview img" /></div>
+            <div className="spotImages" key={spotImg.id}><img src={spotImg.url} alt="not preview img" /></div>
           ))}
         </div>
       <div>
@@ -42,18 +44,25 @@ const SpotDetails = () => {
         <div className="book-spot">
           <h3>${spot.price} night</h3>
           <i className="fa-solid fa-star"></i>
-          <h3>{spot.avgStarRating === 0 ? 'New' : spot.avgStarRating}</h3>
-          <h3>{spot.numReviews} reviews</h3>
+          <h3>{spot.avgStarRating === 0 ? 'New' : (spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0'): spot.avgStarRating)}</h3>
+          <h3>{spot.numReviews === 0 ? null : spot.numReviews === 1 ? spot.numReviews + ' review' : spot.numReviews + ' reviews' } </h3>
           <button onClick={handleBooking}>Reserve</button>
         </div>
       </div>
       <div>
         <i className="fa-solid fa-star"></i>
-        <h3>{spot.avgStarRating === 0 ? 'New' : spot.avgStarRating}</h3>
-        <h3>{spot.numReviews} reviews</h3>
+        <h3>{spot.avgStarRating === 0 ? 'New' : (spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0'): spot.avgStarRating)}</h3>
+        <h3>{spot.numReviews === 0 ? null : spot.numReviews === 1 ? ' · ' + spot.numReviews + ' review' : ' · ' + spot.numReviews + ' reviews' } </h3>
+        {currUser &&
+          <div>
+            <button>Post Your Review</button>
+          </div>}
+        {!spot.numReviews &&
+          <div>
+            <p>Be the first to post a review!</p>
+          </div>}
         <div className="reviews">
-          {/* IMPLEMENT GET REVIEWS OF SPOT ID */}
-          <h3>REVIEWS COMING SOON!</h3>
+          <Reviews spotId={spotId}/>
         </div>
       </div>
     </div>
