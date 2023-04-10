@@ -2,6 +2,10 @@
   display: none
 }
 
+.shown {
+  border: 1px solid;
+}
+
 .navBar {
   display: grid;
   grid-template-columns: auto 1fr auto;

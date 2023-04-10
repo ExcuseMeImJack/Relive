@@ -5,7 +5,6 @@ import { thunkGetReviewBySpotId } from "../../store/reviews";
 const Reviews = ({spotId}) => {
   const dispatch = useDispatch();
   const reviews = useSelector(state => Object.values(state.reviews));
-  console.log(reviews)
 
   useEffect(() => {
     dispatch(thunkGetReviewBySpotId(spotId))
@@ -13,6 +12,8 @@ const Reviews = ({spotId}) => {
 
   const formatMonth = (reviewCreationDate) => {
     let reviewMonth;
+    // [2023-04-08T16:44:02.000Z]
+    // [2023, 04, 08]
     const date = reviewCreationDate.split('T')[0].split('-');
     const month = date[1];
     const year = date[0];
@@ -40,6 +41,22 @@ const Reviews = ({spotId}) => {
 
     return `${reviewMonth} ${year}`
   }
+
+  reviews.sort((a, b) => {
+
+    const createdAtA = new Date(a.createdAt).getTime();
+    const createdAtB = new Date(b.createdAt).getTime();
+
+    if (createdAtA < createdAtB) {
+      return -1;
+    }
+    if (createdAtA > createdAtB) {
+      return 1;
+    }
+    return 0;
+  })
+
+  console.log('SORTED REVIEWS?: ', reviews);
 
   if(Object.keys(reviews).length > 0) {
     // console.log('RENDERING ALL REVIEWS FOR SPOT :', spotId);
