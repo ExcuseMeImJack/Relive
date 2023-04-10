@@ -13,6 +13,8 @@ const Reviews = ({spotId}) => {
 
   const formatMonth = (reviewCreationDate) => {
     let reviewMonth;
+    // [2023-04-08, T16:44:02.000Z]
+    // [2023, 04, 08]
     const date = reviewCreationDate.split('T')[0].split('-');
     const month = date[1];
     const year = date[0];

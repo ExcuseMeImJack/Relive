@@ -1,6 +1,7 @@
 // frontend/src/components/Navigation/OpenModalMenuItem.js
 import React from 'react';
 import { useModal } from '../../context/Modal';
+import { Link } from 'react-router-dom';
 
 function OpenModalMenuItem({
   modalComponent, // component to render inside the modal
@@ -17,7 +18,7 @@ function OpenModalMenuItem({
   };
 
   return (
-    <li onClick={onClick}>{itemText}</li>
+    <p onClick={onClick}>{itemText}</p>
   );
 }
 
