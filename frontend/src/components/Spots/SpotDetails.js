@@ -20,6 +20,8 @@ const SpotDetails = () => {
   const spots = useSelector(state => Object.values(state.spots));
   const spot = spots.find(spot => spot.id === parseInt(spotId));
 
+  const currUser = useSelector(state => state.session.user)
+
   if(!spot) return null;
 
   return (
@@ -51,6 +53,14 @@ const SpotDetails = () => {
         <i className="fa-solid fa-star"></i>
         <h3>{spot.avgStarRating === 0 ? 'New' : (spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0'): spot.avgStarRating)}</h3>
         <h3>{spot.numReviews === 0 ? null : spot.numReviews === 1 ? ' · ' + spot.numReviews + ' review' : ' · ' + spot.numReviews + ' reviews' } </h3>
+        {currUser &&
+          <div>
+            <button>Post Your Review</button>
+          </div>}
+        {!spot.numReviews &&
+          <div>
+            <p>Be the first to post a review!</p>
+          </div>}
         <div className="reviews">
           <Reviews spotId={spotId}/>
         </div>
