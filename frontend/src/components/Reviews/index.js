@@ -12,8 +12,34 @@ const Reviews = ({spotId}) => {
   }, [dispatch, spotId]);
 
   const formatMonth = (reviewCreationDate) => {
-    const creationDate = '';
-    console.log(reviewCreationDate);
+    let reviewMonth;
+    const date = reviewCreationDate.split('T')[0].split('-');
+    const month = date[1];
+    const year = date[0];
+
+    const months = {
+      '01': "January",
+      '02': "February",
+      '03': "March",
+      '04': "April",
+      '05': "May",
+      '06': "June",
+      '07': "July",
+      '08': "August",
+      '09': "September",
+      '10': "October",
+      '11': "November",
+      '12': "December"
+    };
+
+    for(let monthNum in months){
+      if(month === monthNum) {
+        reviewMonth = months[monthNum];
+      }
+    }
+
+    return `${reviewMonth} ${year}`
+
   }
 
   if(Object.keys(reviews).length > 0) {
@@ -24,6 +50,7 @@ const Reviews = ({spotId}) => {
         <div className="review" key={review.id}>
           <h4>{review.User.firstName}</h4>
           <h5>{formatMonth(review.createdAt)}</h5>
+          <p>{review.review}</p>
         </div>
         )}
       </div>
