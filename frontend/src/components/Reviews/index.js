@@ -39,7 +39,6 @@ const Reviews = ({spotId}) => {
     }
 
     return `${reviewMonth} ${year}`
-
   }
 
   if(Object.keys(reviews).length > 0) {
