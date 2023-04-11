@@ -20,6 +20,7 @@ const SpotCreationForm = () => {
   const [spotImage3, setSpotImage3] = useState('');
   const [spotImage4, setSpotImage4] = useState('');
   const [spotImages, setSpotImages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
 
 
@@ -82,32 +83,33 @@ const SpotCreationForm = () => {
 
   }, [country, address, city, state, description, spotName, price, previewImage, spotImage1, spotImage2, spotImage3, spotImage4])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});
-    const newSpotInfo = {
-      address,
-      city,
-      state,
-      country,
-      name: spotName,
-      lat: 0,
-      lng: 0,
-      description,
-      price
-    }
-    const newSpot = dispatch(thunkCreateSpot(newSpotInfo))
-    const spot = newSpot;
+    setIsSubmitted(true);
+    if(Object.values(errors).length < 1) {
+      const newSpotInfo = {
+        address,
+        city,
+        state,
+        country,
+        name: spotName,
+        lat: 0,
+        lng: 0,
+        description,
+        price
+      }
+      const newSpot = await dispatch(thunkCreateSpot(newSpotInfo))
+      const spot = newSpot;
 
-    for(let key in spotImages){
-      dispatch(thunkCreateSpotImage(spot.id, spotImages[key]))
+      for(let key in spotImages){
+        await dispatch(thunkCreateSpotImage(spot.id, spotImages[key]))
+      }
+      if(spot.errors){
+        setErrors(spot.errors)
+      } else {
+        history.push(`/spots/${spot.id}`)
+      }
     }
-    if(spot.errors){
-      setErrors(spot.errors)
-    } else {
-      history.push(`/spots/${spot.id}`)
-    }
-
   };
 
   return (
@@ -121,23 +123,23 @@ const SpotCreationForm = () => {
 
           <div className="country">
             <label className="above"> Country </label>  <br />
-            {errors.country && <p className="errors">{errors.country}</p>}
-            <input className="below" type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
+            {errors.country && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.country}</p>}
+            <input className='below' type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
           </div>
 
           <div className="address">
             <label className="above"> Street Address </label>  <br />
-            {errors.address && <p className="errors">{errors.address}</p>}
+            {errors.address && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.address}</p>}
             <input className="below" type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
 
           <div className="city-state">
             <label className="above"> City </label> <br />
-            {errors.city && <p className="errors">{errors.city}</p>}
+            {errors.city && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.city}</p>}
             <input className="below" type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} /> <br />
 
             <label className="above"> State </label>   <br />
-            {errors.state && <p className="errors">{errors.state}</p>}
+            {errors.state && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.state}</p>}
             <input className="below" type="text" placeholder="STATE" value={state} onChange={(e) => setState(e.target.value)} />
           </div>
 
@@ -148,8 +150,8 @@ const SpotCreationForm = () => {
           <h3>Describe your place to guests</h3>
           <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
           <div className="description">
-            <textarea onChange={(e) =>setDescription(e.target.value)} value={description}>Description</textarea>
-            {errors.description && <p className="errors">{errors.description}</p>}
+            <textarea onChange={(e) =>setDescription(e.target.value)} value={description} placeholder="Description" />
+            {errors.description && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.description}</p>}
           </div>
 
         </div>
@@ -158,7 +160,7 @@ const SpotCreationForm = () => {
           <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
           <div className="title">
             <input className="below" type="text" placeholder="Name of your spot" value={spotName} onChange={(e) => setSpotName(e.target.value)} />
-            {errors.spotName && <p className="errors">{errors.spotName}</p>}
+            {errors.spotName && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotName}</p>}
           </div>
 
         </div>
@@ -168,7 +170,7 @@ const SpotCreationForm = () => {
           <div className="price">
             <h4>$</h4>
             <input className="below" type="text" placeholder="Price per night (USD)" value={price} onChange={(e) => setPrice(e.target.value)} />
-            {errors.price && <p className="errors">{errors.price}</p>}
+            {errors.price && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.price}</p>}
           </div>
         </div>
         <div className="spot-creation-photos">
@@ -176,21 +178,21 @@ const SpotCreationForm = () => {
           <p>Submit a link to at least one photo to publish your spot.</p>
           <div className="preview-image">
             <input className="below" type="text" placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
-            {errors.previewImage && <p className="errors">{errors.previewImage}</p>}
+            {errors.previewImage && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.previewImage}</p>}
           </div>
           <div className="spot-images">
             <input className="below" type="text" placeholder="Image URL" value={spotImage1} onChange={(e) => setSpotImage1(e.target.value)} />
-            {errors.spotImage1 && <p className="errors">{errors.spotImage1}</p>} <br />
+            {errors.spotImage1 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage1}</p>} <br />
             <input className="below" type="text" placeholder="Image URL" value={spotImage2} onChange={(e) => setSpotImage2(e.target.value)} />
-            {errors.spotImage2 && <p className="errors">{errors.spotImage2}</p>} <br />
+            {errors.spotImage2 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage2}</p>} <br />
             <input className="below" type="text" placeholder="Image URL" value={spotImage3} onChange={(e) => setSpotImage3(e.target.value)} />
-            {errors.spotImage3 && <p className="errors">{errors.spotImage3}</p>} <br />
+            {errors.spotImage3 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage3}</p>} <br />
             <input className="below" type="text" placeholder="Image URL" value={spotImage4} onChange={(e) => setSpotImage4(e.target.value)} />
-            {errors.spotImage4 && <p className="errors">{errors.spotImage4}</p>}
+            {errors.spotImage4 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage4}</p>}
           </div>
         </div>
         <div className="create-spot-button-div">
-        <button className="create-spot-button-form" type="submit" disabled={Object.values(errors).length > 0}>Create Spot</button>
+        <button className="create-spot-button-form" type="submit">Create Spot</button>
       </div>
       </form>
     </div>

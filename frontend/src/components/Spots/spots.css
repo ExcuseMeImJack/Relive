@@ -85,6 +85,16 @@ h3 {
 
 } */
 
+
+
+.errors-shown {
+  color: red;
+}
+
+.errors-hidden {
+  display: none;
+}
+
 @media screen and (min-width: 1025px){
   .landing-container {
     display: grid;
@@ -100,7 +110,7 @@ h3 {
 
 @media screen and (min-width: 1200px){
   .spot-image {
-    height: 18em;
+    height: 25em;
   }
 }
 
