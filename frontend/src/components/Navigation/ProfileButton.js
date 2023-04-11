@@ -5,7 +5,6 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
-import { Link } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -52,13 +51,15 @@ function ProfileButton({ user }) {
       <div className={ulClassName} ref={ulRef}>
         {user ? (
           <div>
-            <div>
-              <p>Hello, {user.firstName}</p>
-              <p>{user.email}</p>
+            <div className="divider">
+              <p className="text">Hello, {user.firstName}</p>
+              <p className="text">{user.email}</p>
             </div>
-              <Link>Manage Spots</Link>
-            <div>
-              <button onClick={logout}>Log Out</button>
+            <div className="divider">
+              <button className="manage-spots-button">Manage Spots</button>
+            </div>
+            <div className="logoutButtonDiv">
+              <button className="el-button" onClick={logout}>Log Out</button>
             </div>
           </div>
         ) : (

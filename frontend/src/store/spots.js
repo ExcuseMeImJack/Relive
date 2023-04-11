@@ -5,6 +5,7 @@ export const GET_ALL_SPOTS = "spots/GET_ALL_SPOTS";
 export const GET_ONE_SPOT = "spots/GET_ONE_SPOT";
 export const UPDATE_SPOT = "spots/UPDATE_SPOT";
 export const DELETE_SPOT = "spots/DELETE_SPOT";
+export const CREATE_SPOT_IMAGE = "spots/CREATE_SPOT_IMAGE";
 
 // Action Creators
 export const createSpotAction = (newSpot) => ({
@@ -32,6 +33,10 @@ export const deleteSpotAction = (spotId) => ({
   spotId
 });
 
+export const createSpotImageAction = (spotImage) => ({
+  type: CREATE_SPOT_IMAGE,
+  spotImage
+})
 
 
 // Thunk Action Creators
@@ -109,7 +114,24 @@ export const thunkDeleteSpot = (spotId) => async(dispatch) => {
   }
 }
 
+export const thunkCreateSpotImage = (spotId, spotImage) => async(dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(spotImage)
+  });
 
+  if(res.ok) {
+    const newSpotImage = await res.json();
+    dispatch(createSpotImageAction(spotImage))
+    return newSpotImage;
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+}
 
 // Reducer
 const spotsReducer = (state = {}, action) => {
