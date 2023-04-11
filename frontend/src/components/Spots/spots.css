@@ -6,6 +6,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
 }
 
+button {
+  font-family: 'Poppins', sans-serif;
+}
+
 .spot-card {
   display: flex;
   border: 1px white solid;
@@ -72,6 +76,14 @@ h3 {
   justify-content: center;
   align-items: center;
 }
+
+/* .create-spot-button-form{
+
+}
+
+.create-spot-button-div{
+
+} */
 
 @media screen and (min-width: 1025px){
   .landing-container {

@@ -13,7 +13,6 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [validationErrors, setValidationErrors] = useState({});
   const { closeModal } = useModal();
 
   useEffect(() => {
@@ -23,7 +22,7 @@ function SignupFormModal() {
     if(email.trim().length < 1) err.email = 'Email must not be empty.'
     if(firstName.trim().length < 1) err.firstName = 'First Name must not be empty.'
     if(lastName.trim().length < 1) err.lastName = 'Last Name must not be empty.'
-    setValidationErrors(err);
+    setErrors(err);
   }, [username, password, email, firstName, lastName])
 
   const handleSubmit = (e) => {
@@ -118,7 +117,7 @@ function SignupFormModal() {
         {errors.confirmPassword && (
           <p>{errors.confirmPassword}</p>
         )}
-        <button type="submit" disabled={Object.values(validationErrors).length > 0 || Object.values(errors).length > 0}>Sign Up</button>
+        <button type="submit" disabled={Object.values(errors).length > 0}>Sign Up</button>
       </form>
     </>
   );
