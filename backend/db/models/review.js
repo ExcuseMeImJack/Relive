@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     },
     review: {
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     },
     stars: {
       type: DataTypes.INTEGER

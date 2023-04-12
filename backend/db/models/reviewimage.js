@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     },
     url: {
-      type: DataTypes.STRING
+      type: DataTypes.TEXT
     }
   }, {
     sequelize,

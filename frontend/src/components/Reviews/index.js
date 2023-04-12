@@ -47,16 +47,14 @@ const Reviews = ({spotId}) => {
     const createdAtA = new Date(a.createdAt).getTime();
     const createdAtB = new Date(b.createdAt).getTime();
 
-    if (createdAtA < createdAtB) {
+    if (createdAtA > createdAtB) {
       return -1;
     }
-    if (createdAtA > createdAtB) {
+    if (createdAtA < createdAtB) {
       return 1;
     }
     return 0;
   })
-
-  console.log('SORTED REVIEWS?: ', reviews);
 
   if(Object.keys(reviews).length > 0) {
     // console.log('RENDERING ALL REVIEWS FOR SPOT :', spotId);

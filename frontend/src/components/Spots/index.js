@@ -15,7 +15,6 @@ const Spots = () => {
   }, [dispatch]);
 
   if(Object.keys(spots).length > 0){
-    console.log('RENDERING ALL SPOTS')
     return (
       <div className='landing-container'>
         {spots.map(spot => <SpotItem spot={spot} key={spot.id}/>)}
