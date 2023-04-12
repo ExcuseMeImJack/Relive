@@ -228,7 +228,7 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         spotId: 7,
-        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-50944616/original/8e9a8428-aa1f-4685-b23e-b8b829cf978a.jpeg0',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-50944616/original/8e9a8428-aa1f-4685-b23e-b8b829cf978a.jpeg',
         preview: false
       }
     ], {});

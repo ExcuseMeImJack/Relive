@@ -85,19 +85,19 @@ export const thunkGetSpotById = (spotId) => async(dispatch) => {
   }
 }
 
-export const thunkUpdateSpot = (spot) => async(dispatch) => {
-  const res = await csrfFetch(`/api/spots/${spot.id}`, {
+export const thunkUpdateSpot = (spotId, updatedSpot) => async(dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(spot)
+    body: JSON.stringify(updatedSpot)
   });
 
   if(res.ok) {
-    const updatedSpot = await res.json();
-    dispatch(updateSpotAction(updatedSpot));
-    return updatedSpot;
+    const confirmedUpdatedSpot = await res.json();
+    dispatch(updateSpotAction(confirmedUpdatedSpot));
+    return confirmedUpdatedSpot;
   } else {
     const errors = await res.json();
     return errors;
@@ -108,9 +108,11 @@ export const thunkDeleteSpot = (spotId) => async(dispatch) => {
   const res = await csrfFetch(`/api/spots/${spotId}`, {
     method: "DELETE"
   });
-
   if(res.ok) {
     dispatch(deleteSpotAction(spotId));
+  } else {
+    const errors = await res.json();
+    return errors;
   }
 }
 
@@ -162,6 +164,7 @@ const spotsReducer = (state = {}, action) => {
     // DELETE SPOT
     case DELETE_SPOT: {
       const modState = {...state};
+      console.log(modState)
       delete modState[action.spotId];
       return modState;
     }

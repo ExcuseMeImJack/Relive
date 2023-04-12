@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router"
-import { thunkCreateSpot, thunkCreateSpotImage } from "../../store/spots";
+import { thunkCreateSpot, thunkCreateSpotImage, thunkUpdateSpot } from "../../store/spots";
 
-const SpotCreationForm = () => {
+const SpotForm = ({spot, formType}) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [country, setCountry] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [description, setDescription] = useState('');
-  const [spotName, setSpotName] = useState('');
-  const [price,setPrice] = useState('');
+  const [country, setCountry] = useState(spot.country);
+  const [address, setAddress] = useState(spot.address);
+  const [city, setCity] = useState(spot.city);
+  const [state, setState] = useState(spot.state);
+  const [description, setDescription] = useState(spot.description);
+  const [spotName, setSpotName] = useState(spot.name);
+  const [price,setPrice] = useState(spot.price);
+
   const [previewImage, setPreviewImage] = useState('');
   const [spotImage1, setSpotImage1] = useState('');
   const [spotImage2, setSpotImage2] = useState('');
@@ -32,8 +33,10 @@ const SpotCreationForm = () => {
     if(state.trim().length < 1) err.state = 'State is required';
     if(description.length < 30) err.description = 'Description needs a minimum of 30 characters';
     if(spotName.trim().length < 1) err.spotName = 'Name is required';
-    if(price.trim().length < 1) err.price = 'Price is required';
-    if(previewImage.trim().length < 1) err.previewImage = 'Preview Image is required';
+    if(price.length < 1) err.price = 'Price is required';
+    if(formType === 'create'){
+      if(previewImage.trim().length < 1) err.previewImage = 'Preview Image is required';
+    }
 
     const validUrlFileTypes = ['png', 'jpg', 'jpeg'];
     const images = {};
@@ -96,19 +99,33 @@ const SpotCreationForm = () => {
         lat: 0,
         lng: 0,
         description,
-        price
+        price: parseInt(price)
       }
-      const newSpot = await dispatch(thunkCreateSpot(newSpotInfo))
-      const spot = newSpot;
+      if(formType === 'create'){
+        const newSpot = await dispatch(thunkCreateSpot(newSpotInfo))
+        const newSpotAdded = newSpot;
+        for(let key in spotImages){
+          await dispatch(thunkCreateSpotImage(newSpotAdded.id, spotImages[key]))
+        }
+        if(newSpotAdded.errors){
+          setErrors(newSpotAdded.errors)
+        } else {
+          history.push(`/spots/${newSpotAdded.id}`)
+        }
+      } else if(formType === 'update'){
+        const updatedSpot = await dispatch(thunkUpdateSpot(spot.id, newSpotInfo))
+        const updated = updatedSpot;
+        for(let key in spotImages){
+          await dispatch(thunkCreateSpotImage(updated.id, spotImages[key]))
+        }
+        if(updated.errors){
+          setErrors(updated.errors)
+        } else {
+          history.push(`/spots/${updated.id}`)
+        }
+      }
 
-      for(let key in spotImages){
-        await dispatch(thunkCreateSpotImage(spot.id, spotImages[key]))
-      }
-      if(spot.errors){
-        setErrors(spot.errors)
-      } else {
-        history.push(`/spots/${spot.id}`)
-      }
+
     }
   };
 
@@ -199,4 +216,4 @@ const SpotCreationForm = () => {
   );
 }
 
-export default SpotCreationForm;
+export default SpotForm;

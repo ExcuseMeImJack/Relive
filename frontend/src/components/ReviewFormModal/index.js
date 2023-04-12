@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkCreateReview } from "../../store/reviews";
 import './ReviewForm.css'
@@ -15,7 +15,9 @@ const ReviewFormModal = ({spotId}) => {
   const [errors, setErrors] = useState({});
   const [serverErrors, setServerErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  // const [isFilled, setIsFilled] = useState('empty');
   const {closeModal} = useModal();
+  const currUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     const err ={};
@@ -29,26 +31,36 @@ const ReviewFormModal = ({spotId}) => {
     setIsSubmitted(true);
     if(Object.values(errors).length < 1){
       const newReviewInfo = {
+        User: {
+          firstName: currUser.firstName,
+          lastName: currUser.lastName,
+          id: currUser.id
+        },
         review,
         stars: rating
       }
-      console.log('server error 22323232')
+      console.log('SERVER ERROR BEFORE DISPATCH')
       const newReview = await dispatch(thunkCreateReview(newReviewInfo, spotId))
+      console.log('SERVER ERROR AFTER DISPATCH');
       const r = newReview;
-      console.log(r)
+      console.log('RETURNED FROM SERVER: ', r);
 
       if(r.errors){
         setServerErrors(r.errors)
       } else {
         closeModal();
-        window.location.reload();
+        // history.push(`/spots/${spotId}`)
+        // setIsSuccess(true);
+        setErrors({});
       }
-
       setErrors({});
-      setIsSubmitted(false);
       console.log(serverErrors)
     }
   }
+
+  // const checkIfFilled = () => {
+
+  // }
 
   return (
     <div className="create-review-modal-div">

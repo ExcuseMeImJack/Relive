@@ -6,12 +6,14 @@ import './spots.css'
 import Reviews from "../Reviews/index";
 import ReviewFormModal from "../ReviewFormModal";
 import OpenModalButton from "../OpenModalButton";
+import { thunkGetReviewBySpotId } from "../../store/reviews";
 
 const SpotDetails = () => {
   const {spotId} = useParams();
   const dispatch = useDispatch();
-
   const reviews = useSelector(state => Object.values(state.reviews));
+  const state = useSelector(state => state)
+  console.log(state)
 
   useEffect(() => {
     dispatch(thunkGetSpotById(spotId));
@@ -30,10 +32,9 @@ const SpotDetails = () => {
   let reviewUsers = [];
 
   reviews.forEach(review => {
+    console.log('REVIEW: ', review)
     reviewUsers.push(review.User.id);
   })
-
-  // currUser && (currUser.id !== spot.ownerId || !reviewUsers.includes(currUser.id))
 
   return (
     <div className="getSpotDetails">
@@ -67,13 +68,13 @@ const SpotDetails = () => {
         {currUser && (currUser.id !== spot.ownerId && !reviewUsers.includes(currUser.id)) &&
         <div>
           <OpenModalButton
-            modalComponent={<ReviewFormModal spotId={spotId}/>}
+            modalComponent={<ReviewFormModal spotId={spotId} />}
             buttonText="Post Your Review"
             // add more stuff here if needed
           />
         </div>
         }
-        {currUser && (!spot.numReviews && (currUser.id !== spot.ownerId || !reviewUsers.includes(currUser.id)))  && <p>Be the first to post a review!</p>}
+        {currUser && (!spot.numReviews && (currUser.id !== spot.ownerId && !reviewUsers.includes(currUser.id)))  && <p>Be the first to post a review!</p>}
         <div className="reviews">
           <Reviews spotId={spotId}/>
         </div>

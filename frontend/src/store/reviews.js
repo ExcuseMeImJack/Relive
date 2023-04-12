@@ -75,6 +75,12 @@ const reviewsReducer = (state = {}, action) => {
       return modState;
     }
 
+    case CREATE_REVIEW: {
+      const modState = {...state};
+      modState[action.newReview.id] = action.newReview;
+      return modState;
+    }
+
     default:
       return state;
   }
