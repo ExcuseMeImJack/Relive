@@ -4,10 +4,14 @@ import { useParams } from "react-router-dom"
 import { thunkGetSpotById } from "../../store/spots";
 import './spots.css'
 import Reviews from "../Reviews/index";
+import ReviewFormModal from "../ReviewFormModal";
+import OpenModalButton from "../OpenModalButton";
 
 const SpotDetails = () => {
   const {spotId} = useParams();
   const dispatch = useDispatch();
+
+  const reviews = useSelector(state => Object.values(state.reviews));
 
   useEffect(() => {
     dispatch(thunkGetSpotById(spotId));
@@ -22,6 +26,14 @@ const SpotDetails = () => {
 
   const currUser = useSelector(state => state.session.user)
   if(!spot) return null;
+
+  let reviewUsers = [];
+
+  reviews.forEach(review => {
+    reviewUsers.push(review.User.id);
+  })
+
+  // currUser && (currUser.id !== spot.ownerId || !reviewUsers.includes(currUser.id))
 
   return (
     <div className="getSpotDetails">
@@ -52,12 +64,16 @@ const SpotDetails = () => {
         <i className="fa-solid fa-star"></i>
         <h3>{spot.avgStarRating === 0 ? 'New' : (spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0'): spot.avgStarRating)}</h3>
         <h3>{spot.numReviews === 0 ? null : spot.numReviews === 1 ? ' · ' + spot.numReviews + ' review' : ' · ' + spot.numReviews + ' reviews' } </h3>
-        {currUser && (currUser.id !== spot.ownerId) &&
+        {currUser && (currUser.id !== spot.ownerId && !reviewUsers.includes(currUser.id)) &&
         <div>
-            <button>Post Your Review</button>
+          <OpenModalButton
+            modalComponent={<ReviewFormModal spotId={spotId}/>}
+            buttonText="Post Your Review"
+            // add more stuff here if needed
+          />
         </div>
         }
-        {currUser && (!spot.numReviews && (currUser.id !== spot.ownerId)) && <p>Be the first to post a review!</p>}
+        {currUser && (!spot.numReviews && (currUser.id !== spot.ownerId || !reviewUsers.includes(currUser.id)))  && <p>Be the first to post a review!</p>}
         <div className="reviews">
           <Reviews spotId={spotId}/>
         </div>

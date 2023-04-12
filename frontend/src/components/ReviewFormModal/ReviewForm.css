@@ -1,0 +1,33 @@
+.rating-input {
+  display: flex;
+  margin-right: 4px;
+}
+
+.review-item {
+  display: flex;
+}
+
+.create-review-div{
+  display: flex;
+}
+
+.filled {
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.empty {
+  color: #CCCCCC;
+  outline: none;
+  background: none;
+  border: none;
+}
+
+.errors-shown{
+  color: red;
+}
+
+.errors-hidden{
+  display: none;
+}

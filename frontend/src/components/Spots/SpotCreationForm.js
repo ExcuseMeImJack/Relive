@@ -150,7 +150,7 @@ const SpotCreationForm = () => {
           <h3>Describe your place to guests</h3>
           <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
           <div className="description">
-            <textarea onChange={(e) =>setDescription(e.target.value)} value={description} placeholder="Description" maxLength='524,288'/>
+            <textarea onChange={(e) =>setDescription(e.target.value)} value={description} placeholder="Description" />
             {errors.description && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.description}</p>}
           </div>
 
