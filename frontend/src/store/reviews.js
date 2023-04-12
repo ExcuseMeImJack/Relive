@@ -1,5 +1,4 @@
 import { csrfFetch } from "./csrf";
-import { getSpotByIdAction } from "./spots";
 
 export const CREATE_REVIEW = "reviews/CREATE_REVIEW";
 export const GET_REVIEWS = "reviews/GET_REVIEWS";
