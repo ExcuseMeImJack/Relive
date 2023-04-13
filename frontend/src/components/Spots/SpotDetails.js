@@ -7,6 +7,7 @@ import Reviews from "../Reviews/index";
 import ReviewFormModal from "../ReviewFormModal";
 import OpenModalButton from "../OpenModalButton";
 import { thunkGetReviewBySpotId } from "../../store/reviews";
+import LoadingScreen from "../LoadingScreen";
 
 const SpotDetails = () => {
   const {spotId} = useParams();
@@ -27,7 +28,8 @@ const SpotDetails = () => {
     alert('Feature Coming Soon...')
   }
 
-  if(!spot) return null;
+  if(!spot) return <LoadingScreen/>;
+  if(!spot.SpotImages) return <LoadingScreen/>
 
   let reviewUsers = [];
 
@@ -40,7 +42,7 @@ const SpotDetails = () => {
       <h2>{spot.name}</h2>
       <h3>{spot.city}, {spot.state}, {spot.country}</h3>
         <div className="images">
-          {spot.SpotImages?.map(spotImg => (
+          {spot.SpotImages.map(spotImg => (
             spotImg.preview ?
             <div className="previewImage" key={spotImg.id}><img src={spotImg.url} alt="preview img" /></div>
             :

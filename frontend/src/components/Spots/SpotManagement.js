@@ -17,13 +17,11 @@ const SpotManagement = () => {
     dispatch(thunkGetAllSpots())
   }, [dispatch]);
 
-  if(!currUser) return <h1>You are not logged in!</h1>;
-
   spots.forEach(spot => {
     if (spot.ownerId === currUser.id) currUserSpots.push(spot);
   });
 
-  console.log(currUserSpots)
+
 
 
   return (
