@@ -35,8 +35,6 @@ const SpotDetails = () => {
     reviewUsers.push(review.User.id);
   })
 
-  console.log(spot.numReviews)
-  if(!spot.numReviews) return <p>...Loading</p>;
   return (
     <div className="getSpotDetails">
       <h2>{spot.name}</h2>

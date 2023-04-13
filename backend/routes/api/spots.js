@@ -281,7 +281,6 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     return res.status(404).json({ message: "Spot couldn't be found" });
 
   const { user } = req;
-  console.log(user);
   const spot = await Spot.findByPk(req.params.spotId);
   if (user.id === spot.ownerId) {
     const { url, preview } = req.body;

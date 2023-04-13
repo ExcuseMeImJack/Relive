@@ -165,7 +165,7 @@ const spotsReducer = (state = {}, action) => {
     // DELETE SPOT
     case DELETE_SPOT: {
       const modState = {...state};
-      console.log(modState)
+      // console.log(modState)
       delete modState[action.spotId];
       return modState;
     }
