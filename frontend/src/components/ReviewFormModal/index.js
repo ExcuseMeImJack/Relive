@@ -40,19 +40,21 @@ const ReviewFormModal = ({spotId}) => {
         review,
         stars: rating
       }
-      console.log('SERVER ERROR BEFORE DISPATCH')
+
       const newReview = await dispatch(thunkCreateReview(newReviewInfo, spotId))
-      console.log('SERVER ERROR AFTER DISPATCH');
       const r = newReview;
-      console.log('RETURNED FROM SERVER: ', r);
 
       if(r.errors){
         setServerErrors(r.errors)
       } else {
         closeModal();
-        dispatch(thunkGetReviewBySpotId(spotId))
-        dispatch(thunkGetSpotById(spotId))
-        dispatch(thunkGetAllSpots())
+        await dispatch(thunkGetSpotById(spotId))
+
+        // await dispatch(thunkGetReviewBySpotId(spotId))
+        // console.log('GOT REVIEW')
+
+        // await dispatch(thunkGetAllSpots())
+        // console.log("GOT ALL SPOTS")
         setErrors({});
       }
       setErrors({});
