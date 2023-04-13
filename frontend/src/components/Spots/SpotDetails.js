@@ -6,35 +6,37 @@ import './spots.css'
 import Reviews from "../Reviews/index";
 import ReviewFormModal from "../ReviewFormModal";
 import OpenModalButton from "../OpenModalButton";
+import { thunkGetReviewBySpotId } from "../../store/reviews";
 
 const SpotDetails = () => {
   const {spotId} = useParams();
   const dispatch = useDispatch();
   const reviews = useSelector(state => Object.values(state.reviews));
-  const state = useSelector(state => state)
-  console.log(state)
+  const spots = useSelector(state => Object.values(state.spots));
+  const spot = spots.find(spot => spot.id === parseInt(spotId));
+  const currUser = useSelector(state => state.session.user)
 
   useEffect(() => {
     dispatch(thunkGetSpotById(spotId));
+    dispatch(thunkGetReviewBySpotId(spotId))
   }, [dispatch, spotId]);
+
+
 
   const handleBooking = () => {
     alert('Feature Coming Soon...')
   }
 
-  const spots = useSelector(state => Object.values(state.spots));
-  const spot = spots.find(spot => spot.id === parseInt(spotId));
-
-  const currUser = useSelector(state => state.session.user)
   if(!spot) return null;
 
   let reviewUsers = [];
 
   reviews.forEach(review => {
-    console.log('REVIEW: ', review)
     reviewUsers.push(review.User.id);
   })
 
+  console.log(spot.numReviews)
+  if(!spot.numReviews) return <p>...Loading</p>;
   return (
     <div className="getSpotDetails">
       <h2>{spot.name}</h2>
