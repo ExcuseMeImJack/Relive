@@ -53,13 +53,9 @@ const ReviewFormModal = ({spotId}) => {
         dispatch(thunkGetReviewBySpotId(spotId))
         dispatch(thunkGetSpotById(spotId))
         dispatch(thunkGetAllSpots())
-
-        // history.push(`/spots/${spotId}`)
-        // setIsSuccess(true);
         setErrors({});
       }
       setErrors({});
-      console.log(serverErrors)
     }
   }
 

@@ -60,6 +60,9 @@ export const thunkDeleteReview = (reviewId) => async(dispatch) => {
 
   if(res.ok) {
     dispatch(deleteReviewAction(reviewId));
+  } else {
+    const errors = await res.json();
+    return errors;
   }
 }
 
