@@ -6,7 +6,6 @@ import './spots.css'
 import Reviews from "../Reviews/index";
 import ReviewFormModal from "../ReviewFormModal";
 import OpenModalButton from "../OpenModalButton";
-import { thunkGetReviewBySpotId } from "../../store/reviews";
 
 const SpotDetails = () => {
   const {spotId} = useParams();

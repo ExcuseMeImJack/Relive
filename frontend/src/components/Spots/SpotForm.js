@@ -84,7 +84,7 @@ const SpotForm = ({spot, formType}) => {
     setSpotImages(images);
     setErrors(err);
 
-  }, [country, address, city, state, description, spotName, price, previewImage, spotImage1, spotImage2, spotImage3, spotImage4])
+  }, [country, address, city, state, description, spotName, price, previewImage, spotImage1, spotImage2, spotImage3, spotImage4, formType])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -124,8 +124,6 @@ const SpotForm = ({spot, formType}) => {
           history.push(`/spots/${updated.id}`)
         }
       }
-
-
     }
   };
 
@@ -163,7 +161,6 @@ const SpotForm = ({spot, formType}) => {
         </div>
 
         <div className="spot-creation-description">
-
           <h3>Describe your place to guests</h3>
           <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
           <div className="description">
@@ -190,27 +187,31 @@ const SpotForm = ({spot, formType}) => {
             {errors.price && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.price}</p>}
           </div>
         </div>
-        <div className="spot-creation-photos">
-          <h3>Liven up your spot with photos</h3>
-          <p>Submit a link to at least one photo to publish your spot.</p>
-          <div className="preview-image">
-            <input className="below" type="text" placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
-            {errors.previewImage && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.previewImage}</p>}
-          </div>
-          <div className="spot-images">
-            <input className="below" type="text" placeholder="Image URL" value={spotImage1} onChange={(e) => setSpotImage1(e.target.value)} />
-            {errors.spotImage1 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage1}</p>} <br />
-            <input className="below" type="text" placeholder="Image URL" value={spotImage2} onChange={(e) => setSpotImage2(e.target.value)} />
-            {errors.spotImage2 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage2}</p>} <br />
-            <input className="below" type="text" placeholder="Image URL" value={spotImage3} onChange={(e) => setSpotImage3(e.target.value)} />
-            {errors.spotImage3 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage3}</p>} <br />
-            <input className="below" type="text" placeholder="Image URL" value={spotImage4} onChange={(e) => setSpotImage4(e.target.value)} />
-            {errors.spotImage4 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage4}</p>}
-          </div>
+        {formType === 'create' &&
+          <div className="spot-creation-photos">
+            <h3>Liven up your spot with photos</h3>
+            <p>Submit a link to at least one photo to publish your spot.</p>
+            <div className="preview-image">
+              <input className="below" type="text" placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
+              {errors.previewImage && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.previewImage}</p>}
+            </div>
+            <div className="spot-images">
+              <input className="below" type="text" placeholder="Image URL" value={spotImage1} onChange={(e) => setSpotImage1(e.target.value)} />
+              {errors.spotImage1 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage1}</p>} <br />
+              <input className="below" type="text" placeholder="Image URL" value={spotImage2} onChange={(e) => setSpotImage2(e.target.value)} />
+              {errors.spotImage2 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage2}</p>} <br />
+              <input className="below" type="text" placeholder="Image URL" value={spotImage3} onChange={(e) => setSpotImage3(e.target.value)} />
+              {errors.spotImage3 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage3}</p>} <br />
+              <input className="below" type="text" placeholder="Image URL" value={spotImage4} onChange={(e) => setSpotImage4(e.target.value)} />
+              {errors.spotImage4 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage4}</p>}
+            </div>
         </div>
-        <div className="create-spot-button-div">
-        <button className="create-spot-button-form" type="submit">Create Spot</button>
+        }
+        <div className="create-update-spot-button-div">
+        {formType === 'create' && <button className="create-spot-button-form" type="submit">Create Spot</button>}
+        {formType === 'update' && <button className="update-spot-button-form" type="submit">Update Spot</button>}
       </div>
+
       </form>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useDebugValue, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllSpots } from "../../store/spots";
 import SpotItem from "./SpotItem";
