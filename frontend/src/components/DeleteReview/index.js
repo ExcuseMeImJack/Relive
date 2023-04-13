@@ -8,11 +8,10 @@ const DeleteReview = ({reviewId, spotId}) => {
   const dispatch = useDispatch();
   const {closeModal} = useModal();
 
-  const handleSubmit = () => {
-    dispatch(thunkDeleteReview(reviewId))
-    dispatch(thunkGetReviewBySpotId(spotId))
-    dispatch(thunkGetSpotById(spotId))
-    dispatch(thunkGetAllSpots())
+  const handleSubmit = async () => {
+    await dispatch(thunkDeleteReview(reviewId))
+    await dispatch(thunkGetReviewBySpotId(spotId))
+    await dispatch(thunkGetSpotById(spotId))
     closeModal();
   }
 
