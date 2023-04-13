@@ -11,6 +11,8 @@ const SpotItem = ({spot}) => {
 
   const getSpotDetails = () => history.push(`/spots/${spot.id}`);
 
+  if(!spot.previewImage ) return <LoadingScreen />
+
   return (
     <div title={spot.name} className="spot-card" onClick={getSpotDetails} >
       <div className="spot-image-container changeCursor">
