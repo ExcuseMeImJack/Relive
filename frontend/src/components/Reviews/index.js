@@ -69,7 +69,7 @@ const Reviews = ({spotId}) => {
           <p>{review.review}</p>
           {currUser && (currUser.id === review.User.id) &&
           <OpenModalButton
-            modalComponent={<DeleteReview reviewId={review.id}/>}
+            modalComponent={<DeleteReview reviewId={review.id} spotId={spotId}/>}
             buttonText="Delete"
           />}
         </div>

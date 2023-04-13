@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkCreateReview } from "../../store/reviews";
+import { thunkCreateReview, thunkGetReviewBySpotId } from "../../store/reviews";
 import './ReviewForm.css'
+import { thunkGetAllSpots, thunkGetSpotById } from "../../store/spots";
 // import { useHistory } from "react-router";
 // import spotsReducer from "../../store/spots";
 
@@ -49,6 +50,10 @@ const ReviewFormModal = ({spotId}) => {
         setServerErrors(r.errors)
       } else {
         closeModal();
+        dispatch(thunkGetReviewBySpotId(spotId))
+        dispatch(thunkGetSpotById(spotId))
+        dispatch(thunkGetAllSpots())
+
         // history.push(`/spots/${spotId}`)
         // setIsSuccess(true);
         setErrors({});

@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkDeleteReview } from "../../store/reviews";
+import { thunkDeleteReview, thunkGetReviewBySpotId } from "../../store/reviews";
+import { thunkGetAllSpots, thunkGetSpotById } from "../../store/spots";
 
-const DeleteReview = ({reviewId}) => {
+const DeleteReview = ({reviewId, spotId}) => {
   const dispatch = useDispatch();
   const {closeModal} = useModal();
 
@@ -12,6 +13,9 @@ const DeleteReview = ({reviewId}) => {
       <p>Are you sure you want to delete this review?</p>
       <button onClick={() => {
         dispatch(thunkDeleteReview(reviewId))
+        dispatch(thunkGetReviewBySpotId(spotId))
+        dispatch(thunkGetSpotById(spotId))
+        dispatch(thunkGetAllSpots())
         closeModal();
       }}>Yes (Delete Review)</button>
       <button onClick={closeModal}>No (Keep Review)</button>

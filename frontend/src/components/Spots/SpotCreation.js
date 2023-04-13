@@ -10,7 +10,7 @@ const SpotCreation = () => {
     lat: 0,
     lng: 0,
     description: '',
-    price: 0
+    price: ''
    }
 
    return (
