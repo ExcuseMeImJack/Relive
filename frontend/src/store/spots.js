@@ -33,6 +33,7 @@ export const deleteSpotAction = (spotId) => ({
   spotId
 });
 
+
 export const createSpotImageAction = (spotImage) => ({
   type: CREATE_SPOT_IMAGE,
   spotImage

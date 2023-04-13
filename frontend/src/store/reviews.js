@@ -31,7 +31,9 @@ export const thunkCreateReview = (newReviewInfo, spotId) => async(dispatch) => {
   if(res.ok) {
     const newReview = await res.json();
     dispatch(createReviewAction(newReview));
-    return newReview;
+    const reviews = await dispatch(thunkGetReviewBySpotId(spotId))
+    console.log('REVIEWS ==========> ', reviews)
+    return reviews;
   } else {
     const errors = await res.json();
     return errors;
@@ -75,11 +77,11 @@ const reviewsReducer = (state = {}, action) => {
       return modState;
     }
 
-    case CREATE_REVIEW: {
-      const modState = {...state};
-      modState[action.newReview.id] = action.newReview;
-      return modState;
-    }
+    // case CREATE_REVIEW: {
+    //   const modState = {...state};
+    //   modState[action.newReview.id] = action.newReview;
+    //   return modState;
+    // }
 
     default:
       return state;
