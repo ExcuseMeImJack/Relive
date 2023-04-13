@@ -29,7 +29,7 @@ const SpotManagement = () => {
   return (
    <div className="manage-spots-page">
       <div className="manage-bar">
-        <h2>Manage Your Spots</h2>
+        <h2>Manage Spots</h2>
         {currUserSpots.length === 0 && <button onClick={() => history.push('/spots/new')}>Create a New Spot</button>}
       </div>
       <div className="spots-div">
