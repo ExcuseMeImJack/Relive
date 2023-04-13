@@ -18,8 +18,8 @@ module.exports = {
         email: 'tester1@user.io',
         username: 'Tester-1',
         hashedPassword: bcrypt.hashSync('tester'),
-        firstName: 'Tester',
-        lastName: 'One'
+        firstName: 'John',
+        lastName: 'Smith'
       }
     ], {});
 
@@ -28,8 +28,8 @@ module.exports = {
         email: 'tester2@user.io',
         username: 'Tester-2',
         hashedPassword: bcrypt.hashSync('tester'),
-        firstName: 'Tester',
-        lastName: 'Two'
+        firstName: 'Jane',
+        lastName: 'Doe'
       }
     ], {});
 
@@ -38,8 +38,8 @@ module.exports = {
         email: 'tester3@user.io',
         username: 'Tester-3',
         hashedPassword: bcrypt.hashSync('tester'),
-        firstName: 'Tester',
-        lastName: 'Three'
+        firstName: 'Barney',
+        lastName: 'Willow'
       }
     ], {});
   },

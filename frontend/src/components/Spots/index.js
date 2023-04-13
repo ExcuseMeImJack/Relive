@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { thunkGetAllSpots } from '../../store/spots';
 import SpotItem from './SpotItem';
 import './spots.css'
+import LoadingScreen from '../LoadingScreen';
 
 const Spots = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,8 @@ const Spots = () => {
         {spots.map(spot => <SpotItem spot={spot} key={spot.id}/>)}
       </div>
     );
+  } else {
+    return <LoadingScreen />
   }
 }
 

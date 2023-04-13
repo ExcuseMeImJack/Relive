@@ -13,8 +13,8 @@ function Navigation({ isLoaded }){
   return (
     <nav className='navBar'>
       <div className='nav-left'>
-        <NavLink exact to="/"><img src={icon} alt='logo icon' className='navIcon'/></NavLink>
-        <NavLink exact to="/"><img src={logo} alt='logo' className='navLogo'/></NavLink>
+        <NavLink exact to="/"><img src={icon} className='navIcon'/></NavLink>
+        <NavLink exact to="/"><img src={logo} className='navLogo'/></NavLink>
       </div>
       {sessionUser &&
       <div className='create-spot-div'>

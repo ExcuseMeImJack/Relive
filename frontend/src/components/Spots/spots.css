@@ -85,8 +85,6 @@ h3 {
 
 } */
 
-
-
 .errors-shown {
   color: red;
 }
@@ -100,15 +98,49 @@ h3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
+  .spot-image {
+    height: 25em;
+  }
 }
 
-@media screen and (min-width: 1090px){
+
+@media screen and (min-width: 1025px){
+  .spot-image {
+    height: 13em;
+  }
+}
+
+@media screen and (min-width: 1125px){
+  .spot-image {
+    height: 14em;
+  }
+}
+
+@media screen and (min-width: 1225px){
+  .spot-image {
+    height: 15em;
+  }
+}
+
+@media screen and (min-width: 1325px){
   .spot-image {
     height: 16em;
   }
 }
 
-@media screen and (min-width: 1200px){
+@media screen and (min-width: 1425px){
+  .spot-image {
+    height: 20em;
+  }
+}
+
+@media screen and (min-width: 1500px){
+  .spot-image {
+    height: 20em;
+  }
+}
+
+@media screen and (min-width: 1600px){
   .spot-image {
     height: 25em;
   }
