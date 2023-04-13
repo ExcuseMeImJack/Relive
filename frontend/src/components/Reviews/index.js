@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { thunkGetReviewBySpotId } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton";
+import DeleteReview from "../DeleteReview";
 
 const Reviews = ({spotId}) => {
   const dispatch = useDispatch();
   const reviews = useSelector(state => Object.values(state.reviews));
+  const currUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     dispatch(thunkGetReviewBySpotId(spotId))
@@ -55,7 +58,6 @@ const Reviews = ({spotId}) => {
     }
     return 0;
   })
-
   if(Object.keys(reviews).length > 0) {
     // console.log('RENDERING ALL REVIEWS FOR SPOT :', spotId);
     return (
@@ -65,6 +67,11 @@ const Reviews = ({spotId}) => {
           <h4>{review.User.firstName}</h4>
           <h5>{formatMonth(review.createdAt)}</h5>
           <p>{review.review}</p>
+          {currUser && (currUser.id === review.User.id) &&
+          <OpenModalButton
+            modalComponent={<DeleteReview reviewId={review.id}/>}
+            buttonText="Delete"
+          />}
         </div>
         )}
       </div>

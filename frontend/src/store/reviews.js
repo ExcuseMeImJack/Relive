@@ -1,5 +1,4 @@
 import { csrfFetch } from "./csrf";
-import { getSpotByIdAction } from "./spots";
 
 export const CREATE_REVIEW = "reviews/CREATE_REVIEW";
 export const GET_REVIEWS = "reviews/GET_REVIEWS";
@@ -32,7 +31,9 @@ export const thunkCreateReview = (newReviewInfo, spotId) => async(dispatch) => {
   if(res.ok) {
     const newReview = await res.json();
     dispatch(createReviewAction(newReview));
-    return newReview;
+    const reviews = await dispatch(thunkGetReviewBySpotId(spotId))
+    console.log('REVIEWS ==========> ', reviews)
+    return reviews;
   } else {
     const errors = await res.json();
     return errors;
@@ -75,6 +76,12 @@ const reviewsReducer = (state = {}, action) => {
       delete modState[action.reviewId];
       return modState;
     }
+
+    // case CREATE_REVIEW: {
+    //   const modState = {...state};
+    //   modState[action.newReview.id] = action.newReview;
+    //   return modState;
+    // }
 
     default:
       return state;

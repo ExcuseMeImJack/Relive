@@ -5,9 +5,11 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
+import { useHistory } from "react-router";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -56,7 +58,7 @@ function ProfileButton({ user }) {
               <p className="text">{user.email}</p>
             </div>
             <div className="divider">
-              <button className="manage-spots-button">Manage Spots</button>
+              <button className="manage-spots-button" onClick={() => history.push(`/spots/current`)}>Manage Spots</button>
             </div>
             <div className="logoutButtonDiv">
               <button className="el-button" onClick={logout}>Log Out</button>

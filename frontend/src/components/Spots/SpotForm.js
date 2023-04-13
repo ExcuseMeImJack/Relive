@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router"
-import { thunkCreateSpot, thunkCreateSpotImage } from "../../store/spots";
+import { thunkCreateSpot, thunkCreateSpotImage, thunkUpdateSpot } from "../../store/spots";
 
-const SpotCreationForm = () => {
+const SpotForm = ({spot, formType}) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [country, setCountry] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [description, setDescription] = useState('');
-  const [spotName, setSpotName] = useState('');
-  const [price,setPrice] = useState('');
+  const [country, setCountry] = useState(spot.country);
+  const [address, setAddress] = useState(spot.address);
+  const [city, setCity] = useState(spot.city);
+  const [state, setState] = useState(spot.state);
+  const [description, setDescription] = useState(spot.description);
+  const [spotName, setSpotName] = useState(spot.name);
+  const [price,setPrice] = useState(spot.price);
+
   const [previewImage, setPreviewImage] = useState('');
   const [spotImage1, setSpotImage1] = useState('');
   const [spotImage2, setSpotImage2] = useState('');
@@ -32,8 +33,10 @@ const SpotCreationForm = () => {
     if(state.trim().length < 1) err.state = 'State is required';
     if(description.length < 30) err.description = 'Description needs a minimum of 30 characters';
     if(spotName.trim().length < 1) err.spotName = 'Name is required';
-    if(price.trim().length < 1) err.price = 'Price is required';
-    if(previewImage.trim().length < 1) err.previewImage = 'Preview Image is required';
+    if(price.length < 1) err.price = 'Price is required';
+    if(formType === 'create'){
+      if(previewImage.trim().length < 1) err.previewImage = 'Preview Image is required';
+    }
 
     const validUrlFileTypes = ['png', 'jpg', 'jpeg'];
     const images = {};
@@ -81,7 +84,7 @@ const SpotCreationForm = () => {
     setSpotImages(images);
     setErrors(err);
 
-  }, [country, address, city, state, description, spotName, price, previewImage, spotImage1, spotImage2, spotImage3, spotImage4])
+  }, [country, address, city, state, description, spotName, price, previewImage, spotImage1, spotImage2, spotImage3, spotImage4, formType])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,18 +99,30 @@ const SpotCreationForm = () => {
         lat: 0,
         lng: 0,
         description,
-        price
+        price: parseInt(price)
       }
-      const newSpot = await dispatch(thunkCreateSpot(newSpotInfo))
-      const spot = newSpot;
-
-      for(let key in spotImages){
-        await dispatch(thunkCreateSpotImage(spot.id, spotImages[key]))
-      }
-      if(spot.errors){
-        setErrors(spot.errors)
-      } else {
-        history.push(`/spots/${spot.id}`)
+      if(formType === 'create'){
+        const newSpot = await dispatch(thunkCreateSpot(newSpotInfo))
+        const newSpotAdded = newSpot;
+        for(let key in spotImages){
+          await dispatch(thunkCreateSpotImage(newSpotAdded.id, spotImages[key]))
+        }
+        if(newSpotAdded.errors){
+          setErrors(newSpotAdded.errors)
+        } else {
+          history.push(`/spots/${newSpotAdded.id}`)
+        }
+      } else if(formType === 'update'){
+        const updatedSpot = await dispatch(thunkUpdateSpot(spot.id, newSpotInfo))
+        const updated = updatedSpot;
+        for(let key in spotImages){
+          await dispatch(thunkCreateSpotImage(updated.id, spotImages[key]))
+        }
+        if(updated.errors){
+          setErrors(updated.errors)
+        } else {
+          history.push(`/spots/${updated.id}`)
+        }
       }
     }
   };
@@ -146,7 +161,6 @@ const SpotCreationForm = () => {
         </div>
 
         <div className="spot-creation-description">
-
           <h3>Describe your place to guests</h3>
           <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
           <div className="description">
@@ -173,30 +187,34 @@ const SpotCreationForm = () => {
             {errors.price && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.price}</p>}
           </div>
         </div>
-        <div className="spot-creation-photos">
-          <h3>Liven up your spot with photos</h3>
-          <p>Submit a link to at least one photo to publish your spot.</p>
-          <div className="preview-image">
-            <input className="below" type="text" placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
-            {errors.previewImage && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.previewImage}</p>}
-          </div>
-          <div className="spot-images">
-            <input className="below" type="text" placeholder="Image URL" value={spotImage1} onChange={(e) => setSpotImage1(e.target.value)} />
-            {errors.spotImage1 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage1}</p>} <br />
-            <input className="below" type="text" placeholder="Image URL" value={spotImage2} onChange={(e) => setSpotImage2(e.target.value)} />
-            {errors.spotImage2 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage2}</p>} <br />
-            <input className="below" type="text" placeholder="Image URL" value={spotImage3} onChange={(e) => setSpotImage3(e.target.value)} />
-            {errors.spotImage3 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage3}</p>} <br />
-            <input className="below" type="text" placeholder="Image URL" value={spotImage4} onChange={(e) => setSpotImage4(e.target.value)} />
-            {errors.spotImage4 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage4}</p>}
-          </div>
+        {formType === 'create' &&
+          <div className="spot-creation-photos">
+            <h3>Liven up your spot with photos</h3>
+            <p>Submit a link to at least one photo to publish your spot.</p>
+            <div className="preview-image">
+              <input className="below" type="text" placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
+              {errors.previewImage && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.previewImage}</p>}
+            </div>
+            <div className="spot-images">
+              <input className="below" type="text" placeholder="Image URL" value={spotImage1} onChange={(e) => setSpotImage1(e.target.value)} />
+              {errors.spotImage1 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage1}</p>} <br />
+              <input className="below" type="text" placeholder="Image URL" value={spotImage2} onChange={(e) => setSpotImage2(e.target.value)} />
+              {errors.spotImage2 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage2}</p>} <br />
+              <input className="below" type="text" placeholder="Image URL" value={spotImage3} onChange={(e) => setSpotImage3(e.target.value)} />
+              {errors.spotImage3 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage3}</p>} <br />
+              <input className="below" type="text" placeholder="Image URL" value={spotImage4} onChange={(e) => setSpotImage4(e.target.value)} />
+              {errors.spotImage4 && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.spotImage4}</p>}
+            </div>
         </div>
-        <div className="create-spot-button-div">
-        <button className="create-spot-button-form" type="submit">Create Spot</button>
+        }
+        <div className="create-update-spot-button-div">
+        {formType === 'create' && <button className="create-spot-button-form" type="submit">Create Spot</button>}
+        {formType === 'update' && <button className="update-spot-button-form" type="submit">Update Spot</button>}
       </div>
+
       </form>
     </div>
   );
 }
 
-export default SpotCreationForm;
+export default SpotForm;
