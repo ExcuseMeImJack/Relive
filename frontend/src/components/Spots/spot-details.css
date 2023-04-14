@@ -182,12 +182,30 @@
   .image-grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(1fr, 1fr));
+    height: 100%;
   }
 
   .overview-section {
     grid-template-columns: 5fr 1fr;
   }
 
+}
+
+@media only screen and (min-width: 1400px){
+  .getSpotDetails{
+    width: 100%;
+  }
+
+  .image-grid-container {
+    gap: 16px;
+    grid-auto-rows: 300px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(1fr, 1fr));
+  }
+
+  .overview-section {
+    grid-template-columns: 5fr 1fr;
+  }
 }
 
 @media only screen and (max-width: 1024px){
