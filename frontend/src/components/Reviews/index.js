@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { thunkGetReviewBySpotId } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import DeleteReview from "../DeleteReview";
+import './reviews.css'
 
 const Reviews = ({spotId}) => {
   const dispatch = useDispatch();
@@ -64,11 +65,12 @@ const Reviews = ({spotId}) => {
       <div className='review-container'>
         {reviews.map(review =>
         <div className="review" key={review.id}>
-          <h4>{review.User.firstName}</h4>
-          <h5>{formatMonth(review.createdAt)}</h5>
-          <p>{review.review}</p>
+          <h5 className="review-user">{review.User.firstName}</h5>
+          <p className="date-subheading review-date">{formatMonth(review.createdAt)}</p>
+          <p className="review-text">{review.review}</p>
           {currUser && (currUser.id === review.User.id) &&
           <OpenModalButton
+            cName={'delete-review-button changeCursor'}
             modalComponent={<DeleteReview reviewId={review.id} spotId={spotId}/>}
             buttonText="Delete"
           />}

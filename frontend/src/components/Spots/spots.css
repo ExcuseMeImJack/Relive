@@ -1,9 +1,18 @@
 p {
   font-family: 'Poppins', sans-serif;
+  font-size: 14px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
   font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 button {
@@ -86,7 +95,7 @@ h3 {
 } */
 
 .errors-shown {
-  color: red;
+  color: #FF5A5F;
 }
 
 .errors-hidden {

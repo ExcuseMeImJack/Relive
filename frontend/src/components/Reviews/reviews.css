@@ -1,0 +1,29 @@
+.review {
+
+}
+
+.date-subheading {
+  color: #707070;
+}
+
+.review-user {
+  margin-top: 20px;
+  margin-bottom: 0;
+  height: 15px;
+}
+
+.review-date {
+  height: 15px;
+}
+
+.review-text {
+  width: 400px;
+  margin-bottom: 10px;
+}
+
+.delete-review-button {
+  background-color: #696969;
+  color: white;
+  border: black 1px solid;
+  box-shadow: 2px 2px 2px black;
+}
