@@ -21,9 +21,6 @@ const SpotManagement = () => {
     if (spot.ownerId === currUser.id) currUserSpots.push(spot);
   });
 
-
-
-
   return (
    <div className="manage-spots-page">
       <div className="manage-bar">

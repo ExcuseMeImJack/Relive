@@ -54,11 +54,11 @@ function ProfileButton({ user }) {
       <div className={ulClassName} ref={ulRef}>
         {user ? (
           <div>
-            <div className="divider">
+            <div className="divider-nav">
               <p className="text">Hello, {user.firstName}</p>
               <p className="text">{user.email}</p>
             </div>
-            <div className="divider">
+            <div className="divider-nav">
               <button className="manage-spots-button" onClick={() => history.push(`/spots/current`)}>Manage Spots</button>
             </div>
             <div className="logoutButtonDiv">

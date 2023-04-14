@@ -1,0 +1,229 @@
+.getSpotDetails {
+  /* border: 1px solid red; */
+  width: 1000px;
+  box-sizing: border-box;
+  padding: 0px 16px 0px 16px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.changeCursor {
+  cursor: pointer;
+}
+
+.divider {
+  margin: 10px 0px 20px 0px;
+  border-bottom: 2px black solid;
+}
+
+.image-grid-container {
+  gap: 16px;
+  height: 430px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-auto-rows: 207px;
+}
+
+.previewImage {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.image-grid-container > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-shadow: 2px 2px 5px #999999;
+}
+
+.overview-section {
+  display: grid;
+  padding-top: 15px;
+  grid-template-columns: 2fr 1fr;
+}
+
+.book-spot {
+  display: flex;
+  flex-direction: column;
+  width: 330px;
+  height: 110px;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px #999999;
+  padding-bottom: 15px;
+}
+
+.description {
+  padding-right: 50px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.book-spot-top {
+  display: flex;
+  align-items: center;
+  padding: 0px 20px;
+  justify-content: space-between;
+}
+
+.book-spot-top > p {
+  padding-left: 5px;
+}
+
+.book-spot-top > .one {
+  border: 1px solid green;
+}
+
+.book-spot-top > .new {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  justify-content: space-between;
+}
+
+.book-spot-top > .multiple {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  justify-content: space-between;
+}
+
+.book-spot-multiple {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.one-review {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.multiple-reviews {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.one-review > .dot {
+  padding: 0px 10px 0px 7px;
+}
+
+.multiple-reviews > .dot {
+  padding: 0px 10px 0px 7px;
+}
+
+.reserve-button {
+  background-color: #FF5A5F;
+  color: white;
+  border: 1px black solid;
+  margin: 0px 20px;
+  padding: 5px;
+  box-shadow: 2px 2px 2px black;
+}
+
+/* Entire Reviews Summary */
+.reviews-overall {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Specific Cases */
+.reviews-new {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 3em;
+}
+
+.reviews-one {
+  border: 1px solid green;
+}
+
+.reviews-multiple {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 3em;
+}
+
+.reviews-suffix-one {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reviews-suffix-multiple {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.review-post-button {
+  background-color: #696969;
+  color: white;
+  border: black 1px solid;
+  box-shadow: 2px 2px 2px black;
+}
+
+@media only screen and (min-width: 1025px){
+  .getSpotDetails{
+    width: 100%;
+  }
+
+  .image-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(1fr, 1fr));
+  }
+
+  .overview-section {
+    grid-template-columns: 5fr 1fr;
+  }
+
+}
+
+@media only screen and (max-width: 1024px){
+  .getSpotDetails{
+    width: 100%;
+  }
+
+  .image-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(1fr, 1fr));
+  }
+
+  .overview-section {
+    grid-template-columns: 5fr 1fr;
+  }
+
+}
+
+@media only screen and (max-width: 700px){
+  .getSpotDetails{
+    width: 100%;
+  }
+
+  .image-grid-container {
+    display: flex;
+    flex-direction: column;
+    height: 1000px;
+  }
+
+  .overview-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .book-spot {
+    width: 100%;
+  }
+
+}

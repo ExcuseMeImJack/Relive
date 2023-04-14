@@ -129,7 +129,7 @@ const SpotForm = ({spot, formType}) => {
 
   return (
     <div className="spot-creation-container">
-      <h2>Create a new Spot</h2>
+      {formType === 'create' ? <h2>Create a new Spot</h2> : <h2>Update your Spot</h2>}
       <h3>Where's your place located?</h3>
       <p>Guests will only get your exact address once they booked a reservation.</p>
 
