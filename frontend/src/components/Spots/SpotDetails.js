@@ -56,7 +56,7 @@ const SpotDetails = () => {
           <h2>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h2>
           <p>{spot.description}</p>
         </div>
-        <div className="book-spot">
+        <div className={spot.avgStarRating === 0 ? 'book-spot reserve-box-height-new' : 'book-spot reserve-box-height-existing'}>
           <div className="book-spot-top">
             <div className="info">
               <h3>${spot.price}</h3>
@@ -84,12 +84,12 @@ const SpotDetails = () => {
           <button className="reserve-button changeCursor" onClick={handleBooking}>Reserve</button>
         </div>
       </div>
-      <div className="divider"></div>
+      <div className="divider-review-top"></div>
       <div className="reviews-div">
         <div className="reviews-overall">
         <div className={spot.avgStarRating === 0 ? 'reviews-new' : spot.avgStarRating === 1 ? 'reviews-one' : 'reviews-multiple'}>
             <i className="fa-solid fa-star"></i>
-              <div>
+              <div className="rating-num">
                 <h4>{spot.avgStarRating === 0 ? 'New' : (spot.avgStarRating % 1 === 0 ? (spot.avgStarRating + '.0'): spot.avgStarRating)} </h4>
               </div>
               {spot.numReviews === 1 &&

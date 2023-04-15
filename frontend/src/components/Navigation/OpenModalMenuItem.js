@@ -18,7 +18,7 @@ function OpenModalMenuItem({
   };
 
   return (
-    <p onClick={onClick}>{itemText}</p>
+    <p className='changeCursor' onClick={onClick}>{itemText}</p>
   );
 }
 

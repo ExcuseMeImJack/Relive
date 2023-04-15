@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
-import OpenModalMenuItem from './OpenModalMenuItem';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
-import './Navigation.css';
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
+import OpenModalMenuItem from "./OpenModalMenuItem";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
+import "./Navigation.css";
 import { useHistory } from "react-router";
 
 function ProfileButton({ user }) {
@@ -27,7 +27,7 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -38,7 +38,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
-    history.push('/')
+    history.push("/");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? " shown" : " hidden");
@@ -47,38 +47,44 @@ function ProfileButton({ user }) {
     <>
       <button onClick={openMenu} className="profile-menu-button changeCursor">
         <div className="profile-menu">
-        <i className="fa-solid fa-bars"></i>
-        <i className="fas fa-user-circle profile-circle" />
+          <i className="fa-solid fa-bars"></i>
+          <i className="fas fa-user-circle profile-circle" />
         </div>
       </button>
       <div className={ulClassName} ref={ulRef}>
         {user ? (
-          <div>
+          <div className="user-menu-info-dropdown">
             <div className="divider-nav">
               <p className="text">Hello, {user.firstName}</p>
               <p className="text">{user.email}</p>
             </div>
             <div className="divider-nav">
-              <button className="manage-spots-button" onClick={() => history.push(`/spots/current`)}>Manage Spots</button>
+              <button
+                className="manage-spots-button changeCursor"
+                onClick={() => history.push(`/spots/current`)}
+              >
+                Manage Spots
+              </button>
             </div>
             <div className="logoutButtonDiv">
-              <button className="el-button" onClick={logout}>Log Out</button>
+              <button className="el-button changeCursor" onClick={logout}>
+                Log Out
+              </button>
             </div>
           </div>
         ) : (
-          <>
-            <OpenModalMenuItem
-              itemText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
+          <div className="login-signup-dropdown">
             <OpenModalMenuItem
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
-
-          </>
+            <OpenModalMenuItem
+              itemText="Log In"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
+            />
+          </div>
         )}
       </div>
     </>

@@ -2,6 +2,11 @@
   display: none
 }
 
+.errors-shown-removepadding{
+  margin: 8px 0px 5px 0px;
+  color: red;
+}
+
 .shown {
   border: 1px solid black;
   box-shadow: 1px 1px #CCCCCC;
@@ -69,6 +74,18 @@
   position: absolute;
   top: 70px;
   right: 28px;
+}
+
+.login-signup-dropdown {
+  padding-right: 100px;
+}
+
+.login-signup-dropdown > p {
+  margin: 5px 0px 5px 0px;
+}
+
+.profile-dropdown > p {
+  margin: 5px 0px 5px 0px
 }
 
 .create-spot-div {

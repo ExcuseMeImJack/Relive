@@ -59,11 +59,18 @@
   display: flex;
   flex-direction: column;
   width: 330px;
-  height: 110px;
   border: 2px solid black;
   border-radius: 10px;
   box-shadow: 2px 2px 5px #999999;
   padding-bottom: 15px;
+}
+
+.reserve-box-height-new {
+  height: 90px;
+}
+
+.reserve-box-height-existing {
+  height: 110px;
 }
 
 .description {
@@ -147,6 +154,10 @@
   flex-direction: column;
 }
 
+.reviews-overall > p {
+  margin-top: 0px;
+}
+
 /* Specific Cases */
 .reviews-new {
   display: flex;
@@ -166,6 +177,14 @@
   height: 3em;
 }
 
+.reviews-suffix-multiple >  h4 {
+  margin: 3px 0px;
+}
+
+.rating-num > h4 {
+  margin: 3px 0px;
+}
+
 .reviews-suffix-one {
   display: flex;
   align-items: center;
@@ -183,6 +202,18 @@
   color: white;
   border: black 1px solid;
   box-shadow: 2px 2px 2px black;
+}
+
+.review > h5 {
+  margin: 0px 0px;
+}
+
+.review {
+  margin: 0px 0px 30px 0px;
+}
+
+.review-post-div {
+  padding-bottom: 15px;
 }
 
 /* @media only screen and (min-width: 1025px){

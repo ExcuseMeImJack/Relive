@@ -14,8 +14,8 @@ const SpotItem = ({spot}) => {
   if(!spot.previewImage ) return <LoadingScreen />
 
   return (
-    <div title={spot.name} className="spot-card" onClick={getSpotDetails} >
-      <div className="spot-image-container changeCursor">
+    <div title={spot.name} className="spot-card changeCursor" onClick={getSpotDetails} >
+      <div className="spot-image-container">
         <img className="spot-image" src={spot.previewImage} alt={spot.name}/>
       </div>
       <div>

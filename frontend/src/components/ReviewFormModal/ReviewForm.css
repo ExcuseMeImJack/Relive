@@ -18,16 +18,48 @@
 }
 
 .empty {
-  color: #CCCCCC;
+  /* color: #CCCCCC; */
   outline: none;
   background: none;
   border: none;
 }
 
-.errors-shown{
+.errors-shown {
   color: red;
 }
 
-.errors-hidden{
+.errors-hidden {
   display: none;
+}
+
+.create-review-text > h2-semibold{
+  margin: 0px 0px 10px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.ReviewCreateFormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ReviewCreateFormContainer > textarea {
+  resize: none;
+  height: 110px;
+  border: 2px black solid;
+}
+
+.create-review-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-review-div > button > i {
+  font-size: 20px;
+}
+
+.create-review-div > p {
+  padding-left: 3px;
 }
