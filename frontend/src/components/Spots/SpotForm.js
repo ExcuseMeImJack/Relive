@@ -138,26 +138,26 @@ const SpotForm = ({spot, formType}) => {
         <div className="spot-creation-location">
 
           <div className="country">
-            <label className="above"> Country </label>  <br />
-            {errors.country && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.country}</p>}
+            <label className="above"> Country </label>
+            {errors.country && <span className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.country}</span>}
             <input className='below' type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
           </div>
 
           <div className="address">
-            <label className="above"> Street Address </label>  <br />
-            {errors.address && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.address}</p>}
+            <label className="above"> Street Address </label>
+            {errors.address && <span className={isSubmitted ? 'errors-create-spot' : 'errors-hidden'}>{errors.address}</span>}
             <input className="below" type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
 
           <div className="city-state">
             <div className="city-form">
-              <label className="above"> City </label> <br />
-              {errors.city && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.city}</p>}
+              <label className="above"> City </label>
+              {errors.city && <span className={isSubmitted ? 'errors-create-spot' : 'errors-hidden'}>{errors.city}</span>}
               <input className="below" type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} /> <span>,</span>
             </div>
             <div className="state-form">
-              <label className="above"> State </label>   <br />
-              {errors.state && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.state}</p>}
+              <label className="above"> State </label>
+              {errors.state && <span className={isSubmitted ? 'errors-create-spot' : 'errors-hidden'}>{errors.state}</span>}
               <input className="below" type="text" placeholder="STATE" value={state} onChange={(e) => setState(e.target.value)} />
             </div>
           </div>
@@ -189,8 +189,8 @@ const SpotForm = ({spot, formType}) => {
           <div className="price">
             <h4>$</h4>
             <input className="below" type="text" placeholder="Price per night (USD)" value={price} onChange={(e) => setPrice(e.target.value)} />
-            {errors.price && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.price}</p>}
           </div>
+          {errors.price && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.price}</p>}
         </div>
         <div className="divider-review-top"></div>
         {formType === 'create' &&
