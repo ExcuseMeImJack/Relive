@@ -1,1 +1,117 @@
-/* TODO Add site wide styles */
+p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+h5 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+h1-semibold {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+h2-semibold {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+h3-semibold {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+h4-semibold {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+h5-semibold {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+h1-regular  {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+h2-regular  {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+h3-regular  {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+h4-regular {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+h5-regular  {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+input {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+}
+
+span {
+  font-family: 'Poppins', sans-serif;
+}
+
+textarea {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
