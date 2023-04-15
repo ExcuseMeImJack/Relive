@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkDeleteReview, thunkGetReviewBySpotId } from "../../store/reviews";
-import { thunkGetAllSpots, thunkGetSpotById } from "../../store/spots";
-import { useEffect } from "react";
+import { thunkGetSpotById } from "../../store/spots";
+
 
 const DeleteReview = ({reviewId, spotId}) => {
   const dispatch = useDispatch();
@@ -16,11 +16,15 @@ const DeleteReview = ({reviewId, spotId}) => {
   }
 
   return (
-    <div>
-      <h2>Confirm Delete</h2>
+    <div className="confirm-delete-modal-div">
+      <div className="confirm-delete-text">
+       <h2-semibold>Confirm Delete</h2-semibold>
+      </div>
       <p>Are you sure you want to delete this review?</p>
-      <button onClick={handleSubmit}>Yes (Delete Review)</button>
-      <button onClick={closeModal}>No (Keep Review)</button>
+      <div className="confirm-delete-buttons">
+        <button className='delete-modal-button changeCursor' onClick={handleSubmit}>Yes (Delete Review)</button>
+        <button className="close-modal-button changeCursor" onClick={closeModal}>No (Keep Review)</button>
+      </div>
     </div>
   )
 }

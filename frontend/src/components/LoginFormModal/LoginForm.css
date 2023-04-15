@@ -1,0 +1,72 @@
+.login-form-div {
+  width: 100%;
+}
+
+.login-form-div > h2-semibold {
+  display: flex;
+  justify-content: center;
+}
+
+.login-credential-div {
+  padding: 10px 0px 0px;
+}
+
+.login-password-div {
+  padding: 10px 0px;
+}
+
+.login-credential-input {
+  display: flex;
+  border: 2px solid black;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-password-input {
+  display: flex;
+  border: 2px solid black;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.demouser-login-div {
+  padding: 5px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.demouser-login-button {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  color: #00525E;
+  box-sizing: border-box;
+}
+
+.login-div {
+  padding: 5px 0px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-button-invalid{
+  width: 100%;
+  padding: 5px;
+  border: 2px solid #cccccc;
+  box-shadow: 1px 1px #999999;
+  background-color: white;
+  color: #cccccc;
+  box-sizing: border-box;
+}
+
+.login-button-valid{
+  width: 100%;
+  padding: 5px;
+  border: 2px solid black;
+  box-shadow: 1px 1px black;
+  background-color: #FF5A5F;
+  color: white;
+  box-sizing: border-box;
+}

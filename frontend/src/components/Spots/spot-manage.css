@@ -1,0 +1,39 @@
+.manage-bar {
+  margin-left: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.manage-bar > button {
+  width: 140px;
+  font-size: 12px;
+  background-color: #696969;
+  color: white;
+  border: black 1px solid;
+  box-shadow: 2px 2px 2px black;
+}
+
+.update-button {
+  background-color: #696969;
+  color: white;
+  border: black 1px solid;
+  box-shadow: 2px 2px 2px black;
+}
+
+.delete-button {
+  background-color: #696969;
+  color: white;
+  border: black 1px solid;
+  box-shadow: 2px 2px 2px black;
+}
+
+.manage-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.manage-buttons > button, OpenModalButton {
+  font-size: 12px;
+}

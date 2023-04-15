@@ -5,6 +5,8 @@ import SpotItem from "./SpotItem";
 import OpenModalButton from "../OpenModalButton";
 import DeleteModal from '../DeleteSpot'
 import { useHistory } from "react-router";
+import './spots.css'
+import './spot-manage.css'
 
 const SpotManagement = () => {
   const dispatch = useDispatch();
@@ -24,18 +26,21 @@ const SpotManagement = () => {
   return (
    <div className="manage-spots-page">
       <div className="manage-bar">
-        <h2>Manage Spots</h2>
-        {currUserSpots.length === 0 && <button onClick={() => history.push('/spots/new')}>Create a New Spot</button>}
+        <h2-semibold>Manage Your Spots</h2-semibold>
+        <button className="changeCursor" onClick={() => history.push('/spots/new')}>Create a New Spot</button>
       </div>
-      <div className="spots-div">
+      <div className="landing-container">
         {currUserSpots.map(spot =>
         <div key={spot.id}>
           <SpotItem spot={spot} />
-          <button className="update-button" onClick={() => history.push(`/spots/${spot.id}/edit`)}>Update</button>
-          <OpenModalButton
-            modalComponent={<DeleteModal spotId={spot.id}/>}
-            buttonText="Delete"
-          />
+          <div className="manage-buttons">
+            <button className="update-button changeCursor" onClick={() => history.push(`/spots/${spot.id}/edit`)}>Update</button>
+            <OpenModalButton
+              cName="delete-button changeCursor"
+              modalComponent={<DeleteModal spotId={spot.id}/>}
+              buttonText="Delete"
+            />
+          </div>
         </div>
         )}
 
