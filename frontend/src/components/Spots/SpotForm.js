@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router"
 import { thunkCreateSpot, thunkCreateSpotImage, thunkUpdateSpot } from "../../store/spots";
+import './spot-create.css'
 
 const SpotForm = ({spot, formType}) => {
   const history = useHistory();
@@ -129,48 +130,51 @@ const SpotForm = ({spot, formType}) => {
 
   return (
     <div className="spot-creation-container">
-      {formType === 'create' ? <h2>Create a new Spot</h2> : <h2>Update your Spot</h2>}
-      <h3>Where's your place located?</h3>
+      {formType === 'create' ? <h1>Create a new Spot</h1> : <h1>Update your Spot</h1>}
+      <h3-semibold>Where's your place located?</h3-semibold>
       <p>Guests will only get your exact address once they booked a reservation.</p>
 
       <form onSubmit={handleSubmit}>
         <div className="spot-creation-location">
 
           <div className="country">
-            <label className="above"> Country </label>  <br />
-            {errors.country && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.country}</p>}
+            <label className="above"> Country </label>
+            {errors.country && <span className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.country}</span>}
             <input className='below' type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
           </div>
 
           <div className="address">
-            <label className="above"> Street Address </label>  <br />
-            {errors.address && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.address}</p>}
+            <label className="above"> Street Address </label>
+            {errors.address && <span className={isSubmitted ? 'errors-create-spot' : 'errors-hidden'}>{errors.address}</span>}
             <input className="below" type="text" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
 
           <div className="city-state">
-            <label className="above"> City </label> <br />
-            {errors.city && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.city}</p>}
-            <input className="below" type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} /> <br />
-
-            <label className="above"> State </label>   <br />
-            {errors.state && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.state}</p>}
-            <input className="below" type="text" placeholder="STATE" value={state} onChange={(e) => setState(e.target.value)} />
+            <div className="city-form">
+              <label className="above"> City </label>
+              {errors.city && <span className={isSubmitted ? 'errors-create-spot' : 'errors-hidden'}>{errors.city}</span>}
+              <input className="below" type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} /> <span>,</span>
+            </div>
+            <div className="state-form">
+              <label className="above"> State </label>
+              {errors.state && <span className={isSubmitted ? 'errors-create-spot' : 'errors-hidden'}>{errors.state}</span>}
+              <input className="below" type="text" placeholder="STATE" value={state} onChange={(e) => setState(e.target.value)} />
+            </div>
           </div>
 
         </div>
-
+        <div className="divider-review-bottom"></div>
         <div className="spot-creation-description">
-          <h3>Describe your place to guests</h3>
+          <h3-semibold>Describe your place to guests</h3-semibold>
           <p>Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
-          <div className="description">
+          <div className="review-description">
             <textarea onChange={(e) =>setDescription(e.target.value)} value={description} placeholder="Please write at least 30 characters" />
             {errors.description && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.description}</p>}
           </div>
-
         </div>
+        <div className="divider-review-top"></div>
         <div className="spot-creation-title">
-          <h3>Create a title for your spot</h3>
+          <h3-semibold >Create a title for your spot</h3-semibold>
           <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
           <div className="title">
             <input className="below" type="text" placeholder="Name of your spot" value={spotName} onChange={(e) => setSpotName(e.target.value)} />
@@ -178,18 +182,20 @@ const SpotForm = ({spot, formType}) => {
           </div>
 
         </div>
+        <div className="divider-review-top"></div>
         <div className="spot-creation-pricing">
-          <h3>Set a base price for your spot</h3>
+          <h3-semibold >Set a base price for your spot</h3-semibold>
           <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
           <div className="price">
             <h4>$</h4>
             <input className="below" type="text" placeholder="Price per night (USD)" value={price} onChange={(e) => setPrice(e.target.value)} />
-            {errors.price && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.price}</p>}
           </div>
+          {errors.price && <p className={isSubmitted ? 'errors-shown' : 'errors-hidden'}>{errors.price}</p>}
         </div>
+        <div className="divider-review-top"></div>
         {formType === 'create' &&
           <div className="spot-creation-photos">
-            <h3>Liven up your spot with photos</h3>
+            <h3-semibold >Liven up your spot with photos</h3-semibold>
             <p>Submit a link to at least one photo to publish your spot.</p>
             <div className="preview-image">
               <input className="below" type="text" placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
@@ -207,6 +213,7 @@ const SpotForm = ({spot, formType}) => {
             </div>
         </div>
         }
+        {formType === 'create' && <div className="divider-review-top"></div>}
         <div className="create-update-spot-button-div">
         {formType === 'create' && <button className="create-spot-button-form" type="submit">Create Spot</button>}
         {formType === 'update' && <button className="update-spot-button-form" type="submit">Update Spot</button>}

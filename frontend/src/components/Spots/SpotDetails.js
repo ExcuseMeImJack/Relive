@@ -17,7 +17,6 @@ const SpotDetails = () => {
   const spots = useSelector(state => Object.values(state.spots));
   const spot = spots.find(spot => spot.id === parseInt(spotId));
   const currUser = useSelector(state => state.session.user)
-  const [imgCount, setImgCount] = useState(0);
 
   useEffect(() => {
     dispatch(thunkGetSpotById(spotId));
@@ -40,8 +39,9 @@ const SpotDetails = () => {
   })
 
   return (
-    <div className="getSpotDetails">
-      <h2>{spot.name}</h2>
+    <div className="details-flex">
+      <div className="getSpotDetails">
+      <h1>{spot.name}</h1>
       <h3>{spot.city}, {spot.state}, {spot.country}</h3>
         <div className="image-grid-container">
           {spot.SpotImages.map((spotImg, i )=> (
@@ -53,7 +53,7 @@ const SpotDetails = () => {
         </div>
       <div className="overview-section">
         <div className="description">
-          <h3>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h3>
+          <h2>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h2>
           <p>{spot.description}</p>
         </div>
         <div className="book-spot">
@@ -121,6 +121,7 @@ const SpotDetails = () => {
           <Reviews spotId={spotId}/>
         </div>
       </div>
+    </div>
     </div>
   )
 }

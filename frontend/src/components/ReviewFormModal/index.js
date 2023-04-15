@@ -23,7 +23,7 @@ const ReviewFormModal = ({spotId}) => {
   useEffect(() => {
     const err ={};
     if(rating < 1) err.rating = "Star Rating must be atleast 1 star."
-    if(review.length < 9) err.review = "Review must have atleast 10 characters."
+    if(review.length < 10) err.review = "Review must have atleast 10 characters."
     setErrors(err);
   }, [rating, review]);
 
