@@ -129,6 +129,7 @@ const SpotForm = ({spot, formType}) => {
   };
 
   return (
+    <div className="spot-creation">
     <div className="spot-creation-container">
       {formType === 'create' ? <h1>Create a new Spot</h1> : <h1>Update your Spot</h1>}
       <h3-semibold>Where's your place located?</h3-semibold>
@@ -220,6 +221,7 @@ const SpotForm = ({spot, formType}) => {
       </div>
 
       </form>
+    </div>
     </div>
   );
 }

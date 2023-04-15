@@ -8,10 +8,17 @@
   border-bottom: 2px black solid;
 }
 
+.spot-creation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .spot-creation-container {
+  width: 500px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 0px 265px;
 }
 
 .spot-creation-container > h1{

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkCreateReview, thunkGetReviewBySpotId } from "../../store/reviews";
+import { thunkCreateReview} from "../../store/reviews";
 import './ReviewForm.css'
-import { thunkGetAllSpots, thunkGetSpotById } from "../../store/spots";
+import { thunkGetSpotById } from "../../store/spots";
 // import { useHistory } from "react-router";
 // import spotsReducer from "../../store/spots";
 
