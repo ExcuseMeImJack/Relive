@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router"
+import { useHistory } from "react-router";
+import {useLocation} from 'react-router-dom';
 import { thunkCreateSpot, thunkCreateSpotImage, thunkUpdateSpot } from "../../store/spots";
 import './spot-create.css'
 
 const SpotForm = ({spot, formType}) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [country, setCountry] = useState(spot.country);
   const [address, setAddress] = useState(spot.address);
@@ -24,7 +26,39 @@ const SpotForm = ({spot, formType}) => {
   const [spotImages, setSpotImages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [locationKeys, setLocationKeys] = useState([]);
 
+  const currentLocationKey = location.key;
+  // console.log(location);
+
+  if(!locationKeys.includes(currentLocationKey)) {
+    setLocationKeys([...locationKeys, currentLocationKey])
+  }
+
+  useEffect(() => {
+    const prevLocationKey = locationKeys[0];
+    if(prevLocationKey !== currentLocationKey){
+      locationKeys.shift(0);
+      setIsSubmitted(false);
+      setCountry(spot.country);
+      setAddress(spot.address);
+      setCity(spot.city);
+      setState(spot.state);
+      setDescription(spot.description);
+      setSpotName(spot.name);
+      setPrice(spot.price)
+      if(formType === 'create'){
+        setPreviewImage('')
+        setSpotImage1('')
+        setSpotImage2('')
+        setSpotImage3('')
+        setSpotImage4('')
+      }
+    }
+    // console.log(locationKeys); // [ "qqocnf", "qm6fsf" ]
+    // console.log('PREV KEY: ', prevLocationKey) // qqocnf
+    // console.log('CURR KEY: ', currentLocationKey) // qm6fsf
+  }, [locationKeys])
 
   useEffect(() => {
     const err = {};
@@ -84,7 +118,6 @@ const SpotForm = ({spot, formType}) => {
     }
     setSpotImages(images);
     setErrors(err);
-
   }, [country, address, city, state, description, spotName, price, previewImage, spotImage1, spotImage2, spotImage3, spotImage4, formType])
 
   const handleSubmit = async (e) => {
