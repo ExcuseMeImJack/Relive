@@ -94,6 +94,13 @@
   padding-left: 5px;
 }
 
+.book-spot-top > .one {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  justify-content: space-between;
+}
+
 .book-spot-top > .new {
   display: flex;
   align-items: center;
@@ -162,6 +169,12 @@
   height: 3em;
 }
 
+.reviews-one {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 3em;
+}
 
 .reviews-multiple {
   display: flex;
