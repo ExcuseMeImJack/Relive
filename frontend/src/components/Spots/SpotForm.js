@@ -248,10 +248,12 @@ const SpotForm = ({spot, formType}) => {
         </div>
         }
         {formType === 'create' && <div className="divider-review-top"></div>}
+
         <div className="create-update-spot-button-div">
-        {formType === 'create' && <button className="create-spot-button-form changeCursor" type="submit">Create Spot</button>}
-        {formType === 'update' && <button className="update-spot-button-form changeCursor" type="submit">Update Spot</button>}
-      </div>
+          {formType === 'create' && <button className="create-spot-button-form changeCursor" type="submit">Create Spot</button>}
+          
+          {formType === 'update' && <button className="update-spot-button-form changeCursor" type="submit">Update Spot</button>}
+        </div>
 
       </form>
     </div>
