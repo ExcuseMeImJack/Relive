@@ -32,6 +32,10 @@
   display: none;
 }
 
+.create-review-modal-div {
+  width: 100%;
+}
+
 .create-review-text > h2-semibold{
   margin: 0px 0px 10px 0px;
   display: flex;
@@ -48,6 +52,7 @@
   resize: none;
   height: 110px;
   border: 2px black solid;
+  width: 100%;
 }
 
 .create-review-div{
