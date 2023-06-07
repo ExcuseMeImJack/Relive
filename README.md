@@ -92,39 +92,38 @@ Logged in Users can
 # API-Backend
 
 ## SPOTS
-    * `POST /api/spots/:spotId/bookings` Create a booking from a Spot based on the Spot's ID
-    * `GET /api/spots/:spotId/bookings` Get all the Bookings for a Spot based on the Spot's ID
-    * `POST /api/spots/:spotId/reviews` Create a Review for a Spot based on the Spot's ID
-    * `GET /api/spots/:spotId/reviews` Get all Reviews by a Spot's ID
-    * `GET /api/spots/current` Get all Spots owned by the Current User
-    * `POST /api/spots/:spotId/images` Create an Image for a Spot based on the Spot's ID
-    * `GET /api/spots/:spotId` Get details of a Spot based on the Spot's ID
-    * `DELETE /api/spots/:spotId` Delete a Spot based on the Spot's ID
-    * `PUT /api/spots/:spotId` Edit a Spot based on the Spot's ID
-    * `POST /api/spots` Create a Spot
-    * `GET /api/spots` Get all Spots
+   * `POST /api/spots/:spotId/bookings` Create a booking from a Spot based on the Spot's ID
+   * `GET /api/spots/:spotId/bookings` Get all the Bookings for a Spot based on the Spot's ID
+   * `POST /api/spots/:spotId/reviews` Create a Review for a Spot based on the Spot's ID
+   * `GET /api/spots/:spotId/reviews` Get all Reviews by a Spot's ID
+   * `GET /api/spots/current` Get all Spots owned by the Current User
+   * `POST /api/spots/:spotId/images` Create an Image for a Spot based on the Spot's ID
+   * `GET /api/spots/:spotId` Get details of a Spot based on the Spot's ID
+   * `DELETE /api/spots/:spotId` Delete a Spot based on the Spot's ID    * `PUT /api/spots/:spotId` Edit a Spot based on the Spot's ID
+   * `POST /api/spots` Create a Spot
+   * `GET /api/spots` Get all Spots
 
 ## REVIEWS
-    * `POST /api/reviews/:reviewId/images` Create an Image for a Review based on the Review's ID
-    * `GET /api/reviews/current` Get all the Reviews of a Current User
-    * `PUT /api/reviews/:reviewId` Edit a Review based on the Review's ID
-    * `DELETE /api/reviews/:reviewId` Delete a Review based on the Review's ID
+   * `POST /api/reviews/:reviewId/images` Create an Image for a Review based on the Review's ID
+   * `GET /api/reviews/current` Get all the Reviews of a Current User
+   * `PUT /api/reviews/:reviewId` Edit a Review based on the Review's ID
+   * `DELETE /api/reviews/:reviewId` Delete a Review based on the Review's ID
 
 ## BOOKINGS
-    * `DELETE /api/bookings/:bookingId` Delete a Booking based on the Booking ID
-    * `PUT /api/bookings/:bookingId` Edit a Booking based on the Booking ID
-    * `GET /api/bookings/current` Get all of the Current User's Bookings
+   * `DELETE /api/bookings/:bookingId` Delete a Booking based on the Booking ID
+   * `PUT /api/bookings/:bookingId` Edit a Booking based on the Booking ID
+   * `GET /api/bookings/current` Get all of the Current User's Bookings
 
 ## SPOT IMAGES
-    * `DELETE /api/spot-images/:imageId` Delete a Spot Image based on the Spot Image ID
+   * `DELETE /api/spot-images/:imageId` Delete a Spot Image based on the Spot Image ID
 
 ## REVIEW IMAGES
-    * `DELETE /api/review-images/:imageId` Delete a Review Image based on the Review Image ID
+   * `DELETE /api/review-images/:imageId` Delete a Review Image based on the Review Image ID
 
 ## USERS
-    * `POST /api/users` Create/Sign up a User
+   * `POST /api/users` Create/Sign up a User
     
 ## SESSION
-    * `POST /api/session` Login a User
-    * `DELETE /api/session` Log out a User
-    * `GET /api/session` Restore session user
+   * `POST /api/session` Login a User
+   * `DELETE /api/session` Log out a User
+   * `GET /api/session` Restore session user
