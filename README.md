@@ -1,6 +1,6 @@
 # Relive
 
-Relive is a clone of Airbnb, a complete web application where users can create, review and book spots. 
+Relive is a clone of Airbnb, a complete web application where users can create, review and book spots.
 
 Check out [Relive](https://relive.onrender.com)
 
@@ -34,17 +34,17 @@ Check out [Relive](https://relive.onrender.com)
    `
    https://github.com/ExcuseMeImJack/Relive.git
    `
-   
+
 2. Install denpendencies into the Backed and the Frontend by making a terminal for each one and then run the following:
 
    * `npm install`
 
-3. Create a **.env** file using the **.envexample** provided 
+3. Create a **.env** file using the **.envexample** provided
 
-4. Set up your database with information from your .env and then run the following to create your database, migrate, and seed: 
- 
+4. Set up your database with information from your .env and then run the following to create your database, migrate, and seed:
+
    * `npx dotenv sequelize db:create`
-   * `npx dotenv sequelize db:migrate` 
+   * `npx dotenv sequelize db:migrate`
    * `npx dotenv sequelize db:seed:all`
 
 5. Start the app for both backend and frontend using:
@@ -58,7 +58,7 @@ Check out [Relive](https://relive.onrender.com)
 
 ***
 
-# Features 
+# Features
 
 ## Spots
 * Users can create a Spot
@@ -82,48 +82,94 @@ Logged-in Users can
 ### AWS
 Logged-in Users can
 * Upload multiple images of their spot to AWS S3
-* 
+*
 ### Google Maps Api
 Logged in Users can
-* Locate their spot with Google Maps Api 
+* Locate their spot with Google Maps Api
 
-*** 
+***
 
 # API-Backend
 
 ## SPOTS
-   * `POST /api/spots/:spotId/bookings` Create a booking from a Spot based on the Spot's ID
-   * `GET /api/spots/:spotId/bookings` Get all the Bookings for a Spot based on the Spot's ID
-   * `POST /api/spots/:spotId/reviews` Create a Review for a Spot based on the Spot's ID
-   * `GET /api/spots/:spotId/reviews` Get all Reviews by a Spot's ID
-   * `GET /api/spots/current` Get all Spots owned by the Current User
-   * `POST /api/spots/:spotId/images` Create an Image for a Spot based on the Spot's ID
-   * `GET /api/spots/:spotId` Get details of a Spot based on the Spot's ID
-   * `DELETE /api/spots/:spotId` Delete a Spot based on the Spot's ID    * `PUT /api/spots/:spotId` Edit a Spot based on the Spot's ID
-   * `POST /api/spots` Create a Spot
-   * `GET /api/spots` Get all Spots
+   * `POST /api/spots/:spotId/bookings`
+       * Purpose: Create a booking from a Spot based on the Spot's ID
+       * Return: `{"id": 1,"spotId": 1,"userId": 2,"startDate": "2021-11-19","endDate": "2021-11-20","createdAt": "2021-11-19 20:39:36","updatedAt": "2021-11-19 20:39:36"}`
+   * `GET /api/spots/:spotId/bookings`
+       * Purpose: Get all the Bookings for a Spot based on the Spot's ID
+       * Return: `{"Bookings": [{"spotId": 1,"startDate": "2021-11-19","endDate": "2021-11-20"}]}`
+   * `POST /api/spots/:spotId/reviews`
+       * Purpose: Create a Review for a Spot based on the Spot's ID
+       * Return: `{"review": "This was an awesome spot!","stars": 5,}`
+   * `GET /api/spots/:spotId/reviews`
+       * Purpose: Get all Reviews by a Spot's ID
+       * Return: `{"Reviews": [{"id": 1,"userId": 1,"spotId": 1,"review": "This was an awesome spot!", . . . }]}`
+   * `GET /api/spots/current`
+       * Purpose: Get all Spots owned by the Current User
+       * Return: `{"Spots": [{"id": 1, "ownerId": 1, "address": "123 Disney Lane" . . . }]}`
+   * `POST /api/spots/:spotId/images`
+       * Purpose: Create an Image for a Spot based on the Spot's ID
+       * Return: `{"url": "image url", "preview": true}`
+   * `GET /api/spots/:spotId`
+       * Purpose: Get details of a Spot based on the Spot's ID
+       * Return: `{"id": 1, "ownerId": 1, "address": "123 Disney Lane" . . . }`
+   * `DELETE /api/spots/:spotId`
+       * Purpose: Delete a Spot based on the Spot's ID
+       * Return: `{"message": "Successfully deleted"}`
+   * `PUT /api/spots/:spotId`
+       * Purpose: Edit a Spot based on the Spot's ID
+       * Return: `{"id": 1, "ownerId": 1, "address": "123 Disney Lane" . . . }`
+   * `POST /api/spots`
+       * Purpose: Create a Spot
+       * Return: `{"address": "123 Disney Lane", "city": "San Francisco", . . . }`
+   * `GET /api/spots`
+       * Purpose: Get all Spots
+       * Return: `{"Spots": [{"id": 1, "ownerId": 1, "address": "123 Disney Lane" . . . }]}`
 
 ## REVIEWS
-   * `POST /api/reviews/:reviewId/images` Create an Image for a Review based on the Review's ID
-   * `GET /api/reviews/current` Get all the Reviews of a Current User
-   * `PUT /api/reviews/:reviewId` Edit a Review based on the Review's ID
-   * `DELETE /api/reviews/:reviewId` Delete a Review based on the Review's ID
+   * `POST /api/reviews/:reviewId/images`
+       * Purpose: Create an Image for a Review based on the Review's ID
+       * Return: `{"id": 1,"url": "image url"}`
+   * `GET /api/reviews/current`
+       * Purpose: Get all the Reviews of a Current User
+       * Return: `{"Reviews": [{"id": 1,"userId": 1,"spotId": 1,"review": "This was an awesome spot!", . . . }]}`
+   * `PUT /api/reviews/:reviewId`
+       * Purpose: Edit a Review based on the Review's ID
+       * Return: `{"id": 1,"userId": 1,"spotId": 1,"review": "This was an awesome spot!", . . . }]}`
+   * `DELETE /api/reviews/:reviewId`
+       * Purpose: Delete a Review based on the Review's ID
+       * Return: `{"message": "Successfully deleted"}`
 
 ## BOOKINGS
-   * `DELETE /api/bookings/:bookingId` Delete a Booking based on the Booking ID
-   * `PUT /api/bookings/:bookingId` Edit a Booking based on the Booking ID
-   * `GET /api/bookings/current` Get all of the Current User's Bookings
+   * `DELETE /api/bookings/:bookingId`
+       * Purpose: Delete a Booking based on the Booking ID
+       * Return: `{"message": "Successfully deleted"}`
+   * `PUT /api/bookings/:bookingId`
+       * Purpose: Edit a Booking based on the Booking ID
+       * Return: `{"id": 1,"spotId": 1,"userId": 2,"startDate": "2021-11-19", . . . }`
+   * `GET /api/bookings/current`
+       * Purpose: Get all of the Current User's Bookings
+       * Return: `{"Bookings": [{"id": 1,"spotId": 1,"Spot": { . . . } . . . }]}`
 
 ## SPOT IMAGES
-   * `DELETE /api/spot-images/:imageId` Delete a Spot Image based on the Spot Image ID
+   * `DELETE /api/spot-images/:imageId`
+       * Purpose: Delete a Spot Image based on the Spot Image ID
+       * Return: `{"message": "Successfully deleted"}`
 
 ## REVIEW IMAGES
-   * `DELETE /api/review-images/:imageId` Delete a Review Image based on the Review Image ID
+   * `DELETE /api/review-images/:imageId`
+       * Purpose: Delete a Review Image based on the Review Image ID
+       * Return: `{"message": "Successfully deleted"}`
 
 ## USERS
-   * `POST /api/users` Create/Sign up a User
-    
+   * `POST /api/users`
+       * Purpose: Create/Sign up a User
+       * Return: `{"id": 1,"firstName": "John","lastName": "Smith", . . . }`
+
 ## SESSION
-   * `POST /api/session` Login a User
-   * `DELETE /api/session` Log out a User
-   * `GET /api/session` Restore session user
+   * `POST /api/session`
+       * Purpose: Login a User
+       * Return: `{"user": {"id": 1,"firstName": "John", . . . }}`
+   * `GET /api/session`
+       * Purpose: Returns the information about the current user that is logged in.
+       * Return: `{"user": {"id": 1,"firstName": "John", . . . }}`
