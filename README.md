@@ -4,12 +4,12 @@ Relive is a clone of Airbnb, a complete web application where users can create, 
 
 Check out [Relive](https://relive.onrender.com)
 
-<!-- ## Index
+## Index
 
-[MVP Feature List](https://github.com/ExcuseMeImJack/watchboxd/wiki/MVP-Feature-List) |
-[Database Scheme](https://github.com/ExcuseMeImJack/watchboxd/wiki/Database-Schema) |
-[User Stories](https://github.com/ExcuseMeImJack/watchboxd/wiki/User-Stories) |
-[Wire Frames](https://github.com/ExcuseMeImJack/watchboxd/wiki/Wireframe) | -->
+[MVP Feature List](https://github.com/ExcuseMeImJack/Relive/wiki/MVP-Feature-List) |
+[Database Scheme](https://github.com/ExcuseMeImJack/Relive/wiki/Database-Schema) |
+[User Stories](https://github.com/ExcuseMeImJack/Relive/wiki/User-Stories) |
+[Wire Frames](https://github.com/ExcuseMeImJack/Relive/wiki/Wireframe) |
 
 ## Technologies Used
 
