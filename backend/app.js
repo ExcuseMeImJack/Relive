@@ -17,6 +17,7 @@ const app = express();
 app.use(morgan('dev'));
 
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
@@ -53,7 +54,7 @@ app.use((_req, _res, next) => {
   err.status = 404;
   next(err);
 });
- 
+
 app.use((err, _req, _res, next) => {
   // check if error is a Sequelize error:
   if (err instanceof ValidationError) {

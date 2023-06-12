@@ -5,6 +5,12 @@ const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const {Op} = require("sequelize");
 const { where } = require("sequelize");
+const {
+  singleMulterUpload,
+  singlePublicFileUpload,
+  multipleMulterUpload,
+  multiplePublicFileUpload,
+} = require("../../awsS3");
 
 const router = express.Router();
 
@@ -283,7 +289,8 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   const { user } = req;
   const spot = await Spot.findByPk(req.params.spotId);
   if (user.id === spot.ownerId) {
-    const { url, preview } = req.body;
+    const { preview } = req.body;
+    const url = await singlePublicFileUpload(req.file)
 
     const newSpotImage = await SpotImage.create({
       spotId: req.params.spotId,
