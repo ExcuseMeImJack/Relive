@@ -117,15 +117,22 @@ export const thunkDeleteSpot = (spotId) => async(dispatch) => {
   }
 }
 
-export const thunkCreateSpotImage = (spotId, spotImage) => async(dispatch) => {
-  const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+export const thunkCreateSpotImage = (spotID, spotImage) => async(dispatch) => {
+  const { url, preview } = spotImage;
+  const formData = new FormData();
+  formData.append("url", url);
+  formData.append("preview", preview);
+
+  if (url) formData.append("url", url);
+
+  const res = await csrfFetch(`/api/spots/${spotID}/images`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "multipart/form-data"
     },
-    body: JSON.stringify(spotImage)
+    body: formData
   });
-
+  
   if(res.ok) {
     const newSpotImage = await res.json();
     dispatch(createSpotImageAction(spotImage))

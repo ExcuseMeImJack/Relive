@@ -290,6 +290,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   if (user.id === spot.ownerId) {
     const { preview } = req.body;
+    console.log(req)
     const url = await singlePublicFileUpload(req.file)
 
     const newSpotImage = await SpotImage.create({
