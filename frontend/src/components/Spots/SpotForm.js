@@ -18,11 +18,11 @@ const SpotForm = ({spot, formType}) => {
   const [spotName, setSpotName] = useState(spot.name);
   const [price,setPrice] = useState(spot.price);
 
-  const [previewImage, setPreviewImage] = useState('');
-  const [spotImage1, setSpotImage1] = useState('');
-  const [spotImage2, setSpotImage2] = useState('');
-  const [spotImage3, setSpotImage3] = useState('');
-  const [spotImage4, setSpotImage4] = useState('');
+  const [previewImage, setPreviewImage] = useState(null);
+  const [spotImage1, setSpotImage1] = useState(null);
+  const [spotImage2, setSpotImage2] = useState(null);
+  const [spotImage3, setSpotImage3] = useState(null);
+  const [spotImage4, setSpotImage4] = useState(null);
   const [spotImages, setSpotImages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
@@ -48,11 +48,11 @@ const SpotForm = ({spot, formType}) => {
       setSpotName(spot.name);
       setPrice(spot.price)
       if(formType === 'create'){
-        setPreviewImage('')
-        setSpotImage1('')
-        setSpotImage2('')
-        setSpotImage3('')
-        setSpotImage4('')
+        setPreviewImage(null)
+        setSpotImage1(null)
+        setSpotImage2(null)
+        setSpotImage3(null)
+        setSpotImage4(null)
       }
     }
     // console.log(locationKeys); // [ "qqocnf", "qm6fsf" ]
@@ -77,35 +77,35 @@ const SpotForm = ({spot, formType}) => {
 
     if(previewImage){
       images.previewImage = {
-        url: previewImage,
+        file: previewImage,
         preview: true
       };
     }
 
     if(spotImage1){
       images.spotImage1 = {
-        url: spotImage1,
+        file: spotImage1,
         preview: false
       };
     }
 
     if(spotImage2){
       images.spotImage2 = {
-        url: spotImage2,
+        file: spotImage2,
         preview: false
       };
     }
 
     if(spotImage3){
       images.spotImage3 = {
-        url: spotImage3,
+        file: spotImage3,
         preview: false
       };
     }
 
     if(spotImage4){
       images.spotImage4 = {
-        url: spotImage4,
+        file: spotImage4,
         preview: false
       };
     }

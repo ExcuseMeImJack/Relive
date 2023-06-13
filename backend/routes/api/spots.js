@@ -5,6 +5,7 @@ const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const {Op} = require("sequelize");
 const { where } = require("sequelize");
+
 const {
   singleMulterUpload,
   singlePublicFileUpload,
@@ -282,21 +283,18 @@ router.get("/current", [requireAuth], async (req, res) => {
 });
 
 // Create an Image for a spotId
-router.post("/:spotId/images", requireAuth, async (req, res) => {
+router.post("/:spotId/images", [requireAuth, singleMulterUpload("file")], async (req, res) => {
   if ((await doesSpotExist(req.params.spotId)) === false)
     return res.status(404).json({ message: "Spot couldn't be found" });
 
   const { user } = req;
   const spot = await Spot.findByPk(req.params.spotId);
   if (user.id === spot.ownerId) {
-    const { preview } = req.body;
-    console.log(req)
     const url = await singlePublicFileUpload(req.file)
-
     const newSpotImage = await SpotImage.create({
       spotId: req.params.spotId,
       url,
-      preview,
+      preview: req.preview,
     });
 
     const newSpotImageModified = await SpotImage.findOne({where: {id: newSpotImage.id}, attributes: {exclude: ['spotId', 'updatedAt', 'createdAt']}});
