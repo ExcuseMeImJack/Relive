@@ -1,0 +1,13 @@
+.manage-bookings-bar{
+  margin-left: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.startDate, .endDate{
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 16px;
+}

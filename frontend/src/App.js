@@ -8,6 +8,7 @@ import SpotDetails from "./components/Spots/SpotDetails";
 import SpotManagement from "./components/Spots/SpotManagement";
 import SpotCreation from "./components/Spots/SpotCreation";
 import SpotUpdate from "./components/Spots/SpotUpdate";
+import BookingManagement from "./components/Bookings/BookingManagement";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,11 +31,17 @@ function App() {
         <Route path='/spots/current'>
           <SpotManagement/>
         </Route>
+        <Route path='/bookings/current'>
+          <BookingManagement/>
+        </Route>
         <Route exact path='/spots/:spotId'>
           <SpotDetails />
         </Route>
         <Route path='/spots/:spotId/edit'>
           <SpotUpdate />
+        </Route>
+        <Route>
+          <h1>404 Not Found</h1>
         </Route>
       </Switch>}
     </>
