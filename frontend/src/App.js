@@ -9,6 +9,7 @@ import SpotManagement from "./components/Spots/SpotManagement";
 import SpotCreation from "./components/Spots/SpotCreation";
 import SpotUpdate from "./components/Spots/SpotUpdate";
 import BookingManagement from "./components/Bookings/BookingManagement";
+import Footer from "./components/Navigation/Footer";
 
 function App() {
   const dispatch = useDispatch();

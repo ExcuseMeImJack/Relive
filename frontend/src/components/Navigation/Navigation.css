@@ -123,6 +123,7 @@
   background: none;
   color: #00525E;
   font-weight: 600;
+  padding-top: 7px;
 }
 
 .create-spot-button-nav:hover{
@@ -160,4 +161,21 @@
 .navIcon {
   width: 45px;
   height: 45px;
+}
+
+.social-links{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding-top: 7px;
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.fa-brands{
+  color:#f86065e1;
+}
+
+.social-links > a > i:hover{
+  color:#f7232a;
 }
