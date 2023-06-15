@@ -119,17 +119,17 @@ export const thunkDeleteSpot = (spotId) => async(dispatch) => {
 
 export const thunkCreateSpotImage = (spotID, spotImage) => async(dispatch) => {
   const { file, preview } = spotImage;
-  // console.log(file, preview)
+
   const formData = new FormData();
   formData.append("preview", preview);
+  formData.append("url", file);
 
-  if (file) formData.append("file", file);
   const res = await csrfFetch(`/api/spots/${spotID}/images`, {
     method: "POST",
     headers: {
       "Content-Type": "multipart/form-data"
     },
-    body: JSON.stringify(formData)
+    body: formData
   });
 
   if(res.ok) {
