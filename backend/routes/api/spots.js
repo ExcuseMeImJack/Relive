@@ -158,7 +158,16 @@ router.get('/:spotId/bookings', [requireAuth], async (req, res) =>{
 
     return res.json({['Bookings']: ownerBookings})
   } else if(user.id !== spot.ownerId){
-    const clientBookings = await Booking.findAll({where:{spotId: req.params.spotId}, attributes:{exclude:['id', 'userId', 'createdAt', 'updatedAt']}});
+    const clientBookings = await Booking.findAll({where:{spotId: req.params.spotId}, attributes:{exclude:['createdAt', 'updatedAt']}, include: [
+      {
+        model: Spot,
+        attributes: {exclude:['description', 'createdAt', 'updatedAt']},
+        include:
+        {
+          model: SpotImage
+        }
+      },
+    ],});
     return res.json({['Bookings']: clientBookings})
   }
 });
