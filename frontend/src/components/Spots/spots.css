@@ -5,12 +5,18 @@
   flex-direction: column;
 }
 
+.spot-image:hover{
+  box-shadow: 2px 2px 4px rgb(160, 160, 160);
+  border-color: #e7e7e7c7;
+}
+
 .spot-image-container {
   width: 100%;
+
 }
 
 .spot-image {
-  width: 100%;
+  width: 98%;
   height: 13em;
   object-fit: cover;
   border: 1px white solid;

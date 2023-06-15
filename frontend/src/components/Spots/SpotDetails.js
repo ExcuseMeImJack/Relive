@@ -50,6 +50,8 @@ const SpotDetails = () => {
     const preExistingBooking = bookings.find(booking => booking.userId === currUser.id);
     if(preExistingBooking) {
       return <button className="reserve-button changeCursor"  onClick={() => history.push('/bookings/current')}>Booking already made!</button>
+    } else if (spot.ownerId === currUser.id){
+      return <button className="reserve-button changeCursor"  onClick={() => history.push('/bookings/current')}>You can't book your own spot!</button>
     } else {
       return <OpenModalButton
             modalComponent={<CreateBookingModal spotId={spotId} bookings={bookings}/>}

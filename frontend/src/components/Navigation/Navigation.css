@@ -38,6 +38,10 @@
   border-radius: 15px;
 }
 
+.el-button:hover{
+  background-color: #535353b6;
+}
+
 .navBar {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -49,9 +53,14 @@
 }
 
 .manage-spots-button {
+  width: 100%;
   outline: none;
   border: none;
   background: none;
+}
+
+.manage-spots-button:hover{
+  background-color: #e6e6e6b6;
 }
 
 .profile-menu {
@@ -70,6 +79,10 @@
   color: black;
 }
 
+.profile-menu-button:hover{
+  background-color: #e6e6e6b6;
+}
+
 .profile-dropdown {
   position: absolute;
   top: 70px;
@@ -77,11 +90,20 @@
 }
 
 .login-signup-dropdown {
-  padding-right: 100px;
+  width: 120px;
 }
 
 .login-signup-dropdown > p {
   margin: 5px 0px 5px 0px;
+  width: 100%;
+}
+
+.login-signup-hover{
+  width: max-content;
+}
+
+.login-signup-hover:hover{
+  background-color: #e6e6e6b6;
 }
 
 .profile-dropdown > p {
@@ -101,6 +123,10 @@
   background: none;
   color: #00525E;
   font-weight: 600;
+}
+
+.create-spot-button-nav:hover{
+  text-decoration: underline;
 }
 
 .profile-circle {

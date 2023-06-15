@@ -19,6 +19,7 @@ function SignupFormModal() {
   useEffect(() => {
     const err = {};
     if(username.trim().length < 4) err.username = 'Username must be more than 4 characters.';
+    if(username.trim().length > 16) err.username = 'Username must be less than 16 characters.';
     if(password.trim().length < 6) err.password = 'Password must be more than 6 characters.';
     if(email.trim().length < 1) err.email = 'Email must not be empty.'
     if(firstName.trim().length < 1) err.firstName = 'First Name must not be empty.'

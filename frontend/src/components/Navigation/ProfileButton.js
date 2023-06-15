@@ -83,11 +83,13 @@ function ProfileButton({ user }) {
         ) : (
           <div className="login-signup-dropdown">
             <OpenModalMenuItem
+              cName="login-signup-hover"
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
             <OpenModalMenuItem
+              cName="login-signup-hover"
               itemText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
