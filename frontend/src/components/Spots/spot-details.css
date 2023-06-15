@@ -75,6 +75,11 @@
 
 .description {
   padding-right: 50px;
+  width: 550px;
+}
+
+.description > p {
+  word-wrap: break-word;
 }
 
 .info {
