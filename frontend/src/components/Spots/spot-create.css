@@ -181,6 +181,14 @@
   box-shadow: 2px 2px 2px black;
 }
 
+.create-spot-button-form:hover{
+  background-color: #f5494f;
+}
+
+.update-spot-button-form:hover{
+  background-color: #f5494f;
+}
+
 .errors-create-spot {
   color:red;
 }

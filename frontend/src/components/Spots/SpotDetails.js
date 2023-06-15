@@ -9,21 +9,29 @@ import ReviewFormModal from "../ReviewFormModal";
 import OpenModalButton from "../OpenModalButton";
 import { thunkGetReviewBySpotId } from "../../store/reviews";
 import LoadingScreen from "../LoadingScreen";
+import CreateBookingModal from "../Bookings/CreateBookingModal";
+import LoginFormModal from "../LoginFormModal"
+import { thunkGetSpotBookings } from "../../store/bookings";
+import { useHistory } from "react-router";
 
 const SpotDetails = () => {
   const {spotId} = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const reviews = useSelector(state => Object.values(state.reviews));
   const spots = useSelector(state => Object.values(state.spots));
   const spot = spots.find(spot => spot.id === parseInt(spotId));
   const currUser = useSelector(state => state.session.user)
+  const bookings = useSelector(state => Object.values(state.bookings.spotBookings))
+
+  useEffect(() => {
+    dispatch(thunkGetSpotBookings(spotId))
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(thunkGetSpotById(spotId));
     dispatch(thunkGetReviewBySpotId(spotId))
   }, [dispatch, spotId]);
-
-
 
   const handleBooking = () => {
     alert('Feature Coming Soon...')
@@ -37,6 +45,22 @@ const SpotDetails = () => {
   reviews.forEach(review => {
     reviewUsers.push(review.User.id);
   })
+
+  const handleBookingButton = () => {
+    const preExistingBooking = bookings.find(booking => booking.userId === currUser.id);
+    if(preExistingBooking) {
+      return <button className="reserve-button changeCursor"  onClick={() => history.push('/bookings/current')}>Booking already made!</button>
+    } else if (spot.ownerId === currUser.id){
+      return <button className="reserve-button changeCursor"  onClick={() => history.push('/bookings/current')}>You can't book your own spot!</button>
+    } else {
+      return <OpenModalButton
+            modalComponent={<CreateBookingModal spotId={spotId} bookings={bookings}/>}
+            cName="reserve-button changeCursor"
+            buttonText="Reserve"
+           />
+    }
+
+  }
 
   return (
     <div className="details-flex">
@@ -81,7 +105,15 @@ const SpotDetails = () => {
               }
             </div>
           </div>
-          <button className="reserve-button changeCursor" onClick={handleBooking}>Reserve</button>
+          {currUser ?
+            handleBookingButton()
+           : <OpenModalButton
+           modalComponent={<LoginFormModal />}
+            cName="reserve-button changeCursor"
+            buttonText="Sign In To Reserve"
+           />
+           }
+
         </div>
       </div>
       <div className="divider-review-top"></div>

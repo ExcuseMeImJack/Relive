@@ -117,16 +117,23 @@ export const thunkDeleteSpot = (spotId) => async(dispatch) => {
   }
 }
 
-export const thunkCreateSpotImage = (spotId, spotImage) => async(dispatch) => {
-  const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+export const thunkCreateSpotImage = (spotID, spotImage) => async(dispatch) => {
+  const { file, preview } = spotImage;
+
+  const formData = new FormData();
+  formData.append("preview", preview);
+  formData.append("url", file);
+
+  const res = await csrfFetch(`/api/spots/${spotID}/images`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "multipart/form-data"
     },
-    body: JSON.stringify(spotImage)
+    body: formData
   });
 
   if(res.ok) {
+    console.log("HIT")
     const newSpotImage = await res.json();
     dispatch(createSpotImageAction(spotImage))
     return newSpotImage;
@@ -165,7 +172,6 @@ const spotsReducer = (state = {}, action) => {
     // DELETE SPOT
     case DELETE_SPOT: {
       const modState = {...state};
-      console.log(modState)
       delete modState[action.spotId];
       return modState;
     }

@@ -1,0 +1,41 @@
+import { useDispatch, useSelector } from 'react-redux';
+import LoadingScreen from '../LoadingScreen';
+import { useHistory } from "react-router-dom";
+import { useEffect } from 'react';
+import { thunkGetAllSpots } from '../../store/spots';
+
+const BookingItem = ({booking}) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  // const spots = useSelector(state => Object.values(state.spots));
+
+
+  if(!booking.Spot || !booking) return null
+
+  const getSpotDetails = () => history.push(`/spots/${booking.Spot.id}`);
+  const currDate = new Date().getTime();
+
+  return (
+    <div title={booking.Spot.name} className="spot-card changeCursor" onClick={getSpotDetails} >
+        <div className="changeCursor" onClick={getSpotDetails} >
+          <div className="spot-image-container">
+            <img className="spot-image" src={booking.Spot.previewImage} alt={booking.Spot.name}/>
+          </div>
+          <div>
+          <div className="spot-card-top bookings-card-top">
+            <div>
+              <p>Booking Start Date: </p>
+              <p className='startDate'>{booking.startDate.split('T')[0]}</p>
+            </div>
+            <div>
+              <p>Booking End Date: </p>
+              <p className='endDate'>{booking.endDate.split('T')[0]}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default BookingItem;

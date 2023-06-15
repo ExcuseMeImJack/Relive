@@ -66,6 +66,14 @@ function ProfileButton({ user }) {
                 Manage Spots
               </button>
             </div>
+            <div className="divider-nav">
+              <button
+                className="manage-spots-button changeCursor"
+                onClick={() => history.push(`/bookings/current`)}
+              >
+                Manage Bookings
+              </button>
+            </div>
             <div className="logoutButtonDiv">
               <button className="el-button changeCursor" onClick={logout}>
                 Log Out
@@ -75,11 +83,13 @@ function ProfileButton({ user }) {
         ) : (
           <div className="login-signup-dropdown">
             <OpenModalMenuItem
+              cName="login-signup-hover"
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
             <OpenModalMenuItem
+              cName="login-signup-hover"
               itemText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}

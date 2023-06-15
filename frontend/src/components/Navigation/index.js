@@ -16,12 +16,21 @@ function Navigation({ isLoaded }){
         <NavLink exact to="/"><img src={icon} className='navIcon'/></NavLink>
         <NavLink exact to="/"><img src={logo} className='navLogo'/></NavLink>
       </div>
+
       {sessionUser &&
       <div className='create-spot-div'>
         <button className='create-spot-button-nav changeCursor' onClick={() => history.push('/spots/new')}>Create a New Spot</button>
       </div>}
 
       <div className='nav-right'>
+        <div className="social-links">
+          <a href="https://github.com/ExcuseMeImJack" target='_blank'>
+            <i className="fa-brands fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/jroybaldev/" target='_blank'>
+            <i className="fa-brands fa-linkedin"></i>
+          </a>
+        </div>
         {isLoaded && (
           <div>
             <ProfileButton user={sessionUser} />

@@ -32,12 +32,20 @@
   box-shadow: 2px 2px 2px black;
 }
 
+.delete-modal-button:hover{
+  background-color: #f5494f;
+}
+
 .close-modal-button {
   background-color: #696969;
   color: white;
   border: black 1px solid;
   padding: 5px;
   box-shadow: 2px 2px 2px black;
+}
+
+.close-modal-button:hover{
+  background-color: #505050;
 }
 
 .confirm-delete-buttons {

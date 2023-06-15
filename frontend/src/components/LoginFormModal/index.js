@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import { useHistory } from "react-router-dom";
+import OpenModalButton from "../OpenModalButton";
+import SignupFormModal from "../SignupFormModal";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -71,6 +73,12 @@ function LoginFormModal() {
           .then(closeModal)
           history.push('/')
         }}>Demo User</button>
+
+        <OpenModalButton
+          cName="demouser-login-button changeCursor"
+          buttonText="Looking to Sign Up?"
+          onButtonClick={closeModal}
+          modalComponent={<SignupFormModal />}/>
       </div>
     </div>
   );

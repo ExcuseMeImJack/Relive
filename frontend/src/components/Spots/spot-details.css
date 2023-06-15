@@ -151,6 +151,10 @@
   box-shadow: 2px 2px 2px black;
 }
 
+.reserve-button:hover{
+  background-color: #f5494f;
+}
+
 /* Entire Reviews Summary */
 .reviews-overall {
   display: flex;
@@ -208,6 +212,10 @@
   color: white;
   border: black 1px solid;
   box-shadow: 2px 2px 2px black;
+}
+
+.review-post-button:hover{
+  background-color: #505050;
 }
 
 .review > h5 {

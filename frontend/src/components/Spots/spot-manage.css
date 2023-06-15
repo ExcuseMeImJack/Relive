@@ -15,6 +15,10 @@
   box-shadow: 2px 2px 2px black;
 }
 
+.manage-bar > button:hover{
+  background-color: #505050;
+}
+
 .update-button {
   background-color: #696969;
   color: white;
@@ -22,11 +26,19 @@
   box-shadow: 2px 2px 2px black;
 }
 
+.update-button:hover{
+  background-color: #505050;
+}
+
 .delete-button {
   background-color: #696969;
   color: white;
   border: black 1px solid;
   box-shadow: 2px 2px 2px black;
+}
+
+.delete-button:hover{
+  background-color: #505050;
 }
 
 .manage-buttons {

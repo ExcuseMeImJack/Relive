@@ -88,94 +88,102 @@ const ReviewFormModal = ({ spotId }) => {
       )}
       <form onSubmit={handleSubmit}>
         <div className="ReviewCreateFormContainer">
-        <textarea
-          onChange={(e) => setReview(e.target.value)}
-          value={review}
-          placeholder="Leave your review here..."
-        ></textarea>
-        <div className="rating-input"></div>
-        {/* fa-regular fa-star star */}
-        {/* fa-solid fa-star star */}
-        <div className="create-review-div">
-          <button
-            type="button"
-            className={hoverRating >= 1 || rating >= 1 ? "filled" : "empty"}
-            onMouseEnter={() => setHoverRating(1)}
-            onMouseLeave={() => setHoverRating(0)}
-            onClick={() => setRating(1)}
-          >
-            <i
-              className={
-                hoverRating >= 1 || rating >= 1
-                  ? "fa-solid fa-star star changeCursor"
-                  : "fa-regular fa-star star changeCursor"
-              }
-            ></i>
-          </button>
-          <button
-            type="button"
-            className={hoverRating >= 2 || rating >= 2 ? "filled" : "empty"}
-            onMouseEnter={() => setHoverRating(2)}
-            onMouseLeave={() => setHoverRating(0)}
-            onClick={() => setRating(2)}
-          >
-            <i
-              className={
-                hoverRating >= 2 || rating >= 2
-                  ? "fa-solid fa-star star changeCursor"
-                  : "fa-regular fa-star star changeCursor"
-              }
-            ></i>
-          </button>
-          <button
-            type="button"
-            className={hoverRating >= 3 || rating >= 3 ? "filled" : "empty"}
-            onMouseEnter={() => setHoverRating(3)}
-            onMouseLeave={() => setHoverRating(0)}
-            onClick={() => setRating(3)}
-          >
-            <i
-              className={
-                hoverRating >= 3 || rating >= 3
-                  ? "fa-solid fa-star star changeCursor"
-                  : "fa-regular fa-star star changeCursor"
-              }
-            ></i>
-          </button>
-          <button
-            type="button"
-            className={hoverRating >= 4 || rating >= 4 ? "filled" : "empty"}
-            onMouseEnter={() => setHoverRating(4)}
-            onMouseLeave={() => setHoverRating(0)}
-            onClick={() => setRating(4)}
-          >
-            <i
-              className={
-                hoverRating >= 4 || rating >= 4
-                  ? "fa-solid fa-star star changeCursor"
-                  : "fa-regular fa-star star changeCursor"
-              }
-            ></i>
-          </button>
-          <button
-            type="button"
-            className={hoverRating >= 5 || rating >= 5 ? "filled" : "empty"}
-            onMouseEnter={() => setHoverRating(5)}
-            onMouseLeave={() => setHoverRating(0)}
-            onClick={() => setRating(5)}
-          >
-            <i
-              className={
-                hoverRating >= 5 || rating >= 5
-                  ? "fa-solid fa-star star changeCursor"
-                  : "fa-regular fa-star star changeCursor"
-              }
-            ></i>
-          </button>
-          <p>Stars</p>
+          <textarea
+            onChange={(e) => setReview(e.target.value)}
+            value={review}
+            placeholder="Leave your review here..."
+          ></textarea>
+          <div className="rating-input"></div>
+          {/* fa-regular fa-star star */}
+          {/* fa-solid fa-star star */}
+          <div className="create-review-div">
+            <button
+              type="button"
+              className={hoverRating >= 1 || rating >= 1 ? "filled" : "empty"}
+              onMouseEnter={() => setHoverRating(1)}
+              onMouseLeave={() => setHoverRating(0)}
+              onClick={() => setRating(1)}
+            >
+              <i
+                className={
+                  hoverRating >= 1 || rating >= 1
+                    ? "fa-solid fa-star star changeCursor"
+                    : "fa-regular fa-star star changeCursor"
+                }
+              ></i>
+            </button>
+            <button
+              type="button"
+              className={hoverRating >= 2 || rating >= 2 ? "filled" : "empty"}
+              onMouseEnter={() => setHoverRating(2)}
+              onMouseLeave={() => setHoverRating(0)}
+              onClick={() => setRating(2)}
+            >
+              <i
+                className={
+                  hoverRating >= 2 || rating >= 2
+                    ? "fa-solid fa-star star changeCursor"
+                    : "fa-regular fa-star star changeCursor"
+                }
+              ></i>
+            </button>
+            <button
+              type="button"
+              className={hoverRating >= 3 || rating >= 3 ? "filled" : "empty"}
+              onMouseEnter={() => setHoverRating(3)}
+              onMouseLeave={() => setHoverRating(0)}
+              onClick={() => setRating(3)}
+            >
+              <i
+                className={
+                  hoverRating >= 3 || rating >= 3
+                    ? "fa-solid fa-star star changeCursor"
+                    : "fa-regular fa-star star changeCursor"
+                }
+              ></i>
+            </button>
+            <button
+              type="button"
+              className={hoverRating >= 4 || rating >= 4 ? "filled" : "empty"}
+              onMouseEnter={() => setHoverRating(4)}
+              onMouseLeave={() => setHoverRating(0)}
+              onClick={() => setRating(4)}
+            >
+              <i
+                className={
+                  hoverRating >= 4 || rating >= 4
+                    ? "fa-solid fa-star star changeCursor"
+                    : "fa-regular fa-star star changeCursor"
+                }
+              ></i>
+            </button>
+            <button
+              type="button"
+              className={hoverRating >= 5 || rating >= 5 ? "filled" : "empty"}
+              onMouseEnter={() => setHoverRating(5)}
+              onMouseLeave={() => setHoverRating(0)}
+              onClick={() => setRating(5)}
+            >
+              <i
+                className={
+                  hoverRating >= 5 || rating >= 5
+                    ? "fa-solid fa-star star changeCursor"
+                    : "fa-regular fa-star star changeCursor"
+                }
+              ></i>
+            </button>
+            <p>Stars</p>
+          </div>
         </div>
-        </div>
-        <button className={Object.values(errors).length > 0 ? 'login-button-invalid' : 'login-button-valid changeCursor'} type="submit" disabled={Object.values(errors).length > 0}>
+        <button
+          className={
+            Object.values(errors).length > 0
+              ? "login-button-invalid"
+              : "login-button-valid changeCursor"
+          }
+          type="submit"
+          disabled={Object.values(errors).length > 0}
+        >
           Submit Your Review
         </button>
       </form>

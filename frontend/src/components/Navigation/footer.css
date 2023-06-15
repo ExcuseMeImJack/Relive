@@ -1,0 +1,17 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  height: 35px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 12pt;
+  float: left;
+  width: 100%;
+}
+
+.social-links a {
+  color: var(--text-color);;
+  text-decoration: none;
+}

@@ -4,6 +4,7 @@ import { useModal } from '../../context/Modal';
 import { Link } from 'react-router-dom';
 
 function OpenModalMenuItem({
+  cName,
   modalComponent, // component to render inside the modal
   itemText, // text of the menu item that opens the modal
   onItemClick, // optional: callback function that will be called once the menu item that opens the modal is clicked
@@ -18,7 +19,7 @@ function OpenModalMenuItem({
   };
 
   return (
-    <p className='changeCursor' onClick={onClick}>{itemText}</p>
+    <p className={cName + ' changeCursor'} onClick={onClick}>{itemText}</p>
   );
 }
 

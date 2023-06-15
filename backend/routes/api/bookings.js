@@ -35,41 +35,55 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
   const booking = await Booking.findByPk(req.params.bookingId);
 
-  if(!booking) return res.status(404).json({ message: "Review couldn't be found" });
+  if(!booking) return res.status(404).json({ message: "Booking couldn't be found" });
 
   const date = new Date();
   const currTime = date.getTime();
   if(currTime > booking.startDate.getTime()) return res.status(403).json({ message: "Past bookings can't be modified" });
 
-  const bookingStartDate = booking.startDate;
-  const bookingEndDate = booking.endDate;
-  const newStartDate = new Date(startDate);
-  const newEndDate = new Date(endDate);
-  const bookingStartTime = bookingStartDate.getTime();
-  const bookingEndTime = bookingEndDate.getTime();
-  const startTime = newStartDate.getTime();
-  const endTime = newEndDate.getTime();
+  const allBookings = await Booking.findAll({
+    where: {
+      id: req.params.bookingId
+    }
+  })
 
-  if (endTime <= startTime) {
-    return res.status(400).json({
-        message: "Bad Request",
-        errors: {
-            endDate: "endDate cannot be on or before startDate"
-        }
-    });
-  }
+  const approvedBookings = allBookings.filter(booking => booking.id !== parseInt(req.params.bookingId))
 
-  if (startTime >= bookingStartTime && startTime <= bookingEndTime) errors.startDate = "Start date conflicts with an existing booking"
+  let bookings = []
+  approvedBookings.forEach(booking => {
+    bookings.push(booking.toJSON())
+  })
 
-  if (endTime >= bookingStartTime && endTime <= bookingEndTime) errors.endDate = "End date conflicts with an existing booking"
+  bookings.forEach(currBooking => {
+    const bookingStartDate = currBooking.startDate;
+    const bookingEndDate = currBooking.endDate;
+    const newStartDate = new Date(startDate);
+    const newEndDate = new Date(endDate);
+    const bookingStartTime = bookingStartDate.getTime();
+    const bookingEndTime = bookingEndDate.getTime();
+    const startTime = newStartDate.getTime();
+    const endTime = newEndDate.getTime();
 
-  if(Object.keys(errors).length) {
-    return res.status(403).json({
-      message: "Sorry, this spot is already booked for the specified dates",
-      errors
-    });
-  }
+    if (endTime <= startTime) {
+      return res.status(400).json({
+          message: "Bad Request",
+          errors: {
+              endDate: "endDate cannot be on or before startDate"
+          }
+      });
+    }
 
+    if (startTime >= bookingStartTime && startTime <= bookingEndTime) errors.startDate = "Start date conflicts with an existing booking"
+
+    if (endTime >= bookingStartTime && endTime <= bookingEndTime) errors.endDate = "End date conflicts with an existing booking"
+    console.log(errors)
+    if(Object.keys(errors).length > 0) {
+      return res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        errors
+      });
+    }
+  })
   if(booking.userId === user.id) {
 
     const modifiedBooking = await booking.update({
@@ -83,6 +97,8 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
   }
 
 });
+
+
 
 // Get all of the Current User's Bookings
 router.get('/current', requireAuth, async(req, res) => {
@@ -136,6 +152,8 @@ router.get('/current', requireAuth, async(req, res) => {
     res.status(200).json({['Bookings']: bookingsList})
   }
 });
+
+
 
 
 // My preferred method of doing this is to use the getTime method on date objects.  This returns a number, the number of milliseconds since a specific date about 50 years ago.  You can use this number to compare against the value for other date objects, and if the number is the same, the dates are the same.

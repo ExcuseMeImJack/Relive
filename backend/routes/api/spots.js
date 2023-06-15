@@ -6,6 +6,11 @@ const { handleValidationErrors } = require("../../utils/validation");
 const {Op} = require("sequelize");
 const { where } = require("sequelize");
 
+const {
+  singleMulterUpload,
+  singlePublicFileUpload,
+} = require("../../awsS3");
+
 const router = express.Router();
 
 const doesSpotExist = async (spotIdParam) => {
@@ -158,7 +163,16 @@ router.get('/:spotId/bookings', [requireAuth], async (req, res) =>{
 
     return res.json({['Bookings']: ownerBookings})
   } else if(user.id !== spot.ownerId){
-    const clientBookings = await Booking.findAll({where:{spotId: req.params.spotId}, attributes:{exclude:['id', 'userId', 'createdAt', 'updatedAt']}});
+    const clientBookings = await Booking.findAll({where:{spotId: req.params.spotId}, attributes:{exclude:['createdAt', 'updatedAt']}, include: [
+      {
+        model: Spot,
+        attributes: {exclude:['description', 'createdAt', 'updatedAt']},
+        include:
+        {
+          model: SpotImage
+        }
+      },
+    ],});
     return res.json({['Bookings']: clientBookings})
   }
 });
@@ -276,19 +290,23 @@ router.get("/current", [requireAuth], async (req, res) => {
 });
 
 // Create an Image for a spotId
-router.post("/:spotId/images", requireAuth, async (req, res) => {
+router.post(
+  "/:spotId/images",
+  requireAuth,
+  singleMulterUpload("url"),
+  async (req, res) => {
   if ((await doesSpotExist(req.params.spotId)) === false)
     return res.status(404).json({ message: "Spot couldn't be found" });
 
   const { user } = req;
   const spot = await Spot.findByPk(req.params.spotId);
   if (user.id === spot.ownerId) {
-    const { url, preview } = req.body;
 
+    const url = await singlePublicFileUpload(req.file)
     const newSpotImage = await SpotImage.create({
       spotId: req.params.spotId,
       url,
-      preview,
+      preview: req.body.preview,
     });
 
     const newSpotImageModified = await SpotImage.findOne({where: {id: newSpotImage.id}, attributes: {exclude: ['spotId', 'updatedAt', 'createdAt']}});
