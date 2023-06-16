@@ -46,8 +46,8 @@ const CreateBookingModal = ({spotId, bookings}) => {
         setErrors(newBooking.errors);
       } else {
         closeModal();
-        await dispatch(thunkGetSpotBookings(spotId))
-        await dispatch(thunkGetSpotById(spotId));
+        dispatch(thunkGetSpotBookings(spotId))
+        dispatch(thunkGetSpotById(spotId));
         setErrors({});
         closeModal();
       }

@@ -154,11 +154,8 @@ const bookingsReducer = (state = {bookings: {}, spotBookings: {}}, action) => {
     }
     case DELETE_BOOKING: {
       const modState = {...state};
-      console.log(action)
-      console.log(modState)
       delete modState.bookings[action.booking];
       delete modState.spotBookings[action.booking];
-      console.log(modState)
       return modState
     }
     default:
