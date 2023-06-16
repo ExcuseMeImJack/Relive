@@ -1,7 +1,7 @@
 // import { useDispatch } from "react-redux"
 // import { thunkGetSpotById } from "../../store/spots";
 // import { useEffect } from "react";
-import LoadingScreen from '../LoadingScreen';
+import Loading from '../Loading';
 import './spots.css'
 import { useHistory } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const SpotItem = ({spot}) => {
 
   const getSpotDetails = () => history.push(`/spots/${spot.id}`);
 
-  if(!spot.previewImage ) return <LoadingScreen />
+  if(!spot.previewImage ) return <Loading />
 
   return (
     <div title={spot.name} className="spot-card changeCursor" onClick={getSpotDetails} >

@@ -7,6 +7,7 @@ import DeleteModal from '../DeleteSpot'
 import { useHistory } from "react-router";
 import './spots.css'
 import './spot-manage.css'
+import Loading from "../Loading";
 
 const SpotManagement = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const SpotManagement = () => {
   spots.forEach(spot => {
     if (spot.ownerId === currUser.id) currUserSpots.push(spot);
   });
+
+  if(!spots) return <Loading/>
 
   return (
    <div className="manage-spots-page">

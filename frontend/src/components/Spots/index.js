@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { thunkGetAllSpots } from '../../store/spots';
 import SpotItem from './SpotItem';
 import './spots.css'
-import LoadingScreen from '../LoadingScreen';
+import Loading from '../Loading';
 
 const Spots = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const Spots = () => {
       </div>
     );
   } else {
-    return <LoadingScreen />
+    return <Loading/>
   }
 }
 

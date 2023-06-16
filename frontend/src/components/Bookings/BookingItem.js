@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingScreen from '../LoadingScreen';
 import { useHistory } from "react-router-dom";
 import { useEffect } from 'react';
 import { thunkGetAllSpots } from '../../store/spots';
+import Loading from '../Loading';
 
 const BookingItem = ({booking}) => {
   const history = useHistory();
@@ -10,7 +10,7 @@ const BookingItem = ({booking}) => {
   // const spots = useSelector(state => Object.values(state.spots));
 
 
-  if(!booking.Spot || !booking) return null
+  if(!booking.Spot || !booking) return <Loading/>
 
   const getSpotDetails = () => history.push(`/spots/${booking.Spot.id}`);
   const currDate = new Date().getTime();
