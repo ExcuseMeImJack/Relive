@@ -4,6 +4,7 @@ import BookingItem from "./BookingItem";
 import OpenModalButton from "../OpenModalButton";
 import UpdateBookingModal from './UpdateBookingModal';
 import DeleteBookingModal from './DeleteBookingModal';
+import Loading from '../Loading';
 const { useEffect } = require("react");
 const { useSelector, useDispatch } = require("react-redux");
 const { thunkGetUserBookings } = require("../../store/bookings");
@@ -18,7 +19,7 @@ const BookingManagement = () => {
     dispatch(thunkGetUserBookings());
   }, [dispatch]);
 
-  if(!bookings) return null
+  if(!bookings) return <Loading/>
 
   return (
     <div className="manage-spots-page">

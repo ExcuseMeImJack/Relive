@@ -8,11 +8,11 @@ import Reviews from "../Reviews/index";
 import ReviewFormModal from "../ReviewFormModal";
 import OpenModalButton from "../OpenModalButton";
 import { thunkGetReviewBySpotId } from "../../store/reviews";
-import LoadingScreen from "../LoadingScreen";
 import CreateBookingModal from "../Bookings/CreateBookingModal";
 import LoginFormModal from "../LoginFormModal"
 import { thunkGetSpotBookings } from "../../store/bookings";
 import { useHistory } from "react-router";
+import Loading from "../Loading";
 
 const SpotDetails = () => {
   const {spotId} = useParams();
@@ -37,8 +37,8 @@ const SpotDetails = () => {
     alert('Feature Coming Soon...')
   }
 
-  if(!spot) return <LoadingScreen/>;
-  if(!spot.SpotImages) return <LoadingScreen/>
+  if(!spot) return <Loading/>;
+  if(!spot.SpotImages) return <Loading/>
 
   let reviewUsers = [];
 
