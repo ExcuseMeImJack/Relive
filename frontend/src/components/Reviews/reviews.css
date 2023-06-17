@@ -27,3 +27,7 @@
 .delete-review-button:hover{
   background-color: #505050;
 }
+
+.review{
+  width: 450px;
+}
