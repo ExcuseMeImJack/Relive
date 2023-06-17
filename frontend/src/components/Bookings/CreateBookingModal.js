@@ -10,10 +10,18 @@ const CreateBookingModal = ({spotId, bookings}) => {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [errors, setErrors] = useState({})
+  const [lenErrors, setLenErrors] = useState({})
   const [isSubmitted, setIsSubmitted] = useState(false)
   const {closeModal} = useModal();
 
   const currUser = useSelector(state => state.session.user)
+
+  useEffect(() => {
+    const err ={};
+    if(!startDate) err.startDate = "Booking Start date required."
+    if(!endDate) err.endDate = "Booking End date required."
+    setLenErrors(err);
+  }, [startDate, endDate])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,8 +54,8 @@ const CreateBookingModal = ({spotId, bookings}) => {
         setErrors(newBooking.errors);
       } else {
         closeModal();
-        await dispatch(thunkGetSpotBookings(spotId))
-        await dispatch(thunkGetSpotById(spotId));
+        dispatch(thunkGetSpotBookings(spotId))
+        dispatch(thunkGetSpotById(spotId));
         setErrors({});
         closeModal();
       }
@@ -56,6 +64,12 @@ const CreateBookingModal = ({spotId, bookings}) => {
   }
 
   const currDate = new Date().toISOString().split("T")[0];
+
+  const decideError = () => {
+    if(lenErrors.startDate && lenErrors.endDate) return <p className="errors-shown-removepadding">Please enter a Start Date and an End Date.</p>
+    else if(lenErrors.startDate) return <p className="errors-shown-removepadding">{lenErrors.startDate}</p>
+    else if(lenErrors.endDate) return <p className="errors-shown-removepadding">{lenErrors.endDate}</p>
+  }
 
   return (
     <div className="create-booking-modal-div">
@@ -84,6 +98,7 @@ const CreateBookingModal = ({spotId, bookings}) => {
             }}/>
           </div>
         </div>
+          {decideError()}
         <button
           className={
             Object.values(errors).length > 0 || (startDate === '' || endDate === '')

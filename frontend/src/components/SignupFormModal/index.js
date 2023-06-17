@@ -24,8 +24,9 @@ function SignupFormModal() {
     if(email.trim().length < 1) err.email = 'Email must not be empty.'
     if(firstName.trim().length < 1) err.firstName = 'First Name must not be empty.'
     if(lastName.trim().length < 1) err.lastName = 'Last Name must not be empty.'
+    if(confirmPassword.trim().length < 1) err.confirmPassword = 'Please retype your password.'
     setErrors(err);
-  }, [username, password, email, firstName, lastName])
+  }, [username, password, email, firstName, lastName, confirmPassword])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,15 +61,10 @@ function SignupFormModal() {
         <h2-semibold>Sign Up</h2-semibold>
       </div>
       <div className="errors-div">
-        {isSubmitted && errors.firstName && <p className="errors-shown-removepadding">{errors.firstName}</p>}
-        {isSubmitted && errors.lastName && <p className="errors-shown-removepadding">{errors.lastName}</p>}
-        {isSubmitted && errors.email && <p className="errors-shown-removepadding">{errors.email}</p>}
-        {isSubmitted && errors.username && <p className="errors-shown-removepadding">{errors.username}</p>}
-        {isSubmitted && errors.password && <p className="errors-shown-removepadding">{errors.password}</p>}
-        {isSubmitted && errors.confirmPassword && (<p className="errors-shown-removepadding">{errors.confirmPassword}</p>)}
       </div>
       <div className="signup-form-div">
       <form onSubmit={handleSubmit}>
+        {errors.firstName && <p className="errors-shown-removepadding">{errors.firstName}</p>}
         <div className="signup-input">
           <input
             type="text"
@@ -79,6 +75,7 @@ function SignupFormModal() {
           />
         </div>
 
+        {errors.lastName && <p className="errors-shown-removepadding">{errors.lastName}</p>}
         <div className="signup-input">
           <input
             type="text"
@@ -88,6 +85,7 @@ function SignupFormModal() {
             placeholder="Last Name"
           />
         </div>
+        {errors.email && <p className="errors-shown-removepadding">{errors.email}</p>}
         <div className="signup-input">
           <input
             type="text"
@@ -98,6 +96,7 @@ function SignupFormModal() {
           />
         </div >
 
+        {errors.username && <p className="errors-shown-removepadding">{errors.username}</p>}
         <div className="signup-input">
           <input
             type="text"
@@ -108,6 +107,7 @@ function SignupFormModal() {
           />
         </div>
 
+        {errors.password && <p className="errors-shown-removepadding">{errors.password}</p>}
         <div className="signup-input">
           <input
             type="password"
@@ -117,7 +117,7 @@ function SignupFormModal() {
             placeholder="Password"
           />
         </div>
-
+        {errors.confirmPassword && (<p className="errors-shown-removepadding">{errors.confirmPassword}</p>)}
         <div className="signup-input">
           <input
             type="password"

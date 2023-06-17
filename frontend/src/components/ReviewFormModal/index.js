@@ -88,6 +88,9 @@ const ReviewFormModal = ({ spotId }) => {
       )}
       <form onSubmit={handleSubmit}>
         <div className="ReviewCreateFormContainer">
+          {errors.review && (
+            <p className="errors-shown-removepadding">{errors.review}</p>
+          )}
           <textarea
             onChange={(e) => setReview(e.target.value)}
             value={review}
@@ -96,6 +99,9 @@ const ReviewFormModal = ({ spotId }) => {
           <div className="rating-input"></div>
           {/* fa-regular fa-star star */}
           {/* fa-solid fa-star star */}
+          {errors.rating && (
+            <p className="errors-shown-removepadding">{errors.rating}</p>
+          )}
           <div className="create-review-div">
             <button
               type="button"

@@ -13,6 +13,7 @@ import LoginFormModal from "../LoginFormModal"
 import { thunkGetSpotBookings } from "../../store/bookings";
 import { useHistory } from "react-router";
 import Loading from "../Loading";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const SpotDetails = () => {
   const {spotId} = useParams();
@@ -25,20 +26,21 @@ const SpotDetails = () => {
   const bookings = useSelector(state => Object.values(state.bookings.spotBookings))
 
   useEffect(() => {
-    dispatch(thunkGetSpotBookings(spotId))
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(thunkGetSpotById(spotId));
     dispatch(thunkGetReviewBySpotId(spotId))
   }, [dispatch, spotId]);
 
-  const handleBooking = () => {
-    alert('Feature Coming Soon...')
-  }
+  useEffect(() => {
+
+    if(currUser ) {
+        dispatch(thunkGetSpotBookings(spotId));
+    }
+  }, [dispatch, currUser])
+
 
   if(!spot) return <Loading/>;
   if(!spot.SpotImages) return <Loading/>
+  if(!bookings) return <Loading/>
 
   let reviewUsers = [];
 
@@ -47,8 +49,14 @@ const SpotDetails = () => {
   })
 
   const handleBookingButton = () => {
-    const preExistingBooking = bookings.find(booking => booking.userId === currUser.id);
-    if(preExistingBooking) {
+    const preExistingBooking = bookings.find(booking => booking.spotId === +spotId && booking.userId === currUser.id);
+    // const preExistingBooking = bookings.find(booking => {
+    //   if(booking.spotId === +spotId){
+    //     if(booking.userId === currUser.id) return true
+    //     else return false
+    //   } else return false
+    // });
+    if(preExistingBooking && spot.id === +spotId) {
       return <button className="reserve-button changeCursor"  onClick={() => history.push('/bookings/current')}>Booking already made!</button>
     } else if (spot.ownerId === currUser.id){
       return <button className="reserve-button changeCursor"  onClick={() => history.push('/bookings/current')}>You can't book your own spot!</button>
