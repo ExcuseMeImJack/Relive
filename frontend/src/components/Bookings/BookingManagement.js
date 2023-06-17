@@ -21,6 +21,38 @@ const BookingManagement = () => {
 
   if(!bookings) return <Loading/>
 
+  const currDate = new Date().getTime();
+
+  const calDate = (booking) => {
+    if (currDate < new Date(booking.startDate).getTime()) {
+      return (
+        <div className="manage-buttons">
+            <OpenModalButton
+                cName="delete-button changeCursor"
+                modalComponent={<UpdateBookingModal currBooking={booking} spotId={booking.spotId}/>}
+                buttonText="Update"
+              />
+              <OpenModalButton
+                cName="delete-button changeCursor"
+                modalComponent={<DeleteBookingModal bookingId={booking.id}/>}
+                buttonText="Delete"
+              />
+            </div>
+      );
+    } else {
+      return (
+        <div className="manage-buttons">
+              <OpenModalButton
+                cName="delete-button changeCursor"
+                modalComponent={<DeleteBookingModal bookingId={booking.id}/>}
+                buttonText="Delete Past Booking"
+              />
+            </div>
+
+      );
+    }
+  };
+
   return (
     <div className="manage-spots-page">
       <div className="manage-bar manage-bookings-bar">
@@ -31,18 +63,7 @@ const BookingManagement = () => {
         {bookings.map((booking) => (
           <div key={booking.id}>
             <BookingItem booking={booking} />
-            <div className="manage-buttons">
-            <OpenModalButton
-                cName="delete-button changeCursor"
-                modalComponent={<UpdateBookingModal bookings={bookings} currBooking={booking} spotId={booking.spotId}/>}
-                buttonText="Update"
-              />
-              <OpenModalButton
-                cName="delete-button changeCursor"
-                modalComponent={<DeleteBookingModal bookingId={booking.id}/>}
-                buttonText="Delete"
-              />
-            </div>
+              {calDate(booking)}
           </div>
         ))}
       </div>
