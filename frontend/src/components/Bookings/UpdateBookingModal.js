@@ -22,6 +22,7 @@ const UpdateBookingModal = ({ bookings, currBooking, spotId }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { closeModal } = useModal();
   const spotBookings = useSelector(state => Object.values(state.bookings.spotBookings))
+  const [noChange, setNoChange] = useState(false)
 
   useEffect(() => {
     dispatch(thunkGetSpotBookings(spotId))
@@ -29,6 +30,9 @@ const UpdateBookingModal = ({ bookings, currBooking, spotId }) => {
 
   useEffect(() => {
     const err = {};
+
+    if(oldStart !== startDate) setNoChange(true)
+    if(oldEnd !== endDate) setNoChange(true)
 
     const allBookings = spotBookings.filter(booking => booking.id !== currBooking.id)
 
@@ -54,7 +58,7 @@ const UpdateBookingModal = ({ bookings, currBooking, spotId }) => {
         err.endDate = "Booking End conflicts with an existing booking";
       setErrors(err);
     });
-  }, [startDate, endDate])
+  }, [startDate, endDate, oldEnd, oldStart])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,6 +136,7 @@ const UpdateBookingModal = ({ bookings, currBooking, spotId }) => {
             />
           </div>
         </div>
+        {!noChange && <p className="errors-shown-removepadding">Please make a change to one of the dates.</p>}
         <button
           className={
             Object.values(errors).length > 0 ||
