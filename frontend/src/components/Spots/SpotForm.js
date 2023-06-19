@@ -76,6 +76,7 @@ const SpotForm = ({ spot, formType }) => {
       err.description = "Description needs a minimum of 30 characters";
     if (spotName.trim().length < 1) err.spotName = "Name is required";
     if (price.length < 1) err.price = "Price is required";
+    if (price.length > 0 && isNaN(parseInt(price))) err.price = "Price must be a number value";
     if (formType === "create") {
       if (!previewImage) err.previewImage = "Preview Image is required";
     }
