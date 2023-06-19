@@ -19,7 +19,7 @@ function LoginFormModal() {
   useEffect(() => {
     const err = {};
     if (credential.length < 4)
-      err.credentials = "Username/Email must be more than 4 characters.";
+      err.credential = "Username/Email must be more than 4 characters.";
     if (password.length < 6)
       err.password = "Password must be 6 or more characters.";
     setErrors(err);
@@ -44,8 +44,8 @@ function LoginFormModal() {
       <h2-semibold className="login-text">Log In</h2-semibold>
       <form onSubmit={handleSubmit}>
         <div className="login-credential-div">
-          {errors.credentials && (
-            <p className="errors-shown-removepadding"  id="errors">{errors.credentials}</p>
+          {errors.credential && (
+            <p className="errors-shown-removepadding"  id="errors">{errors.credential}</p>
           )}
           <input
             className="login-credential-input"
