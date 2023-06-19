@@ -36,9 +36,9 @@ const UpdateBookingModal = ({ currBooking, spotId }) => {
     if (oldStart !== startDate) setNoChange(true);
     if (oldEnd !== endDate) setNoChange(true);
 
-    console.log(spotBookings);
-    const allBookings = spotBookings.filter(booking => booking.spotId === +spotId && booking.id !== currBooking.id);
-    console.log(allBookings);
+    const allBookings = spotBookings.filter(
+      (booking) => booking.spotId === +spotId && booking.id !== currBooking.id
+    );
 
     allBookings.forEach((booking) => {
       const newBookingStartTime = new Date(startDate).getTime();
@@ -111,20 +111,16 @@ const UpdateBookingModal = ({ currBooking, spotId }) => {
         </h2-semibold>
       </div>
 
-      {errors.startDate && (
-        <p className={errors.startDate ? "errors-shown" : "errors-hidden"}>
-          {errors.startDate}
-        </p>
-      )}
-      {errors.endDate && (
-        <p className={errors.endDate ? "errors-shown" : "errors-hidden"}>
-          {errors.endDate}
-        </p>
-      )}
-
       <form onSubmit={handleSubmit} className="booking-create-form">
         <div className="BookingCreateFormContainer">
           <div className="booking-start-date">
+            {errors.startDate && (
+              <p
+                className={errors.startDate ? "errors-shown" : "errors-hidden"}
+              >
+                {isSubmitted && errors.startDate}
+              </p>
+            )}
             <label>Booking Start:</label>
             <input
               type="date"
@@ -138,6 +134,11 @@ const UpdateBookingModal = ({ currBooking, spotId }) => {
             />
           </div>
           <div className="booking-end-date">
+            {errors.endDate && (
+              <p className={errors.endDate ? "errors-shown" : "errors-hidden"}>
+                {isSubmitted && errors.endDate}
+              </p>
+            )}
             <label>Booking End:</label>
             <input
               type="date"

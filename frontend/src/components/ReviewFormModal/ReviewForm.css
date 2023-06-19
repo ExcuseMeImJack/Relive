@@ -26,6 +26,7 @@
 
 .errors-shown {
   color: red;
+  margin: 2px 0px;
 }
 
 .errors-hidden {

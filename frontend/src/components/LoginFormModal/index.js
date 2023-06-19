@@ -15,11 +15,12 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   useEffect(() => {
     const err = {};
     if (credential.length < 4)
-      err.credentials = "Username/Email must be more than 4 characters.";
+      err.credential = "Username/Email must be more than 4 characters.";
     if (password.length < 6)
       err.password = "Password must be 6 or more characters.";
     setErrors(err);
@@ -27,8 +28,9 @@ function LoginFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
+    setIsSubmitted(true)
+    if(Object.values(errors).length < 1){
+      return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .then(history.push("/"))
       .catch(async (res) => {
@@ -37,6 +39,7 @@ function LoginFormModal() {
           setErrors(data.errors);
         }
       });
+    }
   };
 
   return (
@@ -44,20 +47,19 @@ function LoginFormModal() {
       <h2-semibold className="login-text">Log In</h2-semibold>
       <form onSubmit={handleSubmit}>
         <div className="login-credential-div">
-          {errors.credentials && (
-            <p className="errors-shown-removepadding"  id="errors">{errors.credentials}</p>
+          {isSubmitted && errors.credential && (
+            <p className="errors-shown-removepadding"  id="errors">{errors.credential}</p>
           )}
           <input
             className="login-credential-input"
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
-            required
             placeholder="Username or Email"
           />
         </div>
         <div className="login-password-div">
-          {errors.password && (
+          {isSubmitted && errors.password && (
             <p className="errors-shown-removepadding" id="errors">{errors.password}</p>
           )}
           <input
@@ -65,19 +67,13 @@ function LoginFormModal() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
             placeholder="Password"
           />
         </div>
         <div className="login-div">
           <button
-            className={
-              Object.values(errors).length > 0
-                ? "login-button-invalid"
-                : "login-button-valid changeCursor"
-            }
+            className='login-button-valid changeCursor'
             type="submit"
-            disabled={Object.values(errors).length > 0}
           >
             Log In
           </button>

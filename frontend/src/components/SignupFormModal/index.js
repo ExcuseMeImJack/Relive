@@ -31,7 +31,7 @@ function SignupFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
-    if (password === confirmPassword) {
+    if (password === confirmPassword && Object.values(errors).length < 1) {
       setErrors({});
       return dispatch(
         sessionActions.signup({
@@ -49,10 +49,11 @@ function SignupFormModal() {
             setErrors(data.errors);
           }
         });
+    } else if (password !== confirmPassword) {
+      return setErrors({
+        confirmPassword: "Confirm Password field must be the same as the Password field"
+      });
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
   };
 
   return (
@@ -64,71 +65,65 @@ function SignupFormModal() {
       </div>
       <div className="signup-form-div">
       <form onSubmit={handleSubmit}>
-        {errors.firstName && <p className="errors-shown-removepadding">{errors.firstName}</p>}
+        {isSubmitted && errors.firstName && <p className="errors-shown-removepadding">{errors.firstName}</p>}
         <div className="signup-input">
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            required
             placeholder="First Name"
           />
         </div>
 
-        {errors.lastName && <p className="errors-shown-removepadding">{errors.lastName}</p>}
+        {isSubmitted && errors.lastName && <p className="errors-shown-removepadding">{errors.lastName}</p>}
         <div className="signup-input">
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            required
             placeholder="Last Name"
           />
         </div>
-        {errors.email && <p className="errors-shown-removepadding">{errors.email}</p>}
+        {isSubmitted && errors.email && <p className="errors-shown-removepadding">{errors.email}</p>}
         <div className="signup-input">
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
             placeholder="Email"
           />
         </div >
 
-        {errors.username && <p className="errors-shown-removepadding">{errors.username}</p>}
+        {isSubmitted && errors.username && <p className="errors-shown-removepadding">{errors.username}</p>}
         <div className="signup-input">
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
             placeholder="Username"
           />
         </div>
 
-        {errors.password && <p className="errors-shown-removepadding">{errors.password}</p>}
+        {isSubmitted && errors.password && <p className="errors-shown-removepadding">{errors.password}</p>}
         <div className="signup-input">
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
             placeholder="Password"
           />
         </div>
-        {errors.confirmPassword && (<p className="errors-shown-removepadding">{errors.confirmPassword}</p>)}
+        {isSubmitted && errors.confirmPassword && (<p className="errors-shown-removepadding">{errors.confirmPassword}</p>)}
         <div className="signup-input">
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
             placeholder="Confirm Password"
           />
         </div>
 
-        <button className={Object.values(errors).length > 0 ? 'login-button-invalid' : 'login-button-valid changeCursor'} type="submit" disabled={Object.values(errors).length > 0}>Sign Up</button>
+        <button className='login-button-valid changeCursor' type="submit" >Sign Up</button>
       </form>
       </div>
     </div>
