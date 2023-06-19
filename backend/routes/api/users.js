@@ -37,7 +37,7 @@ router.post(
   async (req, res, next) => {
     const { email, password, username, firstName, lastName } = req.body;
 
-    const existingUser = await User.findOne({
+    const existingUser = await User.unscoped().findOne({
       where: {
         [Op.or]: {
           username: username,
@@ -47,20 +47,21 @@ router.post(
     });
 
     if(existingUser){
-      if(existingUser.email){
+      if(existingUser.email === email){
         const err = new Error('Email already exists')
         err.status = 401;
         err.title = "Email already exists"
         err.errors = {email: "An account already exists with this Email."}
         return next(err)
-      }
-      if(existingUser.username){
+
+      } else if(existingUser.username === username){
         const err = new Error('Username already exists')
         err.status = 401;
         err.title = "Username already exists"
         err.errors = {username: "An account already exists with this Username."}
         return next(err)
       }
+
     }
 
     const hashedPassword = bcrypt.hashSync(password);
