@@ -73,22 +73,22 @@ const ReviewFormModal = ({ spotId }) => {
       <div className="create-review-text">
         <h2-semibold>How was your stay?</h2-semibold>
       </div>
-      {errors.rating && (
+      {/* {isSubmitted && errors.rating && (
         <p className={isSubmitted ? "errors-shown" : "errors-hidden"}>
           {errors.rating}
         </p>
       )}
-      {errors.review && (
+      {isSubmitted && errors.review && (
         <p className={isSubmitted ? "errors-shown" : "errors-hidden"}>
           {errors.review}
         </p>
-      )}
-      {serverErrors.errors && (
+      )} */}
+      {isSubmitted && serverErrors.errors && (
         <p className="errors-shown">{serverErrors.errors}</p>
       )}
       <form onSubmit={handleSubmit}>
         <div className="ReviewCreateFormContainer">
-          {errors.review && (
+          {isSubmitted && errors.review && (
             <p className="errors-shown-removepadding">{errors.review}</p>
           )}
           <textarea
@@ -99,7 +99,7 @@ const ReviewFormModal = ({ spotId }) => {
           <div className="rating-input"></div>
           {/* fa-regular fa-star star */}
           {/* fa-solid fa-star star */}
-          {errors.rating && (
+          {isSubmitted && errors.rating && (
             <p className="errors-shown-removepadding">{errors.rating}</p>
           )}
           <div className="create-review-div">
@@ -182,13 +182,8 @@ const ReviewFormModal = ({ spotId }) => {
           </div>
         </div>
         <button
-          className={
-            Object.values(errors).length > 0
-              ? "login-button-invalid"
-              : "login-button-valid changeCursor"
-          }
+          className="login-button-valid changeCursor"
           type="submit"
-          disabled={Object.values(errors).length > 0}
         >
           Submit Your Review
         </button>

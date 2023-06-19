@@ -43,7 +43,7 @@ const CreateBookingModal = ({spotId, bookings}) => {
         setErrors(err)
       })
 
-    if(Object.values(errors).length < 1) {
+    if(Object.values(errors).length < 1 && Object.values(lenErrors).length < 1) {
       const newBookingInfo = {
         startDate,
         endDate
@@ -78,12 +78,13 @@ const CreateBookingModal = ({spotId, bookings}) => {
         <h2-semibold>Plan your stay!</h2-semibold>
       </div>
 
-      {errors.startDate && <p className={isSubmitted ? "errors-shown" : "errors-hidden"}>{errors.startDate}</p>}
-      {errors.endDate && <p className={isSubmitted ? "errors-shown" : "errors-hidden"}>{errors.endDate}</p>}
+
+
 
       <form onSubmit={handleSubmit} className="booking-create-form">
         <div className="BookingCreateFormContainer">
           <div className="booking-start-date">
+          {isSubmitted && errors.startDate && <p className={isSubmitted ? "errors-shown" : "errors-hidden"}>{errors.startDate}</p>}
             <label>Booking Start:</label>
             <input type="date" name="startDate" value={startDate} min={currDate} onChange={(e) => {
                 setStartDate(e.target.value)
@@ -91,6 +92,7 @@ const CreateBookingModal = ({spotId, bookings}) => {
             }}/>
           </div>
           <div className="booking-end-date">
+          {isSubmitted && errors.endDate && <p className={isSubmitted ? "errors-shown" : "errors-hidden"}>{errors.endDate}</p>}
             <label>Booking End:</label>
             <input type="date" name="endDate" value={endDate} min={startDate || currDate} onChange={(e) => {
               setEndDate(e.target.value)
@@ -98,15 +100,10 @@ const CreateBookingModal = ({spotId, bookings}) => {
             }}/>
           </div>
         </div>
-          {decideError()}
+          {isSubmitted && decideError()}
         <button
-          className={
-            Object.values(errors).length > 0 || (startDate === '' || endDate === '')
-              ? "login-button-invalid create-booking-button"
-              : "login-button-valid changeCursor create-booking-button"
-          }
+          className="login-button-valid changeCursor create-booking-button"
           type="submit"
-          disabled={Object.values(errors).length > 0 || (startDate === '' || endDate === '')}
         >
           Create Your Booking!
         </button>
