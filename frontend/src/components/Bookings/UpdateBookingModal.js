@@ -24,7 +24,6 @@ const UpdateBookingModal = ({ currBooking, spotId }) => {
   const spotBookings = useSelector((state) =>
     Object.values(state.bookings.spotBookings)
   );
-  const [noChange, setNoChange] = useState(false);
 
   useEffect(() => {
     dispatch(thunkGetSpotBookings(spotId));
@@ -33,8 +32,9 @@ const UpdateBookingModal = ({ currBooking, spotId }) => {
   useEffect(() => {
     const err = {};
 
-    if (oldStart !== startDate) setNoChange(true);
-    if (oldEnd !== endDate) setNoChange(true);
+    if ((oldStart === startDate) && (oldEnd === endDate)){
+      err.noChange = "Please make a change to one of the dates."
+    }
 
     const allBookings = spotBookings.filter(
       (booking) => booking.spotId === +spotId && booking.id !== currBooking.id
@@ -45,10 +45,6 @@ const UpdateBookingModal = ({ currBooking, spotId }) => {
       const newBookingEndTime = new Date(endDate).getTime();
       const oldBookingStartTime = new Date(booking.startDate).getTime();
       const oldBookingEndTime = new Date(booking.endDate).getTime();
-
-      // (selectedStartDate >= existingStartDate && selectedStartDate <= existingEndDate) ||
-      //           (selectedEndDate >= existingStartDate && selectedEndDate <= existingEndDate) ||
-      //           (selectedStartDate <= existingStartDate && selectedEndDate >= existingEndDate)
 
       if (newBookingEndTime <= newBookingStartTime)
         err.endDate = "Booking End cannot be on or before the Booking Start";
@@ -71,8 +67,9 @@ const UpdateBookingModal = ({ currBooking, spotId }) => {
       )
         err.endDate = "Booking Dates overlap another Booking";
 
+      });
+
       setErrors(err);
-    });
   }, [startDate, endDate, oldEnd, oldStart]);
 
   const handleSubmit = async (e) => {
@@ -152,25 +149,12 @@ const UpdateBookingModal = ({ currBooking, spotId }) => {
             />
           </div>
         </div>
-        {!noChange && (
-          <p className="errors-shown-removepadding">
-            Please make a change to one of the dates.
-          </p>
-        )}
+        {errors.noChange && <p className={errors.noChange ? "errors-shown text-padding-errors" : "errors-hidden"}>
+                {isSubmitted && errors.noChange}
+              </p>}
         <button
-          className={
-            Object.values(errors).length > 0 ||
-            (new Date(startDate).getTime() === new Date(oldStart).getTime() &&
-              new Date(endDate).getTime() === new Date(oldEnd).getTime())
-              ? "login-button-invalid create-booking-button"
-              : "login-button-valid changeCursor create-booking-button"
-          }
+          className="login-button-valid changeCursor create-booking-button"
           type="submit"
-          disabled={
-            Object.values(errors).length > 0 ||
-            (new Date(startDate).getTime() === new Date(oldStart).getTime() &&
-              new Date(endDate).getTime() === new Date(oldEnd).getTime())
-          }
         >
           Update Your Booking!
         </button>
