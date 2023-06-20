@@ -57,6 +57,7 @@
   outline: none;
   border: none;
   background: none;
+  display: flex;
 }
 
 .manage-spots-button:hover{
