@@ -6,6 +6,7 @@ export const GET_SPOT_BOOKINGS = "bookings/GET_SPOT_BOOKINGS";
 export const GET_BOOKING = "bookings/GET_BOOKING";
 export const UPDATE_BOOKING = "bookings/UPDATE_BOOKING";
 export const DELETE_BOOKING = "bookings/DELETE_BOOKING";
+export const NUKE_BOOKING = "bookings/NUKE_BOOKING";
 
 // Action Creators
 export const actionCreateBooking = (newBooking) => ({
@@ -36,6 +37,10 @@ export const actionUpdateBooking = (booking) => ({
 export const actionDeleteBooking = (booking) => ({
   type: DELETE_BOOKING,
   booking
+})
+
+export const actionNukeUserBookings = () => ({
+  type: NUKE_BOOKING
 })
 
 // Thunk Action Creators
@@ -128,6 +133,10 @@ export const thunkDeleteBookingById = (bookingId) => async(dispatch) => {
   }
 }
 
+export const nukeUserBookings = () => async(dispatch) => {
+  dispatch(actionNukeUserBookings())
+}
+
 // Reducer
 
 const bookingsReducer = (state = {bookings: {}, spotBookings: {}}, action) => {
@@ -157,6 +166,10 @@ const bookingsReducer = (state = {bookings: {}, spotBookings: {}}, action) => {
       delete modState.bookings[action.booking];
       delete modState.spotBookings[action.booking];
       return modState
+    }
+    case NUKE_BOOKING: {
+      const nukedState = {bookings: {}, spotBookings: {}};
+      return nukedState
     }
     default:
       return state;
