@@ -133,7 +133,7 @@ export const thunkCreateSpotImage = (spotID, spotImage) => async(dispatch) => {
   });
 
   if(res.ok) {
-    console.log("HIT")
+    // console.log("HIT")
     const newSpotImage = await res.json();
     dispatch(createSpotImageAction(spotImage))
     return newSpotImage;

@@ -1,7 +1,7 @@
 // frontend/src/components/LoginFormModal/index.js
 import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import { useHistory } from "react-router-dom";
@@ -15,7 +15,7 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const err = {};
@@ -26,11 +26,11 @@ function LoginFormModal() {
     setErrors(err);
   }, [credential, password]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitted(true)
     if(Object.values(errors).length < 1){
-      return dispatch(sessionActions.login({ credential, password }))
+      await dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .then(history.push("/"))
       .catch(async (res) => {
@@ -39,6 +39,7 @@ function LoginFormModal() {
           setErrors(data.errors);
         }
       });
+
     }
   };
 
@@ -82,8 +83,8 @@ function LoginFormModal() {
       <div className="demouser-login-div">
         <button
           className="demouser-login-button changeCursor"
-          onClick={() => {
-            dispatch(
+          onClick={async () => {
+            await dispatch(
               sessionActions.login({
                 credential: "demo@user.io",
                 password: "password",

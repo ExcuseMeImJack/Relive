@@ -1,3 +1,4 @@
+import { nukeUserBookings } from "./bookings";
 import { csrfFetch } from "./csrf";
 
 const SET_USER = "session/setUser";
@@ -20,6 +21,7 @@ export const logout = () => async (dispatch) => {
   const response = await csrfFetch('/api/session', {
     method: 'DELETE',
   });
+  dispatch(nukeUserBookings())
   dispatch(removeUser());
   return response;
 };
@@ -38,6 +40,7 @@ export const signup = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
+  // dispatch(nukeUserBookings())
   return response;
 };
 
@@ -59,6 +62,7 @@ export const login = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
+  // dispatch(nukeUserBookings())
   return response;
 };
 

@@ -15,7 +15,20 @@ const BookingItem = ({ booking }) => {
   const currDate = new Date().getTime();
 
   const calDate = () => {
-    if (currDate < new Date(booking.startDate).getTime()) {
+    if (currDate >= new Date(booking.startDate).getTime()){
+      return (
+        <div className="spot-card-top bookings-card-top">
+          <div>
+            <p>Booking Start Date: </p>
+            <p className="startDate" id="passed-booking">Booking Started</p>
+          </div>
+          <div>
+            <p>Booking End Date: </p>
+            <p className="endDate">{booking.endDate.split("T")[0]}</p>
+          </div>
+        </div>
+      );
+    } else if (currDate < new Date(booking.endDate).getTime()) {
       return (
         <div className="spot-card-top bookings-card-top">
           <div>

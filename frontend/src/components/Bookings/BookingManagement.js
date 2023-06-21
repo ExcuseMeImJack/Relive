@@ -24,7 +24,10 @@ const BookingManagement = () => {
   const currDate = new Date().getTime();
 
   const calDate = (booking) => {
-    if (currDate < new Date(booking.startDate).getTime()) {
+    if (currDate >= new Date(booking.startDate).getTime()){
+      return
+    }
+    else if (currDate < new Date(booking.endDate).getTime()) {
       return (
         <div className="manage-buttons">
             <OpenModalButton
